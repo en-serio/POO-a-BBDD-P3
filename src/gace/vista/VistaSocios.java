@@ -66,4 +66,16 @@ public class VistaSocios {
     public void mostrarSocio(String socio) {
         System.out.println(socio);
     }
+
+    public int requerirFiltro(){
+        System.out.println("¿Que socios quieres ver?");
+        System.out.println("1. Socios estandar");
+        System.out.println("2. Socios federados");
+        System.out.println("3. Socios infantiles");
+        System.out.println("4. Todos los socios");
+        System.out.println("5. Socios sin excursiones");
+        System.out.println("0. Salir");
+        int opcion = scanner.nextInt();
+        return opcion;
+    }
 }

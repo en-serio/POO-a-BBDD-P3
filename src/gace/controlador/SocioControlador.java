@@ -4,13 +4,25 @@ import gace.modelo.*;
 import gace.vista.VistaSocios;
 import gace.modelo.ListaSocios;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class SocioControlador {
     private VistaSocios vistaSocios;
     private ListaSocios listaSocios;
 
+    /*public SocioControlador(VistaSocios vistaSocios, ListaSocios listaSocios) {
+        this.vistaSocios = new VistaSocios();
+        this.listaSocios = new ListaSocios();
+    }*/
+
     public SocioControlador() {
         this.vistaSocios = new VistaSocios();
         this.listaSocios = new ListaSocios();
+    }
+
+    public ListaSocios getLista(){
+        return this.listaSocios;
     }
 
 
@@ -73,6 +85,40 @@ public class SocioControlador {
         }
         vistaSocios.mostrarSocio(socio.toString());
         listaSocios.agregarSocio(socio);
+        return true;
+    }
+
+    public boolean mostrarSocios() {
+        int opcionSocios = vistaSocios.requerirFiltro();
+        ArrayList<Socio> lista = null;
+        switch (opcionSocios) {
+            case 1:
+                lista = listaSocios.getSocioFiltrado(opcionSocios);
+                break;
+            case 2:
+                lista = listaSocios.getSocioFiltrado(opcionSocios);
+                break;
+            case 3:
+                lista = listaSocios.getSocioFiltrado(opcionSocios);
+                break;
+            case 4:
+                lista = listaSocios.getListaSocios();
+                break;
+            /* Todo - implementar
+            case 5:
+                lista = listaSocios.getSociosSinExcursiones());
+                break;*/
+            case 0:
+                break;
+            default:
+                System.out.println("Opción no válida. Intente de nuevo.");
+        }
+        if (lista == null) {
+            return false;
+        }
+        for(Socio socio : lista) {
+            vistaSocios.mostrarSocio(socio.toString());
+        }
         return true;
     }
 
