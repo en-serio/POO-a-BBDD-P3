@@ -17,6 +17,9 @@ public class Excursion {
         this.precio = precio;
     }
 
+    public Excursion() {
+    }
+
     public String getCodigo() {
         return codigo;
     }

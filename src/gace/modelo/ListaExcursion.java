@@ -24,6 +24,8 @@ public class ListaExcursion {
         return null; // o lanzar excepción
     }
 
+
+
     public ArrayList<Excursion> filtrarFecha(Date fecha) {
         ArrayList<Excursion> resultado = new ArrayList<>();
         for (Excursion excursion : listaExcursiones) {

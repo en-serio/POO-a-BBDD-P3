@@ -2,7 +2,7 @@ package gace.modelo;
 
 public class Seguro {
     private int idSeguro;
-    private boolean tipo; // true = completo, false = básico
+    private boolean tipo;
     private double precio;
 
     public Seguro(int idSeguro, boolean tipo, double precio) {
@@ -10,6 +10,8 @@ public class Seguro {
         this.tipo = tipo;
         this.precio = precio;
     }
+
+    public Seguro() { }
 
     public int getIdSeguro() {
         return idSeguro;

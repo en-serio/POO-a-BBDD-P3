@@ -3,13 +3,15 @@ package gace.modelo;
 public class SocioEstandar extends Socio {
     private String nif;
     private Seguro seguro;
-    private final double cuotaBase = 100.0; // Ejemplo de cuota base
+    private final double cuotaBase = 100.0;
 
-    public SocioEstandar(String noSocio, String nombre, String nif, Seguro seguro) {
-        super(noSocio, nombre, TipoSocio.ESTÁNDAR);
+    public SocioEstandar(String noSocio, String nombre) {
+        super(noSocio, nombre);
         this.nif = nif;
         this.seguro = seguro;
     }
+
+    public SocioEstandar() {}
 
     public String getNif() {
         return nif;
@@ -29,11 +31,11 @@ public class SocioEstandar extends Socio {
 
     @Override
     public double calcularCuota() {
-        return cuotaBase; // Cuota íntegra
+        return cuotaBase;
     }
 
     @Override
     public double costeExcursion(Excursion excursion) {
-        return excursion.getPrecio() + seguro.getPrecio(); // Precio de la excursión más el seguro
+        return excursion.getPrecio() + seguro.getPrecio();
     }
 }

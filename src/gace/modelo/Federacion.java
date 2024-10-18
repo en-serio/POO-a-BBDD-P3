@@ -9,6 +9,8 @@ public class Federacion {
         this.nombre = nombre;
     }
 
+    public Federacion() {}
+
     public String getCodigo() {
         return codigo;
     }

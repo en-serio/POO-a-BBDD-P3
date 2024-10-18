@@ -19,7 +19,7 @@ public class VistaInscripciones {
         }
     }
 
-    public Inscripcion formInscripcion(ListaSocios listaSocios, ListaExcursion listaExcursiones) {
+    /*public String formInscripcion() {
         System.out.print("Ingrese el ID de Inscripción: ");
         String idInscripcion = scanner.nextLine();
         System.out.print("Ingrese el número de socio: ");
@@ -40,5 +40,5 @@ public class VistaInscripciones {
         }
 
         return new Inscripcion(idInscripcion, socio, excursion, new Date());
-    }
+    }*/
 }

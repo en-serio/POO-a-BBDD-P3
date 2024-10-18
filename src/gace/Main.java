@@ -2,11 +2,9 @@ package gace;
 
 import gace.modelo.*;
 import gace.vista.*;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // Inicialización de listas y vistas
         ListaSocios listaSocios = new ListaSocios();
         ListaExcursion listaExcursiones = new ListaExcursion();
         ListaInscripcion listaInscripciones = new ListaInscripcion();
@@ -15,7 +13,6 @@ public class Main {
         VistaExcursion vistaExcursion = new VistaExcursion();
         VistaInscripciones vistaInscripciones = new VistaInscripciones();
 
-        // Menú principal
         boolean running = true;
         while (running) {
             System.out.println("Seleccione una opción:");

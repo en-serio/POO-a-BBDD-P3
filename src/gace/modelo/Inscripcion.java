@@ -15,6 +15,8 @@ public class Inscripcion {
         this.fechaInscripcion = fechaInscripcion;
     }
 
+    public Inscripcion() {}
+
     public String getIdInscripcion() {
         return idInscripcion;
     }

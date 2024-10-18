@@ -19,39 +19,42 @@ public class VistaSocios {
         }
     }
 
-    public Socio formSocio() {
+    public String formSocio() {
         System.out.print("Ingrese el número de socio: ");
         String noSocio = scanner.nextLine();
         System.out.print("Ingrese el nombre: ");
         String nombre = scanner.nextLine();
         System.out.print("Ingrese el tipo de socio (ESTÁNDAR, FEDERADO, INFANTIL): ");
-        TipoSocio tipoSocio = TipoSocio.valueOf(scanner.nextLine().toUpperCase());
-
-        Socio socio = null; // Solo se declara una vez
+        int tipoSocio = scanner.nextInt();
+        String nif= null;
+        String nouSoci = null;
         switch (tipoSocio) {
-            case ESTÁNDAR:
+            case 1:
                 System.out.print("Ingrese el NIF: ");
-                String nifEstandar = scanner.nextLine();
-                System.out.print("Ingrese el precio del seguro: ");
-                double precioSeguro = Double.parseDouble(scanner.nextLine());
-                Seguro seguroEstandar = new Seguro(1, true, precioSeguro);
-                socio = new SocioEstandar(noSocio, nombre, nifEstandar, seguroEstandar); // Se asigna a la variable existente
+                nif = scanner.nextLine();
+                System.out.print("Quin tipus de seguro: 1-COMPLETO 2-ESTÁNDAR");
+                int tipoSeguro = scanner.nextInt();
+                System.out.print("Preu del seguro:");
+                double precioSeguro = scanner.nextDouble();
+                nouSoci = tipoSocio + ',' + noSocio + ',' + nombre + ',' +  nif + ',' +  tipoSeguro + ',' + precioSeguro;
                 break;
-            case FEDERADO:
+            case 2:
                 System.out.print("Ingrese el NIF: ");
-                String nifFederado = scanner.nextLine();
+                nif = scanner.nextLine();
                 System.out.print("Ingrese el código de la federación: ");
                 String codigoFederacion = scanner.nextLine();
-                Federacion federacion = new Federacion(codigoFederacion, "Federación de Ejemplo");
-                socio = new SocioFederado(noSocio, nombre, nifFederado, federacion);
+                System.out.print("Ingrese el nombre de la federación: ");
+                String nombreFederacion = scanner.nextLine();
+                nouSoci = tipoSocio + ',' + noSocio + ',' + nombre + ',' +  nif + ',' +  codigoFederacion+ ',' + nombreFederacion;
                 break;
-            case INFANTIL:
+            case 3:
                 System.out.print("Ingrese el número de tutor: ");
                 String noTutor = scanner.nextLine();
-                socio = new SocioInfantil(noSocio, nombre, noTutor); // Aquí se corrige la llamada al constructor
+                nouSoci = tipoSocio + ',' + noSocio + ',' + nombre + ',' +  noTutor;
+                break;
+            default:
                 break;
         }
-
-        return socio;
+        return nouSoci;
     }
 }
