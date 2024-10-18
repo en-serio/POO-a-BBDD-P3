@@ -1,7 +1,7 @@
-package grupofp.controlador;
+package gace.controlador;
 
-import grupofp.modelo.*;
-import grupofp.vista.*;
+import gace.modelo.*;
+import gace.vista.*;
 import java.util.ArrayList;
 
 public class Controlador {
@@ -9,7 +9,7 @@ public class Controlador {
     private VistaExcursion vistaExcursion;
     private VistaInscripciones vistaInscripciones;
     private Datos datos;
-
+1
     public Controlador() {
         vistaExcursion = new VistaExcursion();
         vistaSocios = new VistaSocios();

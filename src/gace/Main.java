@@ -1,7 +1,7 @@
-package grupofp;
+package gace;
 
-import grupofp.modelo.*;
-import grupofp.vista.*;
+import gace.modelo.*;
+import gace.vista.*;
 
 import java.util.ArrayList;
 

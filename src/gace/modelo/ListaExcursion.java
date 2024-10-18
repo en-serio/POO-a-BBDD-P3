@@ -1,6 +1,6 @@
-package grupofp.modelo;
+package gace.modelo;
 
-import grupofp.modelo.Excursion;
+import gace.modelo.Excursion;
 
 import java.util.ArrayList;
 import java.util.Date;
