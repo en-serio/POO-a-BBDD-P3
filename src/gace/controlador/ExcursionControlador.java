@@ -9,13 +9,13 @@ public class ExcursionControlador {
     private ListaExcursion listaExcursion;
 
     public void agregarExcursion(Excursion excursion) {
-        listaExcursion.anyadirExcursion(excursion);
-        vistaExcursion.detalleExcursion(excursion);
+        //listaExcursion.anyadirExcursion(excursion);
+      //  vistaExcursion.detalleExcursion(excursion);
     }
     public void mostrarExcursiones(Excursion excursion) {
-        vistaExcursion.detalleExcursion(excursion);
+        //vistaExcursion.detalleExcursion(excursion);
     }
     public void eliminarExcursion(Excursion excursion){
-        listaExcursion.eliminarExcursion(excursion);
+       // listaExcursion.eliminarExcursion(excursion);
     }
 }
