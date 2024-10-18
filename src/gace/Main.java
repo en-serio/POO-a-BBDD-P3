@@ -6,6 +6,7 @@ import gace.controlador.SocioControlador;
 import gace.modelo.*;
 import gace.vista.*;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -17,9 +18,10 @@ public class Main {
         VistaExcursion vistaExcursion = new VistaExcursion();
         VistaInscripciones vistaInscripciones = new VistaInscripciones();
         ExcursionControlador controladorExc = new ExcursionControlador();
-        InscripcionControlador controladorIns = new InscripcionControlador();
         //SocioControlador controladorSoc = new SocioControlador(vistaSocios, listaSocios);
         SocioControlador controladorSoc = new SocioControlador();
+        InscripcionControlador controladorIns = new InscripcionControlador(controladorExc, controladorSoc);
+
 
 
         Socio socio1 = new SocioEstandar("1", "Juan", "12345678A", new Seguro(true, 100));
@@ -46,6 +48,39 @@ public class Main {
         controladorSoc.getLista().agregarSocio(socio9);
         controladorSoc.getLista().agregarSocio(socio10);
 
+        Date fecha1 = new Date(2021, 6, 1);
+        Excursion excursion1 = new Excursion("1", "Excursión 1", fecha1, 10, 100);
+        Excursion excursion2 = new Excursion("2", "Excursión 2", fecha1, 15, 150);
+        Excursion excursion3 = new Excursion("3", "Excursión 3", fecha1, 20, 200);
+        Excursion excursion4 = new Excursion("4", "Excursión 4", fecha1, 25, 250);
+        Excursion excursion5 = new Excursion("5", "Excursión 5", fecha1, 30, 300);
+        Excursion excursion6 = new Excursion("6", "Excursión 6", fecha1, 35, 350);
+        Excursion excursion7 = new Excursion("7", "Excursión 7", fecha1, 40, 400);
+
+        controladorExc.getListaExcursion().anyadirExcursion(excursion1);
+        controladorExc.getListaExcursion().anyadirExcursion(excursion2);
+        controladorExc.getListaExcursion().anyadirExcursion(excursion3);
+        controladorExc.getListaExcursion().anyadirExcursion(excursion4);
+        controladorExc.getListaExcursion().anyadirExcursion(excursion5);
+        controladorExc.getListaExcursion().anyadirExcursion(excursion6);
+        controladorExc.getListaExcursion().anyadirExcursion(excursion7);
+
+        Inscripcion inscripcion1 = new Inscripcion("1", socio1, excursion1, new Date());
+        Inscripcion inscripcion2 = new Inscripcion("2", socio2, excursion2, new Date());
+        Inscripcion inscripcion3 = new Inscripcion("3", socio3, excursion3, new Date());
+        Inscripcion inscripcion4 = new Inscripcion("4", socio4, excursion4, new Date());
+        Inscripcion inscripcion5 = new Inscripcion("5", socio5, excursion5, new Date());
+        Inscripcion inscripcion6 = new Inscripcion("6", socio6, excursion6, new Date());
+        Inscripcion inscripcion7 = new Inscripcion("7", socio7, excursion7, new Date());
+        Inscripcion inscripcion8 = new Inscripcion("8", socio8, excursion1, new Date());
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion1);
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion2);
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion3);
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion4);
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion5);
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion6);
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion7);
+        controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion8);
 
 
         boolean running = true;
@@ -69,7 +104,7 @@ public class Main {
                     }
                     break;
                 case 2:
-                    if (controladorSoc.mostrarSocios()) {
+                    if (controladorSoc.mostrarSocios(1,0)) {
                         System.out.println(":D");
                     } else {
                         System.out.println(":(");
@@ -89,20 +124,22 @@ public class Main {
                     } else {
                         System.out.println(":(");
                     }
-                    vistaExcursion.mostrarExcursiones(listaExcursiones.getListaExcursiones());
+                    //vistaExcursion.mostrarExcursiones(listaExcursiones.getListaExcursiones());
                     break;
-                default:
-                    break;
-            }/*
                 case 5:
-                    Inscripcion nuevaInscripcion = vistaInscripciones.formInscripcion(listaSocios, listaExcursiones);
-                    if (nuevaInscripcion != null) {
-                        listaInscripciones.agregarInscripcion(nuevaInscripcion);
-                        System.out.println("Inscripción añadida correctamente.");
+                    int ayudaVisualInsc = controladorIns.solicitarAyudaVisual();
+                    if (controladorIns.novaInscripcio(ayudaVisualInsc)) {
+                        System.out.println(":D");
+                    } else {
+                        System.out.println(":(");
                     }
                     break;
                 case 6:
-                    vistaInscripciones.mostrarInscripciones(listaInscripciones);
+                    if (controladorIns.mostrarInscripciones()) {
+                        System.out.println(":D");
+                    } else {
+                        System.out.println(":(");
+                    }
                     break;
                 case 0:
                     running = false;
@@ -110,7 +147,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
-            }*/
+            }
         }
     }
 }

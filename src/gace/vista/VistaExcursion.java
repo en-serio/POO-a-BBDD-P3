@@ -44,4 +44,6 @@ public class VistaExcursion {
 
         return codigo + ',' + descripcion + ',' + fechaString + ',' + noDias + ',' + precio;
     }
+
+
 }

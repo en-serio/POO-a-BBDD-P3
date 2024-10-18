@@ -11,10 +11,11 @@ public class SocioControlador {
     private VistaSocios vistaSocios;
     private ListaSocios listaSocios;
 
-    /*public SocioControlador(VistaSocios vistaSocios, ListaSocios listaSocios) {
-        this.vistaSocios = new VistaSocios();
-        this.listaSocios = new ListaSocios();
-    }*/
+
+    public SocioControlador(VistaSocios vistaSocios, ListaSocios listaSocios) {
+        this.vistaSocios = vistaSocios;
+        this.listaSocios = listaSocios;
+    }
 
     public SocioControlador() {
         this.vistaSocios = new VistaSocios();
@@ -88,8 +89,13 @@ public class SocioControlador {
         return true;
     }
 
-    public boolean mostrarSocios() {
-        int opcionSocios = vistaSocios.requerirFiltro();
+    public boolean mostrarSocios(int mostrarFiltro, int filtro) {
+        int opcionSocios = 0;
+        if(mostrarFiltro == 1){
+            opcionSocios = vistaSocios.requerirFiltro();
+        }else {
+            opcionSocios = filtro;
+        }
         ArrayList<Socio> lista = null;
         switch (opcionSocios) {
             case 1:
@@ -122,4 +128,12 @@ public class SocioControlador {
         return true;
     }
 
+    public Socio buscarSocio(String noSocio) {
+        for(Socio socio : listaSocios.getListaSocios()) {
+            if (socio.getNoSocio().equals(noSocio)) {
+                return socio;
+            }
+        }
+        return null;
+    }
 }

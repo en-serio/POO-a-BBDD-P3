@@ -22,6 +22,8 @@ public class ListaSocios {
         return null;
     }
 
+
+
     public ArrayList<Socio> getListaSocios() {
         return this.listaSocios;
     }

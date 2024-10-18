@@ -9,7 +9,7 @@ public class ListaInscripcion {
         this.listaInsc = new ArrayList<>();
     }
 
-    public void agregarInscripcion(Inscripcion inscripcion) {
+    public void anyadirInscripcion(Inscripcion inscripcion) {
         listaInsc.add(inscripcion);
     }
 

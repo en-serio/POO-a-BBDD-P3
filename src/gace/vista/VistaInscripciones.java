@@ -12,16 +12,13 @@ public class VistaInscripciones {
         this.scanner = new Scanner(System.in);
     }
 
-    public void mostrarInscripciones(ListaInscripcion listaInscripciones) {
-        System.out.println("Lista de Inscripciones:");
-        for (Inscripcion inscripcion : listaInscripciones.getListaInsc()) {
-            System.out.println(inscripcion);
-        }
+    public void mostrarInscripciones(String listaInscripciones) {
+        System.out.println(listaInscripciones);
     }
 
     /*public String formInscripcion() {
-        System.out.print("Ingrese el ID de Inscripción: ");
-        String idInscripcion = scanner.nextLine();
+        //System.out.print("Ingrese el ID de Inscripción: ");
+        //String idInscripcion = scanner.nextLine();
         System.out.print("Ingrese el número de socio: ");
         String noSocio = scanner.nextLine();
         System.out.print("Ingrese el código de excursión: ");
@@ -39,6 +36,24 @@ public class VistaInscripciones {
             return null;
         }
 
-        return new Inscripcion(idInscripcion, socio, excursion, new Date());
+        //return new Inscripcion(idInscripcion, socio, excursion, new Date());
     }*/
+
+    public String pedirSocioInsc() {
+        scanner.nextLine();
+        System.out.print("Ingrese el número de socio: ");
+        return scanner.nextLine();
+    }
+
+    public int vistaAyuda(){
+        System.out.println("¿Quieres disponer de ayudas?");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+        return scanner.nextInt();
+    }
+
+    public String pedirExcursionInsc(){
+        System.out.print("Ingrese el código de excursión: ");
+        return scanner.nextLine();
+    }
 }

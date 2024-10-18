@@ -6,6 +6,7 @@ import gace.vista.VistaExcursion;
 import gace.modelo.ListaExcursion;
 import gace.modelo.Parser;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ExcursionControlador {
@@ -17,6 +18,10 @@ public class ExcursionControlador {
         this.listaExcursion = new ListaExcursion();
     }
     private Parser parser;
+
+    public ListaExcursion getListaExcursion() {
+        return listaExcursion;
+    }
 
     public void agregarExcursion(Excursion excursion) {
         //listaExcursion.anyadirExcursion(excursion);
@@ -46,5 +51,21 @@ public class ExcursionControlador {
         listaExcursion.anyadirExcursion(exc);
         vistaExcursion.detalleExcursion(exc.toString());
         return true;
+    }
+
+    public boolean mostrarExcursiones(){
+        for (Excursion excursion : this.listaExcursion.getListaExcursiones()) {
+            vistaExcursion.detalleExcursion(excursion.toString());
+        }
+        return true;
+    }
+
+    public Excursion buscarExcursion(String codigo){
+        for(Excursion excursion : this.listaExcursion.getListaExcursiones()){
+            if(excursion.getCodigo().equals(codigo)){
+                return excursion;
+            }
+        }
+        return null;
     }
 }
