@@ -9,7 +9,7 @@ public class Controlador {
     private VistaExcursion vistaExcursion;
     private VistaInscripciones vistaInscripciones;
     private Datos datos;
-1
+
     public Controlador() {
         vistaExcursion = new VistaExcursion();
         vistaSocios = new VistaSocios();
