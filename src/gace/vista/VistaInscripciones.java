@@ -1,6 +1,6 @@
-package grupofp.vista;
+package gace.vista;
 
-import grupofp.modelo.*;
+import gace.modelo.*;
 
 import java.util.Date;
 import java.util.Scanner;

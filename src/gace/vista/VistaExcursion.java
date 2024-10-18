@@ -1,6 +1,6 @@
-package grupofp.vista;
+package gace.vista;
 
-import grupofp.modelo.Excursion;
+import gace.modelo.Excursion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

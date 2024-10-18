@@ -1,6 +1,4 @@
-package grupofp.modelo;
-
-import java.util.ArrayList;
+package gace.modelo;
 
 public class Datos {
     private ListaSocios listaSocios;

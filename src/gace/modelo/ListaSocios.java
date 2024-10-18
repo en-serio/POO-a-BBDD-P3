@@ -1,4 +1,4 @@
-package grupofp.modelo;
+package gace.modelo;
 
 import java.util.ArrayList;
 

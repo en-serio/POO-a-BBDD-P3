@@ -1,4 +1,4 @@
-package grupofp.modelo;
+package gace.modelo;
 
 public class Seguro {
     private int idSeguro;
