@@ -5,7 +5,7 @@ public class SocioEstandar extends Socio {
     private Seguro seguro;
     private final double cuotaBase = 100.0;
 
-    public SocioEstandar(String noSocio, String nombre) {
+    public SocioEstandar(String noSocio, String nombre, String nif, Seguro seguro) {
         super(noSocio, nombre);
         this.nif = nif;
         this.seguro = seguro;
@@ -27,6 +27,17 @@ public class SocioEstandar extends Socio {
 
     public void setSeguro(Seguro seguro) {
         this.seguro = seguro;
+    }
+
+    @Override
+    public String toString() {
+        return "SocioEstandar{" +
+                "Nombre: " + this.getNombre() +
+                 "No Socio: " + this.getNoSocio() +
+                "nif='" + nif + '\'' +
+                ", seguro=" + seguro +
+                ", cuotaBase=" + cuotaBase +
+                '}';
     }
 
     @Override

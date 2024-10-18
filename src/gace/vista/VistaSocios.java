@@ -20,12 +20,16 @@ public class VistaSocios {
     }
 
     public String formSocio() {
+        //scanner.nextLine();
         System.out.print("Ingrese el número de socio: ");
         String noSocio = scanner.nextLine();
+        //scanner.nextLine();
         System.out.print("Ingrese el nombre: ");
         String nombre = scanner.nextLine();
+        //scanner.nextLine();
         System.out.print("Ingrese el tipo de socio (ESTÁNDAR, FEDERADO, INFANTIL): ");
         int tipoSocio = scanner.nextInt();
+        scanner.nextLine();
         String nif= null;
         String nouSoci = null;
         switch (tipoSocio) {
@@ -36,7 +40,8 @@ public class VistaSocios {
                 int tipoSeguro = scanner.nextInt();
                 System.out.print("Preu del seguro:");
                 double precioSeguro = scanner.nextDouble();
-                nouSoci = tipoSocio + ',' + noSocio + ',' + nombre + ',' +  nif + ',' +  tipoSeguro + ',' + precioSeguro;
+                scanner.nextLine();
+                nouSoci = tipoSocio + "," + noSocio + "," + nombre + "," +  nif + "," +  tipoSeguro + "," + precioSeguro;
                 break;
             case 2:
                 System.out.print("Ingrese el NIF: ");
@@ -45,16 +50,20 @@ public class VistaSocios {
                 String codigoFederacion = scanner.nextLine();
                 System.out.print("Ingrese el nombre de la federación: ");
                 String nombreFederacion = scanner.nextLine();
-                nouSoci = tipoSocio + ',' + noSocio + ',' + nombre + ',' +  nif + ',' +  codigoFederacion+ ',' + nombreFederacion;
+                nouSoci = tipoSocio + "," + noSocio + "," + nombre + "," +  nif + "," +  codigoFederacion+ "," + nombreFederacion;
                 break;
             case 3:
                 System.out.print("Ingrese el número de tutor: ");
                 String noTutor = scanner.nextLine();
-                nouSoci = tipoSocio + ',' + noSocio + ',' + nombre + ',' +  noTutor;
+                nouSoci = tipoSocio + "," + noSocio + "," + nombre + "," +  noTutor;
                 break;
             default:
                 break;
         }
         return nouSoci;
+    }
+
+    public void mostrarSocio(String socio) {
+        System.out.println(socio);
     }
 }

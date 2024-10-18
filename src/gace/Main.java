@@ -1,10 +1,19 @@
 package gace;
 
+import gace.controlador.ExcursionControlador;
+import gace.controlador.InscripcionControlador;
+import gace.controlador.SocioControlador;
 import gace.modelo.*;
 import gace.vista.*;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ExcursionControlador controladorExc = new ExcursionControlador();
+        InscripcionControlador controladorIns = new InscripcionControlador();
+        SocioControlador controladorSoc = new SocioControlador();
         ListaSocios listaSocios = new ListaSocios();
         ListaExcursion listaExcursiones = new ListaExcursion();
         ListaInscripcion listaInscripciones = new ListaInscripcion();
@@ -23,17 +32,17 @@ public class Main {
             System.out.println("5. Inscribir Socio a Excursión");
             System.out.println("6. Mostrar Inscripciones");
             System.out.println("0. Salir");
-            int opcion = Integer.parseInt(System.console().readLine());
+            int opcion = Integer.parseInt(scanner.nextLine());
 
             switch (opcion) {
                 case 1:
-                    Socio nuevoSocio = vistaSocios.formSocio();
-                    if (nuevoSocio != null) {
-                        listaSocios.agregarSocio(nuevoSocio);
+                    if (controladorSoc.nouSoci()) {
                         System.out.println("Socio añadido correctamente.");
+                    } else {
+                        System.out.println("Error al añadir socio.");
                     }
                     break;
-                case 2:
+                /*case 2:
                     vistaSocios.mostrarSocios(listaSocios.getListaSocios());
                     break;
                 case 3:
@@ -62,7 +71,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
-            }
+            */}
         }
     }
 }

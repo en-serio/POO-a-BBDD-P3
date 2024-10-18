@@ -1,4 +1,4 @@
-package gace.controlador;
+/*package gace.controlador;
 
 import gace.modelo.*;
 import gace.vista.*;
@@ -8,18 +8,17 @@ public class Controlador {
     private VistaSocios vistaSocios;
     private VistaExcursion vistaExcursion;
     private VistaInscripciones vistaInscripciones;
-    private Datos datos;
+
 
     public Controlador() {
         vistaExcursion = new VistaExcursion();
         vistaSocios = new VistaSocios();
         vistaInscripciones = new VistaInscripciones();
-        datos = new Datos(); // Inicializar la clase Datos donde gestiones tus datos
     }
 
     public void agregarSocio(Socio socio) {
         datos.getListaSocios().agregarSocio(socio);
-        vistaSocios.mostrarSocios(datos.getListaSocios().getListaSocios()); // Asegúrate que este método existe en ListaSocios
+        //vistaSocios.mostrarSocios(datos.getListaSocios().getListaSocios()); // Asegúrate que este método existe en ListaSocios
     }
 
     public void agregarExcursion(Excursion excursion) {
@@ -46,4 +45,4 @@ public class Controlador {
         ListaInscripcion listaInscripciones = datos.getListaInscripciones(); // Aquí se obtiene directamente la lista de inscripciones
         vistaInscripciones.mostrarInscripciones(listaInscripciones);
     }
-}
+}*/

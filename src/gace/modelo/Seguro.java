@@ -1,25 +1,25 @@
 package gace.modelo;
 
 public class Seguro {
-    private int idSeguro;
+    //private int idSeguro;
     private boolean tipo;
     private double precio;
 
-    public Seguro(int idSeguro, boolean tipo, double precio) {
-        this.idSeguro = idSeguro;
+    public Seguro(boolean tipo, double precio) {
+        //this.idSeguro = idSeguro;
         this.tipo = tipo;
         this.precio = precio;
     }
 
     public Seguro() { }
 
-    public int getIdSeguro() {
+    /*public int getIdSeguro() {
         return idSeguro;
     }
 
     public void setIdSeguro(int idSeguro) {
         this.idSeguro = idSeguro;
-    }
+    }*/
 
     public boolean isTipo() {
         return tipo;
@@ -40,7 +40,7 @@ public class Seguro {
     @Override
     public String toString() {
         return "Seguro{" +
-                "idSeguro=" + idSeguro +
+                /*"idSeguro=" + idSeguro +*/
                 ", tipo=" + (tipo ? "COMPLETO" : "BÁSICO") +
                 ", precio=" + precio +
                 '}';
