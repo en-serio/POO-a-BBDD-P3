@@ -2,6 +2,7 @@ package gace.modelo;
 
 import java.util.ArrayList;
 
+
 public class Datos {
     private ListaSocios listaSocios;
     private ListaExcursion listaExcursiones;

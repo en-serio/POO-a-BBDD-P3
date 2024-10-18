@@ -2,7 +2,6 @@ package gace;
 
 import gace.modelo.*;
 import gace.vista.*;
-
 import java.util.ArrayList;
 
 public class Main {

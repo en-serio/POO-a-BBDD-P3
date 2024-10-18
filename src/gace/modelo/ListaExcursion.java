@@ -1,7 +1,6 @@
 package gace.modelo;
 
 import gace.modelo.Excursion;
-
 import java.util.ArrayList;
 import java.util.Date;
 
