@@ -75,20 +75,25 @@ public class Main {
                         System.out.println(":(");
                     }
                     break;
-                default:
-                    break;
-            }
-
-                /*case 3:
-                    Excursion nuevaExcursion = vistaExcursion.formExcursion();
-                    if (nuevaExcursion != null) {
-                        listaExcursiones.anyadirExcursion(nuevaExcursion);
-                        System.out.println("Excursión añadida correctamente.");
+                case 3:
+                    if (controladorExc.novaExcursio()) {
+                        System.out.println(":D");
+                    } else {
+                        System.out.println(":(");
                     }
+
                     break;
                 case 4:
+                    if (controladorExc.mostrarExcursiones()) {
+                        System.out.println(":D");
+                    } else {
+                        System.out.println(":(");
+                    }
                     vistaExcursion.mostrarExcursiones(listaExcursiones.getListaExcursiones());
                     break;
+                default:
+                    break;
+            }/*
                 case 5:
                     Inscripcion nuevaInscripcion = vistaInscripciones.formInscripcion(listaSocios, listaExcursiones);
                     if (nuevaInscripcion != null) {

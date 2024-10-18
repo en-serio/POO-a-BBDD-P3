@@ -22,13 +22,8 @@ public class VistaExcursion {
         }
     }
 
-    public void detalleExcursion(Excursion excursion) {
-        System.out.println("Detalles de la Excursión:");
-        System.out.println("Código: " + excursion.getCodigo());
-        System.out.println("Descripción: " + excursion.getDescripcion());
-        System.out.println("Fecha: " + excursion.getFecha());
-        System.out.println("Número de Días: " + excursion.getNoDias());
-        System.out.println("Precio: " + excursion.getPrecio());
+    public void detalleExcursion(String excursion) {
+        System.out.println(excursion);
     }
 
     public String formExcursion() {
@@ -42,10 +37,10 @@ public class VistaExcursion {
         String fechaString = scanner.nextLine();
 
         System.out.print("Ingrese el número de días: ");
-        int noDias = Integer.parseInt(scanner.nextLine());
+        int noDias = scanner.nextInt();
 
         System.out.print("Ingrese el precio de la excursión: ");
-        double precio = Double.parseDouble(scanner.nextLine());
+        double precio = scanner.nextDouble();
 
         return codigo + ',' + descripcion + ',' + fechaString + ',' + noDias + ',' + precio;
     }
