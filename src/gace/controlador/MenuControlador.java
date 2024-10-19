@@ -2,6 +2,8 @@ package gace.controlador;
 
 import gace.vista.DatosUtil;
 
+import java.util.ArrayList;
+
 public class MenuControlador {
     private DatosUtil datosUtil;
     private ExcursionControlador excursionControlador;
@@ -60,6 +62,10 @@ public class MenuControlador {
                 } else {
                     System.out.println(":(");
                 }
+                break;
+            case 7:
+                int ayuda = datosUtil.asistente();
+                inscripcionControlador.mostrarSinInscripciones(ayuda);
                 break;
             case 0:
                 System.out.println("Saliendo del programa...");

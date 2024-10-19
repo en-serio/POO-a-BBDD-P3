@@ -110,6 +110,26 @@ public class InscripcionControlador {
         return true;
     }
 
+    public boolean mostrarSinInscripciones(int ayuda) {
+        ArrayList<Socio> sociosSin =  new ArrayList<>();
+        for(Socio socio : socioControlador.getLista().getListaSocios()) {
+            boolean tieneInscripcion = false;
+            for(Inscripcion inscripcion : this.listaInscripcion.getListaInsc()) {
+                if(inscripcion.getSocio().equals(socio)){
+                    tieneInscripcion = true;
+                    break;
+                }
+            }
+            if(!tieneInscripcion){
+                sociosSin.add(socio);
+            }
+        }
+        if(ayuda == 1){
+            socioControlador.mostrarListaSociosSelec(sociosSin);
+        }
+        return socioControlador.seleccionarSocio(sociosSin);
+    }
+
     public void llenarinsc(){
         this.listaInscripcion.anyadirInscripcion(new Inscripcion("1", socioControlador.buscarSocio("101"), excursionControlador.buscarExcursion("1"), new Date()));
         this.listaInscripcion.anyadirInscripcion( new Inscripcion("2", socioControlador.buscarSocio("102"), excursionControlador.buscarExcursion("2"), new Date()));

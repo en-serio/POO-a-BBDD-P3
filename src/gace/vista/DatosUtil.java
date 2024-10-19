@@ -63,9 +63,25 @@ public class DatosUtil {
         System.out.println("4. Mostrar Excursiones");
         System.out.println("5. Inscribir Socio a Excursión");
         System.out.println("6. Mostrar Inscripciones");
+        System.out.println("7. Eliminar Socio :(");
         System.out.println("0. Salir");
-        int opcion = leerEntero(6, "");
+        int opcion = leerEntero(7, "");
         return opcion;
     }
 
+    public int asistente(){
+        System.out.println("Deseas ver los socios que no han sido inscritos en ninguna excursión?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+        int opcion = leerEntero(2, "");
+        return opcion;
+    }
+
+    public boolean confirmar(String mensaje){
+        System.out.println(mensaje);
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+        int opcion = leerEntero(2, "");
+        return opcion == 1;
+    }
 }

@@ -5,6 +5,7 @@ package gace.controlador;
 import gace.modelo.*;
 import gace.vista.VistaSocios;
 import gace.modelo.ListaSocios;
+import gace.vista.DatosUtil;
 
 import java.util.ArrayList;
 
@@ -132,6 +133,12 @@ public class SocioControlador {
         return false;
     }
 
+    public void mostrarListaSociosSelec(ArrayList<Socio> socios){
+        for(Socio socio : socios){
+            vistaSocios.mostrarSocio(socio.toString());
+        }
+    }
+
 
     public boolean mostrarSocios(int mostrarFiltro, int filtro) {
         int opcionSocios = 0; //en java hacia falta inicializar ??
@@ -195,6 +202,25 @@ public class SocioControlador {
         return new Seguro(tipo, Double.parseDouble(datosSeg[1]));
     }
 
+    public boolean seleccionarSocio(ArrayList<Socio> socios){
+        String codigo = vistaSocios.pedirSocio();
+        for(Socio socio : socios){
+            if(socio.getNoSocio().equals(codigo)) {
+                vistaSocios.mostrarSocio("Es este el socio que desea eliminar " + socio.toString() + "?");
+                if (vistaSocios.confirmar()) {
+                    listaSocios.getListaSocios().remove(socio);
+                    System.out.println("Socio eliminado");
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+
+
+
     private void llenarLista() {
         Federacion federacion1 = new Federacion("1234", "Montañeros Unidos");
         Federacion federacion2 = new Federacion("5678", "Excursionistas de Montaña");
@@ -210,4 +236,5 @@ public class SocioControlador {
         this.listaSocios.agregarSocio( new SocioInfantil("109", "Pablo", "Gomez", "105"));
         this.listaSocios.agregarSocio( new SocioEstandar("110", "Elena", "Vazquez", "87654321G", new Seguro(false, 75)));
     }
+
 }

@@ -1,6 +1,5 @@
 package gace.vista;
 
-import gace.modelo.*;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -8,16 +7,15 @@ import java.util.Scanner;
 
 public class VistaSocios {
     private Scanner scanner;
+    private DatosUtil datosUtil;
 
     public VistaSocios() {
         this.scanner = new Scanner(System.in);
+        this.datosUtil = new DatosUtil();
     }
 
-    public void mostrarSocios(ArrayList<Socio> lista) {
-        System.out.println("Lista de Socios:");
-        for (Socio socio : lista) {
-            System.out.println(socio);
-        }
+    public void mostrarSocios(String socio) {
+        System.out.println(socio);
     }
 
     public String formSocio() {
@@ -91,5 +89,14 @@ public class VistaSocios {
         System.out.print("Preu del seguro:");
         double precioSeguro = scanner.nextDouble();
         return tipoSeguro + "," + precioSeguro;
+    }
+
+    public String pedirSocio(){
+        System.out.print("Ingrese el número de socio: ");
+        return scanner.nextLine();
+    }
+
+    public boolean confirmar(){
+        return datosUtil.confirmar(" ");
     }
 }
