@@ -16,6 +16,7 @@ public class ExcursionControlador {
     public ExcursionControlador() {
         this.vistaExcursion = new VistaExcursion();
         this.listaExcursion = new ListaExcursion();
+        this.llenarExc();
     }
     private Parser parser;
 
@@ -67,5 +68,17 @@ public class ExcursionControlador {
             }
         }
         return null;
+    }
+    private void llenarExc(){
+        Date fecha1 = new Date(2024, 11, 15);
+        Date fecha2 = new Date(2024, 11, 20);
+        Date fecha3 = new Date(2024, 12, 12);
+        this.listaExcursion.anyadirExcursion(new Excursion("1", "Excursión 1", fecha1, 2, 15));
+        this.listaExcursion.anyadirExcursion(new Excursion("2", "Excursión 2", fecha2, 5, 45));
+        this.listaExcursion.anyadirExcursion( new Excursion("3", "Excursión 3", fecha3, 3, 30));
+        this.listaExcursion.anyadirExcursion( new Excursion("4", "Excursión 4", fecha1, 2, 25));
+        this.listaExcursion.anyadirExcursion(new Excursion("5", "Excursión 5", fecha2, 3, 30));
+        this.listaExcursion.anyadirExcursion( new Excursion("6", "Excursión 6", fecha3, 3, 35));
+        this.listaExcursion.anyadirExcursion(new Excursion("7", "Excursión 7", fecha1, 4, 40));
     }
 }

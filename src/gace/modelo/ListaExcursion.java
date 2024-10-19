@@ -43,4 +43,6 @@ public class ListaExcursion {
     public ArrayList<Excursion> getListaExcursiones() { // Método para obtener la lista de excursiones
         return listaExcursiones;
     }
+
+
 }

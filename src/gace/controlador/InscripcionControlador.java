@@ -7,6 +7,7 @@ import gace.vista.VistaInscripciones;
 import gace.modelo.ListaInscripcion;
 
 import java.awt.event.WindowStateListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ public class InscripcionControlador {
         this.listaInscripcion = new ListaInscripcion();
         this.socioControlador = socioControlador;
         this.excursionControlador = excursionControlador;
+        this.llenarinsc();
     }
     public InscripcionControlador(){
         this.vistaInscripciones = new VistaInscripciones();
@@ -106,6 +108,17 @@ public class InscripcionControlador {
             vistaInscripciones.mostrarInscripciones(inscripcion.toString());
         }
         return true;
+    }
+
+    public void llenarinsc(){
+        this.listaInscripcion.anyadirInscripcion(new Inscripcion("1", socioControlador.buscarSocio("101"), excursionControlador.buscarExcursion("1"), new Date()));
+        this.listaInscripcion.anyadirInscripcion( new Inscripcion("2", socioControlador.buscarSocio("102"), excursionControlador.buscarExcursion("2"), new Date()));
+        this.listaInscripcion.anyadirInscripcion(new Inscripcion("3", socioControlador.buscarSocio("103"), excursionControlador.buscarExcursion("3"), new Date()));
+        this.listaInscripcion.anyadirInscripcion(new Inscripcion("4", socioControlador.buscarSocio("104"), excursionControlador.buscarExcursion("4"), new Date()));
+        this.listaInscripcion.anyadirInscripcion(new Inscripcion("5", socioControlador.buscarSocio("105"), excursionControlador.buscarExcursion("5"), new Date()));
+        this.listaInscripcion.anyadirInscripcion( new Inscripcion("6", socioControlador.buscarSocio("106"), excursionControlador.buscarExcursion("6"), new Date()));
+        this.listaInscripcion.anyadirInscripcion( new Inscripcion("7", socioControlador.buscarSocio("107"), excursionControlador.buscarExcursion("7"), new Date()));
+        this.listaInscripcion.anyadirInscripcion(new Inscripcion("8", socioControlador.buscarSocio("108"), excursionControlador.buscarExcursion("8"), new Date()));
     }
 
 }

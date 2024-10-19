@@ -6,8 +6,8 @@ import gace.modelo.*;
 import gace.vista.VistaSocios;
 import gace.modelo.ListaSocios;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
 
 public class SocioControlador {
     private VistaSocios vistaSocios;
@@ -16,11 +16,13 @@ public class SocioControlador {
     public SocioControlador(VistaSocios vistaSocios, ListaSocios listaSocios) {
         this.vistaSocios = vistaSocios;
         this.listaSocios = listaSocios;
+
     }
 
     public SocioControlador() {
         this.vistaSocios = new VistaSocios();
         this.listaSocios = new ListaSocios();
+        llenarLista();
     }
     public ListaSocios getLista(){
         return this.listaSocios;
@@ -167,12 +169,7 @@ public class SocioControlador {
     }
 
     public Socio buscarSocio(String noSocio) {
-        for(Socio socio : listaSocios.getListaSocios()) {
-            if (socio.getNoSocio().equals(noSocio)) {
-                return socio;
-            }
-        }
-        return null;
+        return listaSocios.buscarSocio(noSocio);
     }
 
     public Federacion nuevaFed(){
@@ -196,5 +193,21 @@ public class SocioControlador {
         //todo - validar que es nuevo.
         boolean tipo = Integer.parseInt(datosSeg[0]) == 1;
         return new Seguro(tipo, Double.parseDouble(datosSeg[1]));
+    }
+
+    private void llenarLista() {
+        Federacion federacion1 = new Federacion("1234", "Montañeros Unidos");
+        Federacion federacion2 = new Federacion("5678", "Excursionistas de Montaña");
+        Federacion federacion3 = new Federacion("9101", "Federación de Montañismo");
+        this.listaSocios.agregarSocio(new SocioEstandar("101", "Juan", "Ramirez", "12345678A", new Seguro(true, 100)));
+        this.listaSocios.agregarSocio( new SocioFederado("102", "Pedro", "Martinez", "87654321B", federacion3));
+        this.listaSocios.agregarSocio( new SocioInfantil("103", "Ana", "Lopez", "102"));
+        this.listaSocios.agregarSocio( new SocioEstandar("104", "María", "Sanchez", "87654321C", new Seguro(false, 50)));
+        this.listaSocios.agregarSocio( new SocioFederado("105", "Luis", "Rodriguez", "12345678D", federacion2));
+        this.listaSocios.agregarSocio( new SocioInfantil("106", "Lucía", "Fernandez", "104"));
+        this.listaSocios.agregarSocio( new SocioEstandar("107", "Carlos", "Perez", "87654321E", new Seguro(true, 150)));
+        this.listaSocios.agregarSocio( new SocioFederado("108", "Sara", "Gonzalez", "12345678F", federacion1));
+        this.listaSocios.agregarSocio( new SocioInfantil("109", "Pablo", "Gomez", "105"));
+        this.listaSocios.agregarSocio( new SocioEstandar("110", "Elena", "Vazquez", "87654321G", new Seguro(false, 75)));
     }
 }
