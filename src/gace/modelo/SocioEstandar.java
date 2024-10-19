@@ -5,39 +5,40 @@ public class SocioEstandar extends Socio {
     private Seguro seguro;
     private final double cuotaBase = 100.0;
 
-    public SocioEstandar(String noSocio, String nombre, String nif, Seguro seguro) {
-        super(noSocio, nombre);
+    public SocioEstandar() {}
+
+    public SocioEstandar(String noSocio, String nombre, String apellido, String nif, Seguro seguro) {
+        super(noSocio, nombre, apellido);
         this.nif = nif;
         this.seguro = seguro;
     }
 
-    public SocioEstandar() {}
-
+    //getters
     public String getNif() {
         return nif;
     }
-
-    public void setNif(String nif) {
-        this.nif = nif;
-    }
-
     public Seguro getSeguro() {
         return seguro;
     }
 
+    //setters
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
     public void setSeguro(Seguro seguro) {
         this.seguro = seguro;
     }
 
     @Override
     public String toString() {
-        return "SocioEstandar{" +
-                "Nombre: " + this.getNombre() +
-                 "No Socio: " + this.getNoSocio() +
-                "nif='" + nif + '\'' +
-                ", seguro=" + seguro +
+        String tipo = seguro.isTipo() ? "Completo" : "Básico";
+        return "Socio nº:" + this.getNoSocio() +", Nombre: " + this.getNombre() +
+                ", Apellido: " + this.getApellido() +
+                ", Tipo: Estandar" +
+                ", Nif: '" + nif +
+                ", Tipo de Seguro: " + tipo +
                 ", cuotaBase=" + cuotaBase +
-                '}';
+                '.';
     }
 
     @Override

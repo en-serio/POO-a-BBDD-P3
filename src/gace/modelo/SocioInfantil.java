@@ -4,28 +4,30 @@ public class SocioInfantil extends Socio {
     private String noTutor;
     private final double cuotaBase = 100.0; // Ejemplo de cuota base
 
-    public SocioInfantil(String noSocio, String nombre, String noTutor) {
-        super(noSocio, nombre);
+    public SocioInfantil() {}
+
+    public SocioInfantil(String noSocio, String nombre, String apellido, String noTutor) {
+        super(noSocio, nombre, apellido);
         this.noTutor = noTutor;
     }
 
-    public SocioInfantil() {}
+    //getters
     public String getNoTutor() {
         return noTutor;
     }
 
+    //setters
     public void setNoTutor(String noTutor) {
         this.noTutor = noTutor;
     }
 
     @Override
     public String toString() {
-        return "SocioInfantil{" +
-                "Nombre: " + this.getNombre() +
-                "No Socio: " + this.getNoSocio() +
-                "noTutor='" + noTutor + '\'' +
-                ", cuotaBase=" + cuotaBase +
-                '}';
+        return "Socio nº:" + this.getNoSocio() +", Nombre: " + this.getNombre() +
+                ", Apellido: " + this.getApellido() +
+                ", Tipo: Infantil" +
+                ", Nº Tutor: " + noTutor +
+                '.';
     }
 
     @Override

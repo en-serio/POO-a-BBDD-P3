@@ -11,32 +11,36 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ListaExcursion listaExcursiones = new ListaExcursion();
-        ListaInscripcion listaInscripciones = new ListaInscripcion();
-        Scanner scanner = new Scanner(System.in);
-        VistaSocios vistaSocios = new VistaSocios();
-        VistaExcursion vistaExcursion = new VistaExcursion();
-        VistaInscripciones vistaInscripciones = new VistaInscripciones();
-        ExcursionControlador controladorExc = new ExcursionControlador();
+        //ListaExcursion listaExcursiones = new ListaExcursion();
+        //ListaInscripcion listaInscripciones = new ListaInscripcion();
+        //Scanner scanner = new Scanner(System.in);
+        //VistaSocios vistaSocios = new VistaSocios();
+        //VistaExcursion vistaExcursion = new VistaExcursion();
+        //VistaInscripciones vistaInscripciones = new VistaInscripciones();
         //SocioControlador controladorSoc = new SocioControlador(vistaSocios, listaSocios);
+
         SocioControlador controladorSoc = new SocioControlador();
+        ExcursionControlador controladorExc = new ExcursionControlador();
         InscripcionControlador controladorIns = new InscripcionControlador(controladorExc, controladorSoc);
 
 
+        Federacion federacion1 = new Federacion("1234", "Montañeros Unidos");
+        Federacion federacion2 = new Federacion("5678", "Excursionistas de Montaña");
+        Federacion federacion3 = new Federacion("9101", "Federación de Montañismo");
 
-        Socio socio1 = new SocioEstandar("1", "Juan", "12345678A", new Seguro(true, 100));
-        Federacion federacion1 = new Federacion("1234", "Federación de Prueba");
-        Federacion federacion2 = new Federacion("5678", "Federación de Prueba 2");
-        Federacion federacion3 = new Federacion("9101", "Federación de Prueba 3");
-        Socio socio2 = new SocioFederado("2", "Pedro", "87654321B", federacion3);
-        Socio socio3 = new SocioInfantil("3", "Ana", "4");
-        Socio socio4 = new SocioEstandar("4", "María", "87654321C", new Seguro(false, 50));
-        Socio socio5 = new SocioFederado("5", "Luis", "12345678D", federacion2);
-        Socio socio6 = new SocioInfantil("6", "Lucía", "7");
-        Socio socio7 = new SocioEstandar("7", "Carlos", "87654321E", new Seguro(true, 150));
-        Socio socio8 = new SocioFederado("8", "Sara", "12345678F",  federacion1);
-        Socio socio9 = new SocioInfantil("9", "Pablo", "10");
-        Socio socio10 = new SocioEstandar("10", "Elena", "87654321G", new Seguro(false, 75));
+        Socio socio1 = new SocioEstandar("101", "Juan","Ramirez", "12345678A", new Seguro(true, 100));
+        Socio socio4 = new SocioEstandar("104", "María","Sanchez", "87654321C", new Seguro(false, 50));
+        Socio socio7 = new SocioEstandar("107", "Carlos", "Perez", "87654321E", new Seguro(true, 150));
+        Socio socio10 = new SocioEstandar("110", "Elena", "Hernandez", "87654321G", new Seguro(false, 75));
+
+        Socio socio2 = new SocioFederado("102", "Pedro", "Martinez", "87654321B", federacion3);
+        Socio socio5 = new SocioFederado("105", "Luis", "Rodriguez","12345678D", federacion2);
+        Socio socio8 = new SocioFederado("108", "Sara", "Gonzalez", "12345678F",  federacion1);
+
+        Socio socio3 = new SocioInfantil("103", "Ana", "Lopez", "102");
+        Socio socio6 = new SocioInfantil("106", "Lucía", "Fernandez","104");
+        Socio socio9 = new SocioInfantil("109", "Pablo","Gomez", "105");
+
         controladorSoc.getLista().agregarSocio(socio1);
         controladorSoc.getLista().agregarSocio(socio2);
         controladorSoc.getLista().agregarSocio(socio3);
@@ -48,14 +52,16 @@ public class Main {
         controladorSoc.getLista().agregarSocio(socio9);
         controladorSoc.getLista().agregarSocio(socio10);
 
-        Date fecha1 = new Date(2021, 6, 1);
-        Excursion excursion1 = new Excursion("1", "Excursión 1", fecha1, 10, 100);
-        Excursion excursion2 = new Excursion("2", "Excursión 2", fecha1, 15, 150);
-        Excursion excursion3 = new Excursion("3", "Excursión 3", fecha1, 20, 200);
-        Excursion excursion4 = new Excursion("4", "Excursión 4", fecha1, 25, 250);
-        Excursion excursion5 = new Excursion("5", "Excursión 5", fecha1, 30, 300);
-        Excursion excursion6 = new Excursion("6", "Excursión 6", fecha1, 35, 350);
-        Excursion excursion7 = new Excursion("7", "Excursión 7", fecha1, 40, 400);
+        Date fecha1 = new Date(2024, 11, 15);
+        Date fecha2 = new Date(2024, 11, 20);
+        Date fecha3 = new Date(2024, 12, 12);
+        Excursion excursion1 = new Excursion("1", "Excursión 1", fecha1, 2, 15);
+        Excursion excursion2 = new Excursion("2", "Excursión 2", fecha2, 5, 45);
+        Excursion excursion3 = new Excursion("3", "Excursión 3", fecha3, 3, 30);
+        Excursion excursion4 = new Excursion("4", "Excursión 4", fecha1, 2, 25);
+        Excursion excursion5 = new Excursion("5", "Excursión 5", fecha2, 3, 30);
+        Excursion excursion6 = new Excursion("6", "Excursión 6", fecha3, 3, 35);
+        Excursion excursion7 = new Excursion("7", "Excursión 7", fecha1, 4, 40);
 
         controladorExc.getListaExcursion().anyadirExcursion(excursion1);
         controladorExc.getListaExcursion().anyadirExcursion(excursion2);
@@ -82,6 +88,8 @@ public class Main {
         controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion7);
         controladorIns.getListaInscripcion().anyadirInscripcion(inscripcion8);
 
+        //Todo mover a vista
+        Scanner scanner = new Scanner(System.in);
 
         boolean running = true;
         while (running) {
