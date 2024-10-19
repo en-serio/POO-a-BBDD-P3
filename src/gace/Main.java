@@ -7,6 +7,7 @@ import gace.modelo.*;
 import gace.vista.*;
 
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +24,6 @@ public class Main {
         InscripcionControlador controladorIns = new InscripcionControlador(controladorExc, controladorSoc);
 
 
-
         Socio socio1 = new SocioEstandar("1", "Juan", "12345678A", new Seguro(true, 100));
         Federacion federacion1 = new Federacion("1234", "Federación de Prueba");
         Federacion federacion2 = new Federacion("5678", "Federación de Prueba 2");
@@ -34,7 +34,7 @@ public class Main {
         Socio socio5 = new SocioFederado("5", "Luis", "12345678D", federacion2);
         Socio socio6 = new SocioInfantil("6", "Lucía", "7");
         Socio socio7 = new SocioEstandar("7", "Carlos", "87654321E", new Seguro(true, 150));
-        Socio socio8 = new SocioFederado("8", "Sara", "12345678F",  federacion1);
+        Socio socio8 = new SocioFederado("8", "Sara", "12345678F", federacion1);
         Socio socio9 = new SocioInfantil("9", "Pablo", "10");
         Socio socio10 = new SocioEstandar("10", "Elena", "87654321G", new Seguro(false, 75));
         controladorSoc.getLista().agregarSocio(socio1);
@@ -85,68 +85,77 @@ public class Main {
 
         boolean running = true;
         while (running) {
-            System.out.println("Seleccione una opción:");
-            System.out.println("1. Añadir Socio");
-            System.out.println("2. Mostrar Socios");
-            System.out.println("3. Añadir Excursión");
-            System.out.println("4. Mostrar Excursiones");
-            System.out.println("5. Inscribir Socio a Excursión");
-            System.out.println("6. Mostrar Inscripciones");
-            System.out.println("0. Salir");
-            int opcion = Integer.parseInt(scanner.nextLine());
+            try {
+                System.out.println("Seleccione una opción:");
+                System.out.println("1. Añadir Socio");
+                System.out.println("2. Mostrar Socios");
+                System.out.println("3. Añadir Excursión");
+                System.out.println("4. Mostrar Excursiones");
+                System.out.println("5. Inscribir Socio a Excursión");
+                System.out.println("6. Mostrar Inscripciones");
+                System.out.println("0. Salir");
+                int opcion = Integer.parseInt(scanner.nextLine());
 
-            switch (opcion) {
-                case 1:
-                    if (controladorSoc.nouSoci()) {
-                        System.out.println("Socio añadido correctamente.");
-                    } else {
-                        System.out.println("Error al añadir socio.");
-                    }
-                    break;
-                case 2:
-                    if (controladorSoc.mostrarSocios(1,0)) {
-                        System.out.println(":D");
-                    } else {
-                        System.out.println(":(");
-                    }
-                    break;
-                case 3:
-                    if (controladorExc.novaExcursio()) {
-                        System.out.println(":D");
-                    } else {
-                        System.out.println(":(");
-                    }
+                switch (opcion) {
+                    case 1:
+                        if (controladorSoc.nouSoci()) {
+                            System.out.println("Socio añadido correctamente.");
+                        } else {
+                            System.out.println("Error al añadir socio.");
+                        }
+                        break;
+                    case 2:
+                        if (controladorSoc.mostrarSocios(1, 0)) {
+                            System.out.println(":D");
+                        } else {
+                            System.out.println(":(");
+                        }
+                        break;
+                    case 3:
+                        if (controladorExc.novaExcursio()) {
+                            System.out.println(":D");
+                        } else {
+                            System.out.println(":(");
+                        }
 
-                    break;
-                case 4:
-                    if (controladorExc.mostrarExcursiones()) {
-                        System.out.println(":D");
-                    } else {
-                        System.out.println(":(");
-                    }
-                    //vistaExcursion.mostrarExcursiones(listaExcursiones.getListaExcursiones());
-                    break;
-                case 5:
-                    int ayudaVisualInsc = controladorIns.solicitarAyudaVisual();
-                    if (controladorIns.novaInscripcio(ayudaVisualInsc)) {
-                        System.out.println(":D");
-                    } else {
-                        System.out.println(":(");
-                    }
-                    break;
-                case 6:
-                    if (controladorIns.mostrarInscripciones()) {
-                        System.out.println(":D");
-                    } else {
-                        System.out.println(":(");
-                    }
-                    break;
-                case 0:
-                    running = false;
-                    System.out.println("Saliendo del programa...");
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                        break;
+                    case 4:
+                        if (controladorExc.mostrarExcursiones()) {
+                            System.out.println(":D");
+                        } else {
+                            System.out.println(":(");
+                        }
+                        //vistaExcursion.mostrarExcursiones(listaExcursiones.getListaExcursiones());
+                        break;
+                    case 5:
+                        int ayudaVisualInsc = controladorIns.solicitarAyudaVisual();
+                        if (controladorIns.novaInscripcio(ayudaVisualInsc)) {
+                            System.out.println(":D");
+                        } else {
+                            System.out.println(":(");
+                        }
+                        break;
+                    case 6:
+                        if (controladorIns.mostrarInscripciones()) {
+                            System.out.println(":D");
+                        } else {
+                            System.out.println(":(");
+                        }
+                        break;
+                    case 0:
+                        running = false;
+                        System.out.println("Saliendo del programa...");
+                        break;
+                    default:
+                        System.out.println("Opcion no valida. Intente de nuevo.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Entrada invalida. Por favor, ingresa un numero.");
+                scanner.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Debes ingresar un numero valido para las opciones.");
+            } catch (Exception e) {
+                System.out.println("Error inesperado: " + e.getMessage());
             }
         }
     }
