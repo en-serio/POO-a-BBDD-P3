@@ -6,15 +6,13 @@ import gace.modelo.Socio;
 import gace.vista.VistaInscripciones;
 import gace.modelo.ListaInscripcion;
 
-import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class InscripcionControlador {
-    private VistaInscripciones vistaInscripciones;
-    private ListaInscripcion listaInscripcion;
+    private final VistaInscripciones vistaInscripciones;
+    private final ListaInscripcion listaInscripcion;
     private SocioControlador socioControlador;
     private ExcursionControlador excursionControlador;
 

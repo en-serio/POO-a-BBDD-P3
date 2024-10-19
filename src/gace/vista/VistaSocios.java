@@ -18,17 +18,16 @@ public class VistaSocios {
 
     public String formSocio() {
         //scanner.nextLine();
-        System.out.print("Ingrese el número de socio: ");
-        String noSocio = scanner.nextLine();
+        System.out.println("Ingrese el número de socio: ");
+        String noSocio = datosUtil.devString();
         //scanner.nextLine();
-        System.out.print("Ingrese el nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.print("Ingrese el apellido: ");
-        String apellido = scanner.nextLine();
+        System.out.println("Ingrese el nombre: ");
+        String nombre = datosUtil.devString();
+        System.out.println("Ingrese el apellido: ");
+        String apellido = datosUtil.devString();
         //scanner.nextLine();
-        System.out.print("Ingrese el tipo de socio (ESTÁNDAR, FEDERADO, INFANTIL): ");
-        int tipoSocio = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Ingrese el tipo de socio \n1-ESTÁNDAR \n2-FEDERADO \n3-INFANTIL");
+        int tipoSocio = datosUtil.leerEntero(3,1, " ");
         return tipoSocio + "," + noSocio + "," + nombre + "," + apellido;
     }
 
@@ -38,7 +37,6 @@ public class VistaSocios {
 
     public int requerirFiltro() {
         int opcion = -1;
-
         try {
             System.out.println("¿Qué socios quieres ver?");
             System.out.println("1. Socios estandar");
@@ -64,37 +62,37 @@ public class VistaSocios {
 
     public String formNif(){
         System.out.print("Ingrese el NIF: ");
-        String nif = scanner.nextLine();
+        String nif = datosUtil.devString();
         return nif;
     }
 
     public String formTutor(){
         System.out.print("Ingrese el número de tutor: ");
-        return scanner.nextLine();
+        return datosUtil.devString();
     }
 
     public String formFederacion(){
         System.out.print("Ingrese el código de la federación: ");
-        String codigoFederacion = scanner.nextLine();
+        String codigoFederacion = datosUtil.devString();
         System.out.print("Ingrese el nombre de la federación: ");
-        String nombreFederacion = scanner.nextLine();
+        String nombreFederacion = datosUtil.devString();
         return codigoFederacion + "," + nombreFederacion;
     }
 
     public String formSeguro(){
         System.out.print("Quin tipus de seguro: 1-COMPLETO 2-ESTÁNDAR");
-        int tipoSeguro = scanner.nextInt();
+        int tipoSeguro = datosUtil.leerEntero(2,1, "");
         System.out.print("Preu del seguro:");
-        double precioSeguro = scanner.nextDouble();
+        double precioSeguro = datosUtil.leerDouble(0, "");
         return tipoSeguro + "," + precioSeguro;
     }
 
     public String pedirSocio(){
         System.out.print("Ingrese el número de socio: ");
-        return scanner.nextLine();
+        return datosUtil.devString();
     }
 
     public boolean confirmar(){
-        return datosUtil.confirmar(" ");
+        return datosUtil.confirmar("");
     }
 }

@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 public class VistaInscripciones {
     private Scanner scanner;
+    private DatosUtil datosUtil;
 
     public VistaInscripciones() {
         this.scanner = new Scanner(System.in);
+        this.datosUtil = new DatosUtil();
     }
 
     public void mostrarInscripciones(String listaInscripciones) {
@@ -14,9 +16,8 @@ public class VistaInscripciones {
     }
 
     public String pedirSocioInsc() {
-        scanner.nextLine();
         System.out.print("Ingrese el número de socio: ");
-        return scanner.nextLine();
+        return datosUtil.devString();
     }
 
     public int vistaAyuda(){

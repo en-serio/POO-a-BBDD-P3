@@ -2,6 +2,7 @@ package gace.controlador;
 
 // TODO Eliminar todos los souts del controlador o moverlos a vista
 
+import gace.excepciones.ClienteExistenteException;
 import gace.modelo.*;
 import gace.vista.VistaSocios;
 import gace.modelo.ListaSocios;
@@ -41,6 +42,12 @@ public class SocioControlador {
         String[] datosSocio = strSocio.split(",");
         if (datosSocio.length < 3) {
             System.out.println("Datos del socio incompletos");
+            return false;
+        }
+        try {
+            comprobarSocio(datosSocio[1]);
+        } catch (ClienteExistenteException e) {
+            System.err.println(e.getMessage());
             return false;
         }
         int tipoSocio = Integer.parseInt(datosSocio[0]);
@@ -85,8 +92,22 @@ public class SocioControlador {
         return true;
     }
 
+    public void comprobarSocio(String numero) throws ClienteExistenteException {
+        for(Socio socio : listaSocios.getListaSocios()){
+            if(socio.getNoSocio().equals(numero)){
+                throw new ClienteExistenteException(numero);
+            }
+        }
+    }
+
     public SocioEstandar nouSociEstandar(String noSocio,String nombre,String apellido){
         String nif = vistaSocios.formNif();
+        try {
+            existeNif(nif);
+        } catch (ClienteExistenteException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
         if(nif == null){
             System.out.println("Nif no válido.");
             return null;
@@ -111,6 +132,23 @@ public class SocioControlador {
             return null;
         }
         return new SocioFederado(noSocio, nombre, apellido, nif, fed);
+    }
+
+    public void existeNif(String nif) throws ClienteExistenteException{
+        for(Socio socio : listaSocios.getListaSocios()){
+            if(socio instanceof SocioEstandar || socio instanceof SocioFederado){
+                String nifSocio = null;
+                if(socio instanceof SocioEstandar) {
+                    nifSocio = ((SocioEstandar) socio).getNif();
+                }else{
+                    nifSocio = ((SocioFederado) socio).getNif();
+                }
+                if(nifSocio != null && nifSocio.equals(nif)){
+                    throw new ClienteExistenteException(nif);
+                }
+
+            }
+        }
     }
 
     public SocioInfantil nouSociInfantil(String noSocio, String nombre, String apellido){
@@ -141,7 +179,7 @@ public class SocioControlador {
 
 
     public boolean mostrarSocios(int mostrarFiltro, int filtro) {
-        int opcionSocios = 0; //en java hacia falta inicializar ??
+        int opcionSocios = 0;
         if(mostrarFiltro == 1){
             opcionSocios = vistaSocios.requerirFiltro();
         }else {

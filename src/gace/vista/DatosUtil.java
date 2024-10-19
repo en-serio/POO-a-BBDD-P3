@@ -20,6 +20,7 @@ public class DatosUtil {
         do {
             try{
                 int valor = scanner.nextInt();
+                scanner.nextLine();
                 if (valor >= 0 && valor <= maximo) {
                     return valor;
                 }
@@ -40,6 +41,7 @@ public class DatosUtil {
         do {
             try{
                 int valor = scanner.nextInt();
+                scanner.nextLine();
                 if (valor >= minimo && valor <= maximo) {
                     return valor;
                 }
@@ -94,6 +96,7 @@ public class DatosUtil {
         System.out.println("1. Sí");
         System.out.println("2. No");
         int opcion = leerEntero(2, "");
+        scanner.nextLine();
         return opcion;
     }
 
@@ -124,6 +127,10 @@ public class DatosUtil {
                 leerDouble(minimo, mensaje);
             }
         } while (true);
+    }
+
+    public void cerrarTeclado(){
+        scanner.close();
     }
 
     public void mostrarError(String mensaje){

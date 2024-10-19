@@ -3,7 +3,6 @@ package gace.controlador;
 import gace.modelo.Excursion;
 import gace.vista.VistaExcursion;
 import gace.modelo.ListaExcursion;
-import gace.modelo.Parser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +17,6 @@ public class ExcursionControlador {
         this.listaExcursion = new ListaExcursion();
         this.llenarExc();
     }
-    private Parser parser;
 
     public ListaExcursion getListaExcursion() {
         return listaExcursion;
@@ -36,7 +34,6 @@ public class ExcursionControlador {
     }
 
     public boolean novaExcursio(){
-        parser = new Parser();
         String strExcursio = this.vistaExcursion.formExcursion();
         String[] datosExc = strExcursio.split(",");
         if (datosExc.length < 5) {

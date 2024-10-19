@@ -51,4 +51,8 @@ public class MenuControlador {
         }
         return true;
     }
+
+    public void cerrarTeclado(){
+        datosUtil.cerrarTeclado();
+    }
 }
