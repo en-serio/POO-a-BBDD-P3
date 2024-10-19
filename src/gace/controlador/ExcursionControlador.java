@@ -1,12 +1,12 @@
 package gace.controlador;
 
 import gace.modelo.Excursion;
-import gace.modelo.Socio;
 import gace.vista.VistaExcursion;
 import gace.modelo.ListaExcursion;
 import gace.modelo.Parser;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ExcursionControlador {
@@ -39,11 +39,17 @@ public class ExcursionControlador {
         parser = new Parser();
         String strExcursio = this.vistaExcursion.formExcursion();
         String[] datosExc = strExcursio.split(",");
-        if (datosExc.length < 3) {
+        if (datosExc.length < 5) {
             System.out.println("Datos de la excursión incompletos");
             return false;
         }
-        Date data = parser.formatearFecha(datosExc[2]);
+        Date data = null;
+        try{
+            data = validarFecha(datosExc[2]);
+        } catch (ParseException e) {
+            System.out.println("Fecha no válida");
+            return false;
+        }
         if(data == null){
             System.out.println("Fecha no válida");
             return false;
@@ -52,6 +58,12 @@ public class ExcursionControlador {
         listaExcursion.anyadirExcursion(exc);
         vistaExcursion.detalleExcursion(exc.toString());
         return true;
+    }
+
+    private Date validarFecha(String fechaString) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);  // Asegura que el formato de la fecha sea estricto
+        return dateFormat.parse(fechaString); // Lanza ParseException si la fecha es inválida
     }
 
     public boolean mostrarExcursiones(){

@@ -1,5 +1,8 @@
 package gace.vista;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,7 +14,9 @@ public class DatosUtil {
     }
 
     public int leerEntero(int maximo, String mensaje) {
-        System.out.print(mensaje);
+        if(!mensaje.isEmpty()) {
+            System.out.print(mensaje);
+        }
         do {
             try{
                 int valor = scanner.nextInt();
@@ -29,7 +34,9 @@ public class DatosUtil {
         } while (true);
     }
     public int leerEntero(int maximo, int minimo, String mensaje) {
-        System.out.print(mensaje);
+        if(!mensaje.isEmpty()){
+            System.out.print(mensaje);
+        }
         do {
             try{
                 int valor = scanner.nextInt();
@@ -45,6 +52,19 @@ public class DatosUtil {
                 leerEntero(maximo, mensaje);
             }
         } while (true);
+    }
+
+    public String devString() {
+        try{
+            return scanner.nextLine();
+        } catch (InputMismatchException e) {
+            System.err.println("Error: Entrada invalida. Por favor, ingresa un numero.");
+            if(salir()==-1) {
+                return "-1";
+            }
+            devString();
+        }
+        return null;
     }
 
     public int salir() {
@@ -84,4 +104,30 @@ public class DatosUtil {
         int opcion = leerEntero(2, "");
         return opcion == 1;
     }
+
+    public double leerDouble(int minimo, String mensaje) {
+        if(!mensaje.isEmpty()){
+            System.out.print(mensaje);
+        }
+        do {
+            try{
+                double valor = scanner.nextDouble();
+                if (valor >= minimo) {
+                    return valor;
+                }
+                System.out.println("Error: Valor fuera de rango. Debe ser superior a " + minimo + ".");
+            } catch (InputMismatchException e) {
+                System.err.println("Error: Entrada invalida. Por favor, ingresa un numero.");
+                if(salir()==-1) {
+                    return -1;
+                }
+                leerDouble(minimo, mensaje);
+            }
+        } while (true);
+    }
+
+    public void mostrarError(String mensaje){
+        System.err.println(mensaje);
+    }
+
 }

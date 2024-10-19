@@ -2,8 +2,6 @@ package gace.controlador;
 
 import gace.vista.DatosUtil;
 
-import java.util.ArrayList;
-
 public class MenuControlador {
     private DatosUtil datosUtil;
     private ExcursionControlador excursionControlador;
@@ -20,58 +18,36 @@ public class MenuControlador {
 
     public boolean menu(){
         int opcion = datosUtil.mostrarMenu();
-        System.out.println("Opción seleccionada: " + opcion);
         switch (opcion) {
             case 1:
-                if (socioControlador.nouSoci()) {
-                    System.out.println("Socio añadido correctamente.");
-                } else {
-                    System.out.println("Error al añadir socio.");
-                }
+                if (!socioControlador.nouSoci()) { datosUtil.mostrarError("Error al añadir socio."); }
                 break;
             case 2:
-                socioControlador.mostrarSocios(1,0);
+                if(!socioControlador.mostrarSocios(1,0)){ datosUtil.mostrarError("Error al mostrar socios.");}
                 break;
             case 3:
-                if (excursionControlador.novaExcursio()) {
-                    System.out.println(":D");
-                } else {
-                    System.out.println(":(");
-                }
-
+                if (!excursionControlador.novaExcursio()) { datosUtil.mostrarError(":("); }
                 break;
             case 4:
-                if (excursionControlador.mostrarExcursiones()) {
-                    System.out.println(":D");
-                } else {
-                    System.out.println(":(");
-                }
-                //vistaExcursion.mostrarExcursiones(listaExcursiones.getListaExcursiones());
+                if (!excursionControlador.mostrarExcursiones()) { datosUtil.mostrarError(":("); }
                 break;
             case 5:
                 int ayudaVisualInsc = inscripcionControlador.solicitarAyudaVisual();
-                if (inscripcionControlador.novaInscripcio(ayudaVisualInsc)) {
-                    System.out.println(":D");
-                } else {
-                    System.out.println(":(");
-                }
+                if (!inscripcionControlador.novaInscripcio(ayudaVisualInsc)) { datosUtil.mostrarError(":("); }
                 break;
             case 6:
-                if (inscripcionControlador.mostrarInscripciones()) {
-                    System.out.println(":D");
-                } else {
-                    System.out.println(":(");
-                }
+                if (!inscripcionControlador.mostrarInscripciones()) { datosUtil.mostrarError(":("); }
                 break;
             case 7:
                 int ayuda = datosUtil.asistente();
-                inscripcionControlador.mostrarSinInscripciones(ayuda);
+                if(!inscripcionControlador.mostrarSinInscripciones(ayuda)){ datosUtil.mostrarError(":("); }
                 break;
             case 0:
                 System.out.println("Saliendo del programa...");
                 return false;
             default:
                 System.out.println("Opción no válida. Inténtelo de nuevo.");
+                break;
         }
         return true;
     }
