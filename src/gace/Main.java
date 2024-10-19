@@ -7,6 +7,7 @@ import gace.modelo.*;
 import gace.vista.*;
 
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
