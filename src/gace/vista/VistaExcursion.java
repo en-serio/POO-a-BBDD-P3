@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class VistaExcursion {
@@ -27,23 +28,51 @@ public class VistaExcursion {
     }
 
     public String formExcursion() {
-        System.out.print("Ingrese el código de la excursión: ");
-        String codigo = scanner.nextLine();
+        String codigo = null;
+        String descripcion = null;
+        String fechaString = null;
+        int noDias = 0;
+        double precio = 0.0;
 
-        System.out.print("Ingrese la descripción de la excursión: ");
-        String descripcion = scanner.nextLine();
+        try {
+            System.out.print("Ingrese el codigo de la excursion: ");
+            codigo = scanner.nextLine();
 
-        System.out.print("Ingrese la fecha de la excursión (formato: yyyy-mm-dd): ");
-        String fechaString = scanner.nextLine();
+            System.out.print("Ingrese la descripcion de la excursion: ");
+            descripcion = scanner.nextLine();
 
-        System.out.print("Ingrese el número de días: ");
-        int noDias = scanner.nextInt();
+            System.out.print("Ingrese la fecha de la excursion (formato: yyyy-MM-dd): ");
+            fechaString = scanner.nextLine();
+            // Validar formato de la fecha
+            validarFecha(fechaString);
 
-        System.out.print("Ingrese el precio de la excursión: ");
-        double precio = scanner.nextDouble();
+            System.out.print("Ingrese el numero de dias: ");
+            noDias = scanner.nextInt();
+            if (noDias <= 0) {
+                throw new IllegalArgumentException("El numero de dias debe ser mayor que cero.");
+            }
+
+            System.out.print("Ingrese el precio de la excursion: ");
+            precio = scanner.nextDouble();
+            if (precio < 0) {
+                throw new IllegalArgumentException("El precio no puede ser negativo.");
+            }
+
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Entrada invalida. Asegurate de ingresar un numero valido para los dias o el precio.");
+            scanner.nextLine();
+        } catch (ParseException e) {
+            System.out.println("Error: Fecha invalida. Usa el formato correcto: yyyy-MM-dd.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
         return codigo + ',' + descripcion + ',' + fechaString + ',' + noDias + ',' + precio;
     }
-
+    private void validarFecha(String fechaString) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);  // Asegura que el formato de la fecha sea estricto
+        Date fecha = dateFormat.parse(fechaString); // Lanza ParseException si la fecha es inválida
+    }
 
 }
