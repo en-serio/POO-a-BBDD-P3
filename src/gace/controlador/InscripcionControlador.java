@@ -56,7 +56,7 @@ public class InscripcionControlador {
         for (Excursion excursion : this.excursionControlador.getListaExcursion().getListaExcursiones()) {
             boolean tieneInscripcion = false;
             for (Inscripcion inscripcion : this.listaInscripcion.getListaInsc()) {
-                if (inscripcion.getExcursion().equals(excursion)) {
+                if (inscripcion.getExcursion()!= null && inscripcion.getExcursion().equals(excursion)) {
                     tieneInscripcion = true;
                     break;
                 }
