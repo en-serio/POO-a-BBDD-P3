@@ -80,7 +80,7 @@ public class ExcursionControlador {
         String codigo = vistaExcursion.pedirExc();
         for(Excursion excur : excursiones){
             if(excur.getCodigo().equals(codigo)) {
-                vistaExcursion.mostrarExcursiones("Es este el socio que desea eliminar " + excur.toString() + "?");
+                vistaExcursion.mostrarExcursiones("Es esta la excursion que desea eliminar " + excur.toString() + "?");
                 if (vistaExcursion.confExc()) {
                     listaExcursion.getListaExcursiones().remove(excur);
                     System.out.println("Excursion eliminada");
@@ -103,5 +103,9 @@ public class ExcursionControlador {
         this.listaExcursion.anyadirExcursion(new Excursion("5", "Excursión 5", fecha2, 3, 30));
         this.listaExcursion.anyadirExcursion( new Excursion("6", "Excursión 6", fecha3, 3, 35));
         this.listaExcursion.anyadirExcursion(new Excursion("7", "Excursión 7", fecha1, 4, 40));
+        this.listaExcursion.anyadirExcursion(new Excursion("8", "Excursión 8", fecha1, 4, 40));
+        this.listaExcursion.anyadirExcursion(new Excursion("9", "Excursión 9", fecha3, 4, 40));
+        this.listaExcursion.anyadirExcursion(new Excursion("10", "Excursión 10", fecha1, 4, 40));
+        this.listaExcursion.anyadirExcursion(new Excursion("11", "Excursión 11", fecha2, 4, 40));
     }
 }
