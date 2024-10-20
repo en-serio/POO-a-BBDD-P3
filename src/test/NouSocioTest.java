@@ -1,6 +1,5 @@
 package test;
 
-import gace.Main;
 import gace.controlador.MenuControlador;
 import gace.modelo.Seguro;
 import gace.modelo.SocioEstandar;
@@ -8,11 +7,8 @@ import gace.modelo.Socio;
 import gace.modelo.SocioInfantil;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-
 import static org.junit.jupiter.api.Assertions.*;
-
-class NouSocioTest {
+public class NouSocioTest {
 
     @Test
     public void testCrearEst() {

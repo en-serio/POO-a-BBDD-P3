@@ -3,8 +3,6 @@ package gace.modelo;
 public abstract class Socio {
     private String noSocio;
     private String nombre;
-
-    //Todo añadir apellido
     private String apellido;
 
     protected Socio() {}

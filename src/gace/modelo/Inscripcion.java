@@ -17,37 +17,34 @@ public class Inscripcion {
 
     public Inscripcion() {}
 
+    //getters
     public String getIdInscripcion() {
         return idInscripcion;
     }
-
-    public void setIdInscripcion(String idInscripcion) {
-        this.idInscripcion = idInscripcion;
-    }
-
     public Socio getSocio() {
         return socio;
     }
-
-    public void setSocio(Socio socio) {
-        this.socio = socio;
-    }
-
     public Excursion getExcursion() {
         return excursion;
     }
-
-    public void setExcursion(Excursion excursion) {
-        this.excursion = excursion;
-    }
-
     public Date getFechaInscripcion() {
         return fechaInscripcion;
     }
 
+    //setters
+    public void setIdInscripcion(String idInscripcion) {
+        this.idInscripcion = idInscripcion;
+    }
+    public void setSocio(Socio socio) {
+        this.socio = socio;
+    }
+    public void setExcursion(Excursion excursion) {
+        this.excursion = excursion;
+    }
     public void setFechaInscripcion(Date fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
+
 
     @Override
     public String toString() {

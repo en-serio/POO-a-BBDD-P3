@@ -23,16 +23,6 @@ public class ExcursionControlador {
         return listaExcursion;
     }
 
-    public void agregarExcursion(Excursion excursion) {
-        //listaExcursion.anyadirExcursion(excursion);
-      //  vistaExcursion.detalleExcursion(excursion);
-    }
-    public void mostrarExcursiones(Excursion excursion) {
-        //vistaExcursion.detalleExcursion(excursion);
-    }
-    public void eliminarExcursion(Excursion excursion){
-        listaExcursion.eliminarExcursion(excursion);
-    }
 
     public boolean novaExcursio(){
         String strExcursio = this.vistaExcursion.formExcursion();
@@ -86,8 +76,6 @@ public class ExcursionControlador {
         }
     }
 
-
-
     public boolean seleccionarExc(ArrayList<Excursion> excursiones){
         String codigo = vistaExcursion.pedirExc();
         for(Excursion excur : excursiones){
@@ -103,7 +91,6 @@ public class ExcursionControlador {
         }
         return false;
     }
-
 
     private void llenarExc(){
         Date fecha1 = new Date(2024, 11, 15);

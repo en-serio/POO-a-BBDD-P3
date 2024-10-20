@@ -43,7 +43,6 @@ public class VistaSocios {
             System.out.println("2. Socios federados");
             System.out.println("3. Socios infantiles");
             System.out.println("4. Todos los socios");
-            System.out.println("5. Socios sin excursiones");
             System.out.println("0. Salir");
             opcion = scanner.nextInt();
 

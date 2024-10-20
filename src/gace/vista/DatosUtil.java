@@ -1,6 +1,5 @@
 package gace.vista;
 
-import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,9 +8,6 @@ public class DatosUtil {
 
     public DatosUtil() {
         this.scanner = new Scanner(System.in);
-    }
-    public DatosUtil(Scanner scanner) {
-        this.scanner = scanner;
     }
 
     public int leerEntero(int maximo, String mensaje) {

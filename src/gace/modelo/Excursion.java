@@ -20,40 +20,40 @@ public class Excursion {
     public Excursion() {
     }
 
+    //getters
+
     public String getCodigo() {
         return codigo;
     }
+    public String getDescripcion() {
+        return descripcion;
+    }
+    public Date getFecha() {
+        return fecha;
+    }
+    public int getNoDias() {
+        return noDias;
+    }
+    public double getPrecio() {
+        return precio;
+    }
+
+    //setters
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public int getNoDias() {
-        return noDias;
-    }
-
     public void setNoDias(int noDias) {
         this.noDias = noDias;
-    }
-
-    public double getPrecio() {
-        return precio;
     }
 
     public void setPrecio(double precio) {
