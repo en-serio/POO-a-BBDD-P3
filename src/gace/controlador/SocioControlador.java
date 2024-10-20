@@ -230,6 +230,9 @@ public class SocioControlador {
 
     public Seguro nuevoSeg(){
         String seg = vistaSocios.formSeguro();
+        if (seg == null) {
+            return null;
+        }
         String[] datosSeg = seg.split(",");
         if (datosSeg.length < 2) {
             System.out.println("Datos del seguro incompletos");

@@ -1,8 +1,5 @@
 package gace.vista;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,12 +11,13 @@ public class DatosUtil {
     }
 
     public int leerEntero(int maximo, String mensaje) {
-        if(!mensaje.isEmpty()) {
-            System.out.print(mensaje);
-        }
         do {
+            if(!mensaje.isEmpty()) {
+                System.out.print(mensaje);
+            }
             try{
-                int valor = scanner.nextInt();
+                int valor = 0;
+                valor = scanner.nextInt();
                 scanner.nextLine();
                 if (valor >= 0 && valor <= maximo) {
                     return valor;
@@ -30,51 +28,62 @@ public class DatosUtil {
                 if(salir()==-1) {
                     return -1;
                 }
-                leerEntero(maximo, mensaje);
             }
         } while (true);
     }
     public int leerEntero(int maximo, int minimo, String mensaje) {
-        if(!mensaje.isEmpty()){
-            System.out.print(mensaje);
-        }
         do {
+            if(!mensaje.isEmpty()){
+                System.out.print(mensaje);
+            }
             try{
-                int valor = scanner.nextInt();
+                int valor = 0;
+                valor = scanner.nextInt();
                 scanner.nextLine();
                 if (valor >= minimo && valor <= maximo) {
                     return valor;
                 }
                 System.out.println("Error: Valor fuera de rango. Debe ser un número entre "+ minimo +" y " + maximo + ".");
+                return leerEntero(maximo, minimo, mensaje);
             } catch (InputMismatchException e) {
-                System.err.println("Error: Entrada invalida. Por favor, ingresa un numero.");
-                if(salir()==-1) {
+                System.out.println("Error: Entrada invalida. Por favor, ingresa un numero.");
+                int opcion = salir();
+                if(opcion == -1) {
                     return -1;
+                }else{
+                    return leerEntero(maximo, minimo, mensaje);
                 }
-                leerEntero(maximo, mensaje);
             }
         } while (true);
     }
 
+
     public String devString() {
-        try{
-            return scanner.nextLine();
-        } catch (InputMismatchException e) {
-            System.err.println("Error: Entrada invalida. Por favor, ingresa un numero.");
-            if(salir()==-1) {
-                return "-1";
+        do {
+            try{
+                String valor = scanner.nextLine();
+                if(!valor.isEmpty()){
+                    return valor;
+                }
+                System.out.println("Error: No puedes dejar este campo vacío.");
+                if (salir()==-1) {
+                    return null;
+                }
+            } catch (InputMismatchException e) {
+                System.err.println("Error: Entrada invalida. Por favor, ingresa un numero.");
+                if(salir()==-1) {
+                    return null;
+                }
             }
-            devString();
-        }
-        return null;
+        } while (true);
     }
 
     public int salir() {
-        System.out.println("Desea salir? (s/n)");
-        if(scanner.nextLine().equalsIgnoreCase("s")) {
-            return -1;
-        }
-        return 0;
+        System.out.println("Desea salir? 1-Si / 2-no");
+        scanner.nextLine();
+        int opcion = scanner.nextInt();
+        System.out.println(opcion);
+        return opcion == 1 ? -1 : 0;
     }
 
     public int mostrarMenu() {
@@ -115,6 +124,7 @@ public class DatosUtil {
         do {
             try{
                 double valor = scanner.nextDouble();
+                scanner.nextLine();
                 if (valor >= minimo) {
                     return valor;
                 }

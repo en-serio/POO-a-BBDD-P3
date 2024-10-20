@@ -80,10 +80,15 @@ public class VistaSocios {
     }
 
     public String formSeguro(){
-        System.out.print("Quin tipus de seguro: 1-COMPLETO 2-ESTÁNDAR");
-        int tipoSeguro = datosUtil.leerEntero(2,1, "");
-        System.out.print("Preu del seguro:");
+        int tipoSeguro = datosUtil.leerEntero(2,1, "Quin tipus de seguro: 1-COMPLETO  2-ESTÁNDAR : ");
+        if (tipoSeguro == -1) {
+            return null;
+        }
+        System.out.println("Preu del seguro:");
         double precioSeguro = datosUtil.leerDouble(0, "");
+        if (precioSeguro == -1) {
+            return null;
+        }
         return tipoSeguro + "," + precioSeguro;
     }
 
