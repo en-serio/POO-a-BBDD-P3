@@ -97,6 +97,10 @@ public class VistaSocios {
         return datosUtil.devString();
     }
 
+    public void noTutor(){
+        System.out.print("No existe ningún tutor con ese número de socio.");
+    }
+
     public boolean confirmar(){
         return datosUtil.confirmar("");
     }

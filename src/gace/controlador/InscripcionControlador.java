@@ -51,6 +51,31 @@ public class InscripcionControlador {
     }
 
 
+    public boolean mostrarExcVacia(int ayuda){
+        ArrayList<Excursion> excursionesSin = new ArrayList<>();
+        for (Excursion excursion : this.excursionControlador.getListaExcursion().getListaExcursiones()) {
+            boolean tieneInscripcion = false;
+            for (Inscripcion inscripcion : this.listaInscripcion.getListaInsc()) {
+                if (inscripcion.getExcursion().equals(excursion)) {
+                    tieneInscripcion = true;
+                    break;
+                }
+            }
+            if (!tieneInscripcion) {
+                excursionesSin.add(excursion);
+            }
+        }
+        if(excursionesSin.isEmpty()){
+            System.out.println("No hay excursiones sin inscripciones");
+            return false;
+        }
+        if(ayuda == 1){
+            excursionControlador.mostrar(excursionesSin);
+        }
+        return excursionControlador.seleccionarExc(excursionesSin);
+    }
+
+
     public int solicitarAyudaVisual() {
         return vistaInscripciones.vistaAyuda();
     }
@@ -59,34 +84,39 @@ public class InscripcionControlador {
         if(ayuda == 1){
             socioControlador.mostrarSocios(0,4);
         }
+
         String strSocio = vistaInscripciones.pedirSocioInsc();
         if (strSocio == null) {
             return false;
         }
+
         Socio soc = this.socioControlador.buscarSocio(strSocio);
         if(soc == null){
             System.out.println("Socio no encontrado");
             return false;
-        }else {
-            System.out.println("Socio encontrado");
         }
+
         if (ayuda == 1) {
             excursionControlador.mostrarExcursiones();
         }
+
         String strExcursion = vistaInscripciones.pedirExcursionInsc();
         if (strExcursion == null) {
             return false;
         }
+
         Excursion exc = this.excursionControlador.buscarExcursion(strExcursion);
         if(exc == null){
             System.out.println("Excursión no encontrada");
             return false;
-        }else {
-            System.out.println("Excursión encontrada");
         }
+
         String codigoExc= this.getCodigoExcursion(soc.getNoSocio(), exc.getCodigo(), exc.getFecha());
 
         Inscripcion ins = new Inscripcion(codigoExc, soc, exc, new Date());
+        if (ins == null){
+            return false;
+        }
         listaInscripcion.anyadirInscripcion(ins);
 
         return true;

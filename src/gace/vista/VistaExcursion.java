@@ -11,15 +11,17 @@ public class VistaExcursion {
         this.datosUtil = new DatosUtil();
     }
 
-    public void mostrarExcursiones(ArrayList<Excursion> lista) {
-        System.out.println("Lista de Excursiones:");
-        for (Excursion excursion : lista) {
-            System.out.println(excursion);
-        }
+    public void mostrarExcursiones(String Excur) {
+        System.out.println(Excur);
     }
 
     public void detalleExcursion(String excursion) {
         System.out.println(excursion);
+    }
+
+    public String pedirExc(){
+        System.out.print("Ingrese el codigo de la excursion: ");
+        return datosUtil.devString();
     }
 
     public String formExcursion() {
@@ -38,6 +40,10 @@ public class VistaExcursion {
         System.out.print("Ingrese el precio de la excursion: ");
         double precio = datosUtil.leerDouble(0,"");
         return codigo + ',' + descripcion + ',' + fechaString + ',' + noDias + ',' + precio;
+    }
+
+    public boolean confExc(){
+        return datosUtil.confirmar("");
     }
 
 }

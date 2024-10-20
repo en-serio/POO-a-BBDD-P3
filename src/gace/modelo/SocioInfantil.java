@@ -8,6 +8,7 @@ public class SocioInfantil extends Socio {
 
     public SocioInfantil(String noSocio, String nombre, String apellido, String noTutor) {
         super(noSocio, nombre, apellido);
+
         this.noTutor = noTutor;
     }
 

@@ -6,6 +6,7 @@ import gace.modelo.ListaExcursion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ExcursionControlador {
@@ -30,7 +31,7 @@ public class ExcursionControlador {
         //vistaExcursion.detalleExcursion(excursion);
     }
     public void eliminarExcursion(Excursion excursion){
-       // listaExcursion.eliminarExcursion(excursion);
+        listaExcursion.eliminarExcursion(excursion);
     }
 
     public boolean novaExcursio(){
@@ -78,6 +79,32 @@ public class ExcursionControlador {
         }
         return null;
     }
+
+    public void mostrar(ArrayList<Excursion> excursiones){
+        for (Excursion excursion : excursiones) {
+            vistaExcursion.detalleExcursion(excursion.toString());
+        }
+    }
+
+
+
+    public boolean seleccionarExc(ArrayList<Excursion> excursiones){
+        String codigo = vistaExcursion.pedirExc();
+        for(Excursion excur : excursiones){
+            if(excur.getCodigo().equals(codigo)) {
+                vistaExcursion.mostrarExcursiones("Es este el socio que desea eliminar " + excur.toString() + "?");
+                if (vistaExcursion.confExc()) {
+                    listaExcursion.getListaExcursiones().remove(excur);
+                    System.out.println("Excursion eliminada");
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+
     private void llenarExc(){
         Date fecha1 = new Date(2024, 11, 15);
         Date fecha2 = new Date(2024, 11, 20);

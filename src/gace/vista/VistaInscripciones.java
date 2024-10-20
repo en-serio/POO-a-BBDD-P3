@@ -17,6 +17,7 @@ public class VistaInscripciones {
 
     public String pedirSocioInsc() {
         System.out.print("Ingrese el número de socio: ");
+        scanner.nextLine();
         return datosUtil.devString();
     }
 

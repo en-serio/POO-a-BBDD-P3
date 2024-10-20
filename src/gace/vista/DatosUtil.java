@@ -1,5 +1,6 @@
 package gace.vista;
 
+import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,6 +9,9 @@ public class DatosUtil {
 
     public DatosUtil() {
         this.scanner = new Scanner(System.in);
+    }
+    public DatosUtil(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     public int leerEntero(int maximo, String mensaje) {
@@ -95,8 +99,9 @@ public class DatosUtil {
         System.out.println("5. Inscribir Socio a Excursión");
         System.out.println("6. Mostrar Inscripciones");
         System.out.println("7. Eliminar Socio :(");
+        System.out.println("8. Eliminar Excursión :(");
         System.out.println("0. Salir");
-        int opcion = leerEntero(7, "");
+        int opcion = leerEntero(8, "");
         return opcion;
     }
 

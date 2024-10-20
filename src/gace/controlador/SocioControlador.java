@@ -1,6 +1,5 @@
 package gace.controlador;
 
-// TODO Eliminar todos los souts del controlador o moverlos a vista
 
 import gace.excepciones.ClienteExistenteException;
 import gace.modelo.*;
@@ -156,7 +155,17 @@ public class SocioControlador {
         if(noTutor == null){
             return null;
         }
-        if(! buscarTutor(noTutor)){
+        if(!buscarTutor(noTutor)){
+            return null;
+        }
+        return new SocioInfantil(noSocio, nombre, apellido, noTutor);
+    }
+
+    public SocioInfantil nouSociInfantil(String noSocio, String nombre, String apellido, String noTutor) {
+        if(noTutor == null){
+            return null;
+        }
+        if(!buscarTutor(noTutor)){
             return null;
         }
         return new SocioInfantil(noSocio, nombre, apellido, noTutor);
@@ -168,6 +177,7 @@ public class SocioControlador {
                 return true;
             }
         }
+        vistaSocios.noTutor();
         return false;
     }
 
@@ -195,10 +205,6 @@ public class SocioControlador {
             case 4:
                 lista = listaSocios.getListaSocios();
                 break;
-            /* Todo - implementar
-            case 5:
-                lista = listaSocios.getSociosSinExcursiones());
-                break;*/
             case 0:
                 break;
             default:

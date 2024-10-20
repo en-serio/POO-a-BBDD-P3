@@ -16,6 +16,29 @@ public class MenuControlador {
         this.inscripcionControlador = new InscripcionControlador(this.excursionControlador, this.socioControlador);
     }
 
+    public MenuControlador(DatosUtil datosUtil){
+        this.datosUtil = datosUtil;
+        this.socioControlador = new SocioControlador();
+        this.excursionControlador = new ExcursionControlador();
+        this.inscripcionControlador = new InscripcionControlador(this.excursionControlador, this.socioControlador);
+    }
+
+    public DatosUtil getDatosUtil() {
+        return datosUtil;
+    }
+
+    public ExcursionControlador getExcursionControlador() {
+        return excursionControlador;
+    }
+
+    public SocioControlador getSocioControlador() {
+        return socioControlador;
+    }
+
+    public InscripcionControlador getInscripcionControlador() {
+        return inscripcionControlador;
+    }
+
     public boolean menu(){
         int opcion = datosUtil.mostrarMenu();
         switch (opcion) {
@@ -41,6 +64,10 @@ public class MenuControlador {
             case 7:
                 int ayuda = datosUtil.asistente();
                 if(!inscripcionControlador.mostrarSinInscripciones(ayuda)){ datosUtil.mostrarError(":("); }
+                break;
+            case 8:
+                int ayudaExc = datosUtil.asistente();
+                if(!inscripcionControlador.mostrarExcVacia(ayudaExc)){ datosUtil.mostrarError(":("); }
                 break;
             case 0:
                 System.out.println("Saliendo del programa...");
