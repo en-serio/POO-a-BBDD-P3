@@ -70,10 +70,10 @@ public class MenuControlador {
                 if(!inscripcionControlador.mostrarExcVacia(ayudaExc)){ datosUtil.mostrarError(":("); }
                 break;
             case 0:
-                System.out.println("Saliendo del programa...");
+                datosUtil.mostrarError("Saliendo del programa...");
                 return false;
             default:
-                System.out.println("Opción no válida. Inténtelo de nuevo.");
+                datosUtil.mostrarError("Opción no válida. Inténtelo de nuevo.");
                 break;
         }
         return true;

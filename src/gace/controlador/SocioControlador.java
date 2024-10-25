@@ -13,16 +13,18 @@ import java.util.ArrayList;
 public class SocioControlador {
     private VistaSocios vistaSocios;
     private ListaSocios listaSocios;
+    private DatosUtil datosUtil;
 
     public SocioControlador(VistaSocios vistaSocios, ListaSocios listaSocios) {
         this.vistaSocios = vistaSocios;
         this.listaSocios = listaSocios;
-
+        this.datosUtil = new DatosUtil();
     }
 
     public SocioControlador() {
         this.vistaSocios = new VistaSocios();
         this.listaSocios = new ListaSocios();
+        this.datosUtil = new DatosUtil();
         llenarLista();
     }
     public ListaSocios getLista(){
@@ -35,18 +37,18 @@ public class SocioControlador {
     public boolean nouSoci(){
         String strSocio = vistaSocios.formSocio();
         if (strSocio == null) {
-            System.out.println("Error al crear el socio");
+            datosUtil.mostrarError("Error al crear el socio");
             return false;
         }
         String[] datosSocio = strSocio.split(",");
         if (datosSocio.length < 3) {
-            System.out.println("Datos del socio incompletos");
+            datosUtil.mostrarError("Datos del socio incompletos");
             return false;
         }
         try {
             comprobarSocio(datosSocio[1]);
         } catch (ClienteExistenteException e) {
-            System.err.println(e.getMessage());
+            datosUtil.mostrarError(e.getMessage());
             return false;
         }
         int tipoSocio = Integer.parseInt(datosSocio[0]);
@@ -55,7 +57,7 @@ public class SocioControlador {
             case 1:
                 SocioEstandar socioEst = nouSociEstandar(datosSocio[1], datosSocio[2], datosSocio[3]);
                 if (socioEst == null) {
-                    System.out.println("Error al crear el socio estándar");
+                    datosUtil.mostrarError("Error al crear el socio estándar");
                     return false;
                 }
                 /* TODO - Esto es necesario?? o es complicar por complicaR?
@@ -70,7 +72,7 @@ public class SocioControlador {
             case 2: // Socio federado
                 SocioFederado socioFed = nouSociFederado(datosSocio[1], datosSocio[2], datosSocio[3]);
                 if (socioFed == null) {
-                    System.out.println("Error al crear el socio estándar");
+                    datosUtil.mostrarError("Error al crear el socio estándar");
                     return false;
                 }
                 listaSocios.agregarSocio(socioFed);
@@ -79,13 +81,13 @@ public class SocioControlador {
             case 3:
                 SocioInfantil socioInf = nouSociInfantil(datosSocio[1], datosSocio[2], datosSocio[3]);
                 if (socioInf == null) {
-                    System.out.println("Error al crear el socio estándar");
+                    datosUtil.mostrarError("Error al crear el socio estándar");
                     return false;
                 }
                 listaSocios.agregarSocio(socioInf);
                 break;
             default:
-                System.out.println("Tipo de socio no válido");
+                datosUtil.mostrarError("Tipo de socio no válido");
                 return false;
         }
         return true;
@@ -104,16 +106,17 @@ public class SocioControlador {
         try {
             existeNif(nif);
         } catch (ClienteExistenteException e) {
+            datosUtil.mostrarError(e.getMessage());
             System.err.println(e.getMessage());
             return null;
         }
         if(nif == null){
-            System.out.println("Nif no válido.");
+            datosUtil.mostrarError("Nif no válido.");
             return null;
         }
         Seguro seg = nuevoSeg();
         if( seg == null){
-            System.out.println("Seguro no válido.");
+            datosUtil.mostrarError("Seguro no válido.");
             return null;
         }
         return new SocioEstandar(noSocio, nombre, apellido, nif, seg);
@@ -122,12 +125,12 @@ public class SocioControlador {
     public SocioFederado nouSociFederado(String noSocio, String nombre, String apellido){
         String nif = vistaSocios.formNif();
         if(nif == null){
-            System.out.println("Nif no válido.");
+            datosUtil.mostrarError("Nif no válido.");
             return null;
         }
         Federacion fed = nuevaFed();
         if( fed == null){
-            System.out.println("Federación no válida.");
+            datosUtil.mostrarError("Federación no válida.");
             return null;
         }
         return new SocioFederado(noSocio, nombre, apellido, nif, fed);
@@ -208,7 +211,7 @@ public class SocioControlador {
             case 0:
                 break;
             default:
-                System.out.println("Opción no válida. Intente de nuevo.");
+                datosUtil.mostrarError("Opción no válida. Intente de nuevo.");
         }
         if (lista == null) {
             return false;
@@ -227,7 +230,7 @@ public class SocioControlador {
         String fed = vistaSocios.formFederacion();
         String[] datosFed = fed.split(",");
         if (datosFed.length < 2) {
-            System.out.println("Datos de la federación incompletos");
+            datosUtil.mostrarError("Datos de la federación incompletos");
             return null;
         }
         //todo - validar que es nueva.
@@ -241,7 +244,7 @@ public class SocioControlador {
         }
         String[] datosSeg = seg.split(",");
         if (datosSeg.length < 2) {
-            System.out.println("Datos del seguro incompletos");
+            datosUtil.mostrarError("Datos del seguro incompletos");
             return null;
         }
         //todo - validar que es nuevo.
@@ -256,7 +259,7 @@ public class SocioControlador {
                 vistaSocios.mostrarSocio("Es este el socio que desea eliminar " + socio.toString() + "?");
                 if (vistaSocios.confirmar()) {
                     listaSocios.getListaSocios().remove(socio);
-                    System.out.println("Socio eliminado");
+                    datosUtil.mostrarError("Socio eliminado");
                     return true;
                 }
                 return false;

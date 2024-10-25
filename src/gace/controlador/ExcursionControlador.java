@@ -1,6 +1,7 @@
 package gace.controlador;
 
 import gace.modelo.Excursion;
+import gace.vista.DatosUtil;
 import gace.vista.VistaExcursion;
 import gace.modelo.ListaExcursion;
 
@@ -10,12 +11,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ExcursionControlador {
+    private DatosUtil datosUtil;
     private VistaExcursion vistaExcursion;
     private ListaExcursion listaExcursion;
 
     public ExcursionControlador() {
         this.vistaExcursion = new VistaExcursion();
         this.listaExcursion = new ListaExcursion();
+        this.datosUtil = new DatosUtil();
         this.llenarExc();
     }
 
@@ -28,18 +31,18 @@ public class ExcursionControlador {
         String strExcursio = this.vistaExcursion.formExcursion();
         String[] datosExc = strExcursio.split(",");
         if (datosExc.length < 5) {
-            System.out.println("Datos de la excursión incompletos");
+            datosUtil.mostrarError("Datos de la excursión incompletos");
             return false;
         }
         Date data = null;
         try{
             data = validarFecha(datosExc[2]);
         } catch (ParseException e) {
-            System.out.println("Fecha no válida");
+            datosUtil.mostrarError("Fecha no válida");
             return false;
         }
         if(data == null){
-            System.out.println("Fecha no válida");
+            datosUtil.mostrarError("Fecha no válida");
             return false;
         }
         Excursion exc = new Excursion(datosExc[0], datosExc[1], data, Integer.parseInt(datosExc[3]), Double.parseDouble(datosExc[4]));
@@ -83,7 +86,7 @@ public class ExcursionControlador {
                 vistaExcursion.mostrarExcursiones("Es esta la excursion que desea eliminar " + excur.toString() + "?");
                 if (vistaExcursion.confExc()) {
                     listaExcursion.getListaExcursiones().remove(excur);
-                    System.out.println("Excursion eliminada");
+                    datosUtil.mostrarError("Excursion eliminada");
                     return true;
                 }
                 return false;

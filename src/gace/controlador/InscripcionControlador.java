@@ -3,6 +3,7 @@ package gace.controlador;
 import gace.modelo.Excursion;
 import gace.modelo.Inscripcion;
 import gace.modelo.Socio;
+import gace.vista.DatosUtil;
 import gace.vista.VistaInscripciones;
 import gace.modelo.ListaInscripcion;
 
@@ -15,12 +16,14 @@ public class InscripcionControlador {
     private final ListaInscripcion listaInscripcion;
     private SocioControlador socioControlador;
     private ExcursionControlador excursionControlador;
+    private DatosUtil datosUtil;
 
     public InscripcionControlador(ExcursionControlador excursionControlador, SocioControlador socioControlador) {
         this.vistaInscripciones = new VistaInscripciones();
         this.listaInscripcion = new ListaInscripcion();
         this.socioControlador = socioControlador;
         this.excursionControlador = excursionControlador;
+        this.datosUtil = new DatosUtil();
         this.llenarinsc();
     }
     public InscripcionControlador(){
@@ -66,7 +69,7 @@ public class InscripcionControlador {
             }
         }
         if(excursionesSin.isEmpty()){
-            System.out.println("No hay excursiones sin inscripciones");
+            datosUtil.mostrarError("No hay excursiones sin inscripciones");
             return false;
         }
         if(ayuda == 1){
@@ -92,7 +95,7 @@ public class InscripcionControlador {
 
         Socio soc = this.socioControlador.buscarSocio(strSocio);
         if(soc == null){
-            System.out.println("Socio no encontrado");
+            datosUtil.mostrarError("Socio no encontrado");
             return false;
         }
 
@@ -107,7 +110,7 @@ public class InscripcionControlador {
 
         Excursion exc = this.excursionControlador.buscarExcursion(strExcursion);
         if(exc == null){
-            System.out.println("Excursión no encontrada");
+            datosUtil.mostrarError("Excursión no encontrada");
             return false;
         }
 
