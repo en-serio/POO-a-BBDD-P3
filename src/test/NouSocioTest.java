@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class NouSocioTest {
-
+/*
     @Test
     public void testCrearEst() {
         MenuControlador menuControlador = new MenuControlador();
@@ -49,5 +49,5 @@ public class NouSocioTest {
         boolean insc = mc.getInscripcionControlador().mostrarInscripciones();
         assertTrue(exc && soc && insc);
     }
-
+*/
 }

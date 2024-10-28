@@ -3,11 +3,19 @@ package gace.modelo;
 import java.util.Date;
 
 public class Excursion {
+    private int id;
     private String codigo;
     private String descripcion;
     private Date fecha;
     private int noDias;
     private double precio;
+
+    public Excursion(int id, String descripcion, Date fecha, int noDias, double precio) {
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.noDias = noDias;
+        this.precio = precio;
+    }
 
     public Excursion(String codigo, String descripcion, Date fecha, int noDias, double precio) {
         this.codigo = codigo;
@@ -22,6 +30,9 @@ public class Excursion {
 
     //getters
 
+    public int getId() {
+        return id;
+    }
     public String getCodigo() {
         return codigo;
     }
@@ -39,7 +50,9 @@ public class Excursion {
     }
 
     //setters
-
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }

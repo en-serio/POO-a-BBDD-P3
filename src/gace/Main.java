@@ -11,7 +11,6 @@ public class Main {
             if(!controlador.menu()){
                 System.out.println("Saliendo...");
                 running = false;
-
             }
         }
         controlador.cerrarTeclado();

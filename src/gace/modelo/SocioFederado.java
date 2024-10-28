@@ -5,8 +5,8 @@ public class SocioFederado extends Socio {
     private Federacion federacion;
     private final double cuotaBase = 100.0;
 
-    public SocioFederado(String noSocio, String nombre,String apellido, String nif, Federacion federacion) {
-        super(noSocio, nombre, apellido);
+    public SocioFederado(String nombre,String apellido, String nif, Federacion federacion) {
+        super(nombre, apellido);
         this.nif = nif;
         this.federacion = federacion;
     }
@@ -31,7 +31,7 @@ public class SocioFederado extends Socio {
 
     @Override
     public String toString() {
-        return "Socio nº:" + this.getNoSocio() +", Nombre: " + this.getNombre() +
+        return "Socio nº:" + this.getIdSocio() +", Nombre: " + this.getNombre() +
                 ", Apellido: " + this.getApellido() +
                 ", Tipo: Federado" +
                 ", Nif: '" + nif +

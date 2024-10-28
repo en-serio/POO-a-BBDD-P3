@@ -15,10 +15,9 @@ public class VistaInscripciones {
         System.out.println(listaInscripciones);
     }
 
-    public String pedirSocioInsc() {
+    public int pedirSocioInsc() {
         System.out.print("Ingrese el número de socio: ");
-        scanner.nextLine();
-        return datosUtil.devString();
+        return datosUtil.leerEntero(99999, "");
     }
 
     public int vistaAyuda(){
@@ -28,8 +27,8 @@ public class VistaInscripciones {
         return scanner.nextInt();
     }
 
-    public String pedirExcursionInsc(){
+    public int pedirExcursionInsc(){
         System.out.print("Ingrese el código de excursión: ");
-        return scanner.nextLine();
+        return datosUtil.leerEntero(1000, "");
     }
 }

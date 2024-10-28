@@ -7,8 +7,13 @@ public class SocioEstandar extends Socio {
 
     public SocioEstandar() {}
 
-    public SocioEstandar(String noSocio, String nombre, String apellido, String nif, Seguro seguro) {
-        super(noSocio, nombre, apellido);
+    public SocioEstandar(int idSocio, String nombre, String apellido, String nif, Seguro seguro) {
+        super(idSocio, nombre, apellido);
+        this.nif = nif;
+        this.seguro = seguro;
+    }
+    public SocioEstandar(String nombre, String apellido, String nif, Seguro seguro) {
+        super(nombre, apellido);
         this.nif = nif;
         this.seguro = seguro;
     }
@@ -32,7 +37,7 @@ public class SocioEstandar extends Socio {
     @Override
     public String toString() {
         String tipo = seguro.isTipo() ? "Completo" : "Básico";
-        return "Socio nº:" + this.getNoSocio() +", Nombre: " + this.getNombre() +
+        return "Socio nº:" + this.getIdSocio() +", Nombre: " + this.getNombre() +
                 ", Apellido: " + this.getApellido() +
                 ", Tipo: Estandar" +
                 ", Nif: '" + nif +

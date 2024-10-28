@@ -1,6 +1,7 @@
 package gace.vista;
 
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class VistaSocios {
@@ -17,18 +18,13 @@ public class VistaSocios {
     }
 
     public String formSocio() {
-        //scanner.nextLine();
-        System.out.println("Ingrese el número de socio: ");
-        String noSocio = datosUtil.devString();
-        //scanner.nextLine();
         System.out.println("Ingrese el nombre: ");
         String nombre = datosUtil.devString();
         System.out.println("Ingrese el apellido: ");
         String apellido = datosUtil.devString();
-        //scanner.nextLine();
         System.out.println("Ingrese el tipo de socio \n1-ESTÁNDAR \n2-FEDERADO \n3-INFANTIL");
         int tipoSocio = datosUtil.leerEntero(3,1, " ");
-        return tipoSocio + "," + noSocio + "," + nombre + "," + apellido;
+        return tipoSocio  + "," + nombre + "," + apellido;
     }
 
     public void mostrarSocio(String socio) {
@@ -65,9 +61,9 @@ public class VistaSocios {
         return nif;
     }
 
-    public String formTutor(){
+    public int formTutor(){
         System.out.print("Ingrese el número de tutor: ");
-        return datosUtil.devString();
+        return datosUtil.leerEntero(99999,"");
     }
 
     public String formFederacion(){

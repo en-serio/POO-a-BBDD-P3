@@ -1,6 +1,7 @@
 package gace.modelo;
 
 public class Federacion {
+    private int idFederacion;
     private String codigo;
     private String nombre;
 
@@ -12,6 +13,9 @@ public class Federacion {
     public Federacion() {}
 
     //getters
+    public int getIdFederacion() {
+        return idFederacion;
+    }
     public String getCodigo() {
         return codigo;
     }
@@ -20,6 +24,9 @@ public class Federacion {
     }
 
     //setters
+    public void setIdFederacion(int idFederacion) {
+        this.idFederacion = idFederacion;
+    }
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }

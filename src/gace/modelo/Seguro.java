@@ -1,16 +1,23 @@
 package gace.modelo;
 
 public class Seguro {
+    private int idSeguro;
     private boolean tipo;
     private double precio;
 
     public Seguro(boolean tipo, double precio) {
-        //this.idSeguro = idSeguro;
         this.tipo = tipo;
         this.precio = precio;
     }
 
     public Seguro() { }
+
+    public int getIdSeguro() {
+        return idSeguro;
+    }
+    public void setIdSeguro(int idSeguro) {
+        this.idSeguro = idSeguro;
+    }
 
     public boolean isTipo() {
         return tipo;

@@ -3,6 +3,8 @@ package gace.controlador;
 
 import gace.excepciones.ClienteExistenteException;
 import gace.modelo.*;
+import gace.modelo.dao.DAOFactory;
+import gace.modelo.dao.SocioDao;
 import gace.vista.VistaSocios;
 import gace.modelo.ListaSocios;
 import gace.vista.DatosUtil;
@@ -12,27 +14,20 @@ import java.util.ArrayList;
 
 public class SocioControlador {
     private VistaSocios vistaSocios;
-    private ListaSocios listaSocios;
+    private SocioDao socioDao;
     private DatosUtil datosUtil;
 
-    public SocioControlador(VistaSocios vistaSocios, ListaSocios listaSocios) {
+    public SocioControlador(VistaSocios vistaSocios) {
         this.vistaSocios = vistaSocios;
-        this.listaSocios = listaSocios;
+        this.socioDao = DAOFactory.getSocioDao();
         this.datosUtil = new DatosUtil();
     }
 
     public SocioControlador() {
         this.vistaSocios = new VistaSocios();
-        this.listaSocios = new ListaSocios();
+        this.socioDao = DAOFactory.getSocioDao();
         this.datosUtil = new DatosUtil();
-        llenarLista();
     }
-    public ListaSocios getLista(){
-        return this.listaSocios;
-    }
-
-
-
 
     public boolean nouSoci(){
         String strSocio = vistaSocios.formSocio();
@@ -45,41 +40,27 @@ public class SocioControlador {
             datosUtil.mostrarError("Datos del socio incompletos");
             return false;
         }
-        try {
-            comprobarSocio(datosSocio[1]);
-        } catch (ClienteExistenteException e) {
-            datosUtil.mostrarError(e.getMessage());
-            return false;
-        }
         int tipoSocio = Integer.parseInt(datosSocio[0]);
         switch (tipoSocio) {
             //EST
             case 1:
-                SocioEstandar socioEst = nouSociEstandar(datosSocio[1], datosSocio[2], datosSocio[3]);
+                SocioEstandar socioEst = nouSociEstandar( datosSocio[1], datosSocio[2]);
                 if (socioEst == null) {
                     datosUtil.mostrarError("Error al crear el socio estándar");
                     return false;
                 }
-                /* TODO - Esto es necesario?? o es complicar por complicaR?
-                if (!vistaSocios.confirmarSocio(socioEst.toString())) {
-                    return false;
-                }else {
-                    listaSocios.agregarSocio(socioEst);
-                }*/
-                listaSocios.agregarSocio(socioEst);
                 break;
             //FED
-            case 2: // Socio federado
-                SocioFederado socioFed = nouSociFederado(datosSocio[1], datosSocio[2], datosSocio[3]);
+            case 2:
+                SocioFederado socioFed = nouSociFederado(datosSocio[1], datosSocio[2]);
                 if (socioFed == null) {
                     datosUtil.mostrarError("Error al crear el socio estándar");
                     return false;
                 }
-                listaSocios.agregarSocio(socioFed);
                 break;
             //INF
             case 3:
-                SocioInfantil socioInf = nouSociInfantil(datosSocio[1], datosSocio[2], datosSocio[3]);
+                SocioInfantil socioInf = nouSociInfantil(datosSocio[1], datosSocio[2]);
                 if (socioInf == null) {
                     datosUtil.mostrarError("Error al crear el socio estándar");
                     return false;
@@ -90,6 +71,7 @@ public class SocioControlador {
                 datosUtil.mostrarError("Tipo de socio no válido");
                 return false;
         }
+        DAOFactory.getSocioDao().insertar(socioEst);
         return true;
     }
 
@@ -101,17 +83,14 @@ public class SocioControlador {
         }
     }
 
-    public SocioEstandar nouSociEstandar(String noSocio,String nombre,String apellido){
+    public SocioEstandar nouSociEstandar(String nombre,String apellido){
         String nif = vistaSocios.formNif();
-        try {
-            existeNif(nif);
-        } catch (ClienteExistenteException e) {
-            datosUtil.mostrarError(e.getMessage());
-            System.err.println(e.getMessage());
-            return null;
-        }
         if(nif == null){
             datosUtil.mostrarError("Nif no válido.");
+            return null;
+        }
+        if(existeNif(nif)){
+            datosUtil.mostrarError("Nif ya existe.");
             return null;
         }
         Seguro seg = nuevoSeg();
@@ -119,69 +98,65 @@ public class SocioControlador {
             datosUtil.mostrarError("Seguro no válido.");
             return null;
         }
-        return new SocioEstandar(noSocio, nombre, apellido, nif, seg);
+        DAOFactory.getSeguroDao().insertar(seg);
+        return new SocioEstandar( nombre, apellido, nif, seg);
     }
 
-    public SocioFederado nouSociFederado(String noSocio, String nombre, String apellido){
+    public SocioFederado nouSociFederado(String nombre, String apellido){
         String nif = vistaSocios.formNif();
         if(nif == null){
             datosUtil.mostrarError("Nif no válido.");
             return null;
         }
+        if(existeNif(nif)){
+            datosUtil.mostrarError("Nif ya existe.");
+            return null;
+        }
         Federacion fed = nuevaFed();
-        if( fed == null){
+        if(fed == null){
             datosUtil.mostrarError("Federación no válida.");
             return null;
         }
-        return new SocioFederado(noSocio, nombre, apellido, nif, fed);
+        DAOFactory.getFederacionDao().insertar(fed);
+        return new SocioFederado(nombre, apellido, nif, fed);
     }
 
-    public void existeNif(String nif) throws ClienteExistenteException{
-        for(Socio socio : listaSocios.getListaSocios()){
-            if(socio instanceof SocioEstandar || socio instanceof SocioFederado){
-                String nifSocio = null;
-                if(socio instanceof SocioEstandar) {
-                    nifSocio = ((SocioEstandar) socio).getNif();
-                }else{
-                    nifSocio = ((SocioFederado) socio).getNif();
-                }
-                if(nifSocio != null && nifSocio.equals(nif)){
-                    throw new ClienteExistenteException(nif);
-                }
-
-            }
-        }
+    public boolean existeNif(String nif){
+        return DAOFactory.getSocioDao().hayNif(nif);
     }
 
-    public SocioInfantil nouSociInfantil(String noSocio, String nombre, String apellido){
-        String noTutor = vistaSocios.formTutor();
-        if(noTutor == null){
+    public SocioInfantil nouSociInfantil(String nombre, String apellido){
+        int noTutor = vistaSocios.formTutor();
+        if(noTutor == 0){
             return null;
         }
         if(!buscarTutor(noTutor)){
             return null;
         }
-        return new SocioInfantil(noSocio, nombre, apellido, noTutor);
+        return new SocioInfantil(nombre, apellido, noTutor);
     }
 
-    public SocioInfantil nouSociInfantil(String noSocio, String nombre, String apellido, String noTutor) {
-        if(noTutor == null){
+    public SocioInfantil nouSociInfantil(String nombre, String apellido, int noTutor) {
+        if(noTutor == 0){
             return null;
         }
         if(!buscarTutor(noTutor)){
             return null;
         }
-        return new SocioInfantil(noSocio, nombre, apellido, noTutor);
+        return new SocioInfantil(nombre, apellido, noTutor);
     }
 
-    public boolean buscarTutor(String noTutor) {
-        for (Socio socio : listaSocios.getListaSocios()) {
-            if (socio.getNoSocio().equals(noTutor)) {
-                return true;
-            }
+    public boolean buscarTutor(int noTutor) {
+        Socio socio = DAOFactory.getSocioDao().buscar(noTutor);
+        if(socio != null){
+            vistaSocios.noTutor();
+            return false;
         }
-        vistaSocios.noTutor();
-        return false;
+        if(socio instanceof SocioInfantil){
+            datosUtil.mostrarError("El tutor no puede ser un socio infantil.");
+            return false;
+        }
+        return true;
     }
 
     public void mostrarListaSociosSelec(ArrayList<Socio> socios){
@@ -198,32 +173,34 @@ public class SocioControlador {
         }else {
             opcionSocios = filtro;
         }
-        ArrayList<Socio> lista = null;
         switch (opcionSocios) {
             case 1:
+                for(Socio socio : DAOFactory.getSocioEstandarDao().listar()) {
+                    vistaSocios.mostrarSocio(socio.toString());
+                }
             case 2:
+                for(Socio socio : DAOFactory.getSocioFederadoDao().listar()) {
+                    vistaSocios.mostrarSocio(socio.toString());
+                }
             case 3:
-                lista = listaSocios.getSocioFiltrado(opcionSocios);
-                break;
+                for(Socio socio : DAOFactory.getSocioInfantilDao().listar()) {
+                    vistaSocios.mostrarSocio(socio.toString());
+                }
             case 4:
-                lista = listaSocios.getListaSocios();
+                for(Socio socio : DAOFactory.getSocioDao().listar()) {
+                    vistaSocios.mostrarSocio(socio.toString());
+                }
                 break;
             case 0:
                 break;
             default:
                 datosUtil.mostrarError("Opción no válida. Intente de nuevo.");
         }
-        if (lista == null) {
-            return false;
-        }
-        for(Socio socio : lista) {
-            vistaSocios.mostrarSocio(socio.toString());
-        }
         return true;
     }
 
-    public Socio buscarSocio(String noSocio) {
-        return listaSocios.buscarSocio(noSocio);
+    public Socio buscarSocio(int noSocio) {
+        return DAOFactory.getSocioDao().buscar(noSocio);
     }
 
     public Federacion nuevaFed(){
@@ -234,7 +211,9 @@ public class SocioControlador {
             return null;
         }
         //todo - validar que es nueva.
-        return new Federacion(datosFed[0], datosFed[1]);
+        Federacion federacion = new Federacion(datosFed[0], datosFed[1]);
+        DAOFactory.getFederacionDao().insertar(federacion);
+        return federacion;
     }
 
     public Seguro nuevoSeg(){
@@ -248,6 +227,7 @@ public class SocioControlador {
             return null;
         }
         //todo - validar que es nuevo.
+
         boolean tipo = Integer.parseInt(datosSeg[0]) == 1;
         return new Seguro(tipo, Double.parseDouble(datosSeg[1]));
     }

@@ -96,8 +96,9 @@ public class DatosUtil {
         System.out.println("6. Mostrar Inscripciones");
         System.out.println("7. Eliminar Socio :(");
         System.out.println("8. Eliminar Excursión :(");
+        System.out.println("9. Probar conexión");
         System.out.println("0. Salir");
-        int opcion = leerEntero(8, "");
+        int opcion = leerEntero(9, "");
         return opcion;
     }
 

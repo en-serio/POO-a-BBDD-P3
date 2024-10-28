@@ -1,6 +1,9 @@
 package gace.controlador;
 
 import gace.modelo.Excursion;
+import gace.modelo.dao.DAOFactory;
+import gace.modelo.dao.ExcursionDao;
+import gace.modelo.dao.SocioDao;
 import gace.vista.DatosUtil;
 import gace.vista.VistaExcursion;
 import gace.modelo.ListaExcursion;
@@ -9,28 +12,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class ExcursionControlador {
     private DatosUtil datosUtil;
     private VistaExcursion vistaExcursion;
-    private ListaExcursion listaExcursion;
+    private ExcursionDao excursionDao;
 
     public ExcursionControlador() {
         this.vistaExcursion = new VistaExcursion();
-        this.listaExcursion = new ListaExcursion();
+        this.excursionDao = DAOFactory.getExcursionDao();
         this.datosUtil = new DatosUtil();
-        this.llenarExc();
     }
-
-    public ListaExcursion getListaExcursion() {
-        return listaExcursion;
-    }
-
 
     public boolean novaExcursio(){
         String strExcursio = this.vistaExcursion.formExcursion();
         String[] datosExc = strExcursio.split(",");
-        if (datosExc.length < 5) {
+        if (datosExc.length < 4) {
             datosUtil.mostrarError("Datos de la excursión incompletos");
             return false;
         }
@@ -46,33 +44,32 @@ public class ExcursionControlador {
             return false;
         }
         Excursion exc = new Excursion(datosExc[0], datosExc[1], data, Integer.parseInt(datosExc[3]), Double.parseDouble(datosExc[4]));
-        listaExcursion.anyadirExcursion(exc);
+        excursionDao.insertar(exc);
         vistaExcursion.detalleExcursion(exc.toString());
         return true;
     }
 
     private Date validarFecha(String fechaString) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);  // Asegura que el formato de la fecha sea estricto
-        return dateFormat.parse(fechaString); // Lanza ParseException si la fecha es inválida
+        dateFormat.setLenient(false);
+        return dateFormat.parse(fechaString);
     }
 
     public boolean mostrarExcursiones(){
-        for (Excursion excursion : this.listaExcursion.getListaExcursiones()) {
+        for(Excursion excursion : excursionDao.listar()){
             vistaExcursion.detalleExcursion(excursion.toString());
         }
         return true;
     }
 
+    public Excursion buscarExcursion(int id_excursion){
+        return excursionDao.buscar(id_excursion);
+    }
     public Excursion buscarExcursion(String codigo){
-        for(Excursion excursion : this.listaExcursion.getListaExcursiones()){
-            if(excursion.getCodigo().equals(codigo)){
-                return excursion;
-            }
-        }
-        return null;
+        return excursionDao.buscar(codigo);
     }
 
+    //TODO se usa?
     public void mostrar(ArrayList<Excursion> excursiones){
         for (Excursion excursion : excursiones) {
             vistaExcursion.detalleExcursion(excursion.toString());
@@ -85,7 +82,8 @@ public class ExcursionControlador {
             if(excur.getCodigo().equals(codigo)) {
                 vistaExcursion.mostrarExcursiones("Es esta la excursion que desea eliminar " + excur.toString() + "?");
                 if (vistaExcursion.confExc()) {
-                    listaExcursion.getListaExcursiones().remove(excur);
+//                    listaExcursion.getListaExcursiones().remove(excur);
+                    excursionDao.eliminar(excur.getId());
                     datosUtil.mostrarError("Excursion eliminada");
                     return true;
                 }
@@ -95,20 +93,4 @@ public class ExcursionControlador {
         return false;
     }
 
-    private void llenarExc(){
-        Date fecha1 = new Date(2024, 11, 15);
-        Date fecha2 = new Date(2024, 11, 20);
-        Date fecha3 = new Date(2024, 12, 12);
-        this.listaExcursion.anyadirExcursion(new Excursion("1", "Excursión 1", fecha1, 2, 15));
-        this.listaExcursion.anyadirExcursion(new Excursion("2", "Excursión 2", fecha2, 5, 45));
-        this.listaExcursion.anyadirExcursion( new Excursion("3", "Excursión 3", fecha3, 3, 30));
-        this.listaExcursion.anyadirExcursion( new Excursion("4", "Excursión 4", fecha1, 2, 25));
-        this.listaExcursion.anyadirExcursion(new Excursion("5", "Excursión 5", fecha2, 3, 30));
-        this.listaExcursion.anyadirExcursion( new Excursion("6", "Excursión 6", fecha3, 3, 35));
-        this.listaExcursion.anyadirExcursion(new Excursion("7", "Excursión 7", fecha1, 4, 40));
-        this.listaExcursion.anyadirExcursion(new Excursion("8", "Excursión 8", fecha1, 4, 40));
-        this.listaExcursion.anyadirExcursion(new Excursion("9", "Excursión 9", fecha3, 4, 40));
-        this.listaExcursion.anyadirExcursion(new Excursion("10", "Excursión 10", fecha1, 4, 40));
-        this.listaExcursion.anyadirExcursion(new Excursion("11", "Excursión 11", fecha2, 4, 40));
-    }
 }
