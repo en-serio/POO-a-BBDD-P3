@@ -48,49 +48,15 @@ public class MenuControlador {
         int opcion = datosUtil.mostrarMenu();
         switch (opcion) {
             case 1:
-                if (!socioControlador.nouSoci()) {
-                    datosUtil.mostrarError("Error al añadir socio.");
-                }
+                menuSocio();
                 break;
             case 2:
-                if (!socioControlador.mostrarSocios(1, 0)) {
-                    datosUtil.mostrarError("Error al mostrar socios.");
-                }
+                menuExcursion();
                 break;
             case 3:
-                if (!excursionControlador.novaExcursio()) {
-                    datosUtil.mostrarError(":(");
-                }
+                menuInscripcion();
                 break;
             case 4:
-                if (!excursionControlador.mostrarExcursiones()) {
-                    datosUtil.mostrarError(":(");
-                }
-                break;
-            case 5:
-                int ayudaVisualInsc = inscripcionControlador.solicitarAyudaVisual();
-                if (!inscripcionControlador.novaInscripcio(ayudaVisualInsc)) {
-                    datosUtil.mostrarError(":(");
-                }
-                break;
-            case 6:
-                if (!inscripcionControlador.mostrarInscripciones()) {
-                    datosUtil.mostrarError(":(");
-                }
-                break;
-            case 7:
-                int ayuda = datosUtil.asistente();
-                if (!inscripcionControlador.mostrarSinInscripciones(ayuda)) {
-                    datosUtil.mostrarError(":(");
-                }
-                break;
-            case 8:
-                int ayudaExc = datosUtil.asistente();
-                if (/*!inscripcionControlador.mostrarExcVacia(ayudaExc)*/true) {
-                    datosUtil.mostrarError(":(");
-                }
-                break;
-            case 9:
                 if (pruebaConexion()) {
                     System.out.println("Conexión establecida.");
                 } else {
@@ -106,6 +72,89 @@ public class MenuControlador {
         }
         return true;
     }
+
+    public boolean menuSocio(){
+        int opcion = datosUtil.menuSocios();
+        switch (opcion) {
+            case 1:
+                socioControlador.nouSoci();
+                break;
+            case 2:
+                socioControlador.mostrarSocios(1, 0);
+                break;
+            case 3:
+                socioControlador.eliminarSocio();
+                break;
+            case 4:
+                socioControlador.pedirSocio();
+                break;
+            case 5:
+                socioControlador.modificarSeguro();
+                break;
+            case 6:
+                socioControlador.modificarFederacion();
+                break;
+            case 7:
+                inscripcionControlador.calcularCuota();
+                break;
+            case 0:
+                return false;
+            default:
+                datosUtil.mostrarError("Opción no válida. Inténtelo de nuevo.");
+                break;
+        }
+        return true;
+    }
+
+    public boolean menuExcursion(){
+        int opcion = datosUtil.menuExcursiones();
+        switch (opcion) {
+            case 1:
+                excursionControlador.novaExcursio();
+                break;
+            case 2:
+                excursionControlador.mostrarExcursiones();
+                break;
+            case 3:
+                excursionControlador.eliminarExcursion();
+                break;
+            case 4:
+                excursionControlador.pedirExcursion();
+                break;
+            case 0:
+                return false;
+            default:
+                datosUtil.mostrarError("Opción no válida. Inténtelo de nuevo.");
+                break;
+        }
+        return true;
+    }
+
+    public boolean menuInscripcion(){
+        int opcion = datosUtil.menuInscripciones();
+        switch (opcion) {
+            case 1:
+                inscripcionControlador.novaInscripcio(1);
+                break;
+            case 2:
+                inscripcionControlador.mostrarInscripciones();
+                break;
+            case 3:
+                inscripcionControlador.eliminarInscripcion();
+                break;
+            case 4:
+                inscripcionControlador.buscarInscripcion();
+                break;
+            case 0:
+                return false;
+            default:
+                datosUtil.mostrarError("Opción no válida. Inténtelo de nuevo.");
+                break;
+        }
+        return true;
+    }
+
+
 
     public void cerrarTeclado() {
         datosUtil.cerrarTeclado();

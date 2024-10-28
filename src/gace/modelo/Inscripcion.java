@@ -16,6 +16,12 @@ public class Inscripcion {
         this.excursion = excursion;
         this.fechaInscripcion = fechaInscripcion;
     }
+    public Inscripcion( String codigo, Socio socio, Excursion excursion) {
+        this.codigo = codigo;
+        this.socio = socio;
+        this.excursion = excursion;
+        this.fechaInscripcion = new Date();
+    }
 
     public Inscripcion() {}
 

@@ -1,5 +1,8 @@
 package gace.vista;
 
+import gace.modelo.SocioEstandar;
+import gace.modelo.SocioFederado;
+
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
@@ -13,9 +16,7 @@ public class VistaSocios {
         this.datosUtil = new DatosUtil();
     }
 
-    public void mostrarSocios(String socio) {
-        System.out.println(socio);
-    }
+
 
     public String formSocio() {
         System.out.println("Ingrese el nombre: ");
@@ -87,8 +88,12 @@ public class VistaSocios {
         return tipoSeguro + "," + precioSeguro;
     }
 
-    public String pedirSocio(){
+    public int pedirSocio(){
         System.out.print("Ingrese el número de socio: ");
+        return datosUtil.leerEntero(99999,"");
+    }
+    public String pedirNif(){
+        System.out.print("Ingrese el nif del socio: ");
         return datosUtil.devString();
     }
 
@@ -96,7 +101,8 @@ public class VistaSocios {
         System.out.print("No existe ningún tutor con ese número de socio.");
     }
 
-    public boolean confirmar(){
-        return datosUtil.confirmar("");
+    public boolean confirmar(String mensaje){
+        return datosUtil.confirmar(mensaje);
     }
+
 }

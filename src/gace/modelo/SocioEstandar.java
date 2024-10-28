@@ -52,7 +52,7 @@ public class SocioEstandar extends Socio {
     }
 
     @Override
-    public double costeExcursion(Excursion excursion) {
-        return excursion.getPrecio() + seguro.getPrecio();
+    public double costeExcursion(double precio) {
+        return precio;
     }
 }

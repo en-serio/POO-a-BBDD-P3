@@ -77,6 +77,26 @@ public class DatosUtil {
             }
         } while (true);
     }
+    public String devString(String mensaje) {
+        do {
+            try{
+                System.out.println(mensaje);
+                String valor = scanner.nextLine();
+                if(!valor.isEmpty()){
+                    return valor;
+                }
+                System.out.println("Error: No puedes dejar este campo vacío.");
+                if (salir()==-1) {
+                    return null;
+                }
+            } catch (InputMismatchException e) {
+                System.err.println("Error: Entrada invalida. Por favor, ingresa un numero.");
+                if(salir()==-1) {
+                    return null;
+                }
+            }
+        } while (true);
+    }
 
     public int salir() {
         System.out.println("Desea salir? 1-Si / 2-no");
@@ -88,17 +108,48 @@ public class DatosUtil {
 
     public int mostrarMenu() {
         System.out.println("Seleccione una opción:");
-        System.out.println("1. Añadir Socio");
-        System.out.println("2. Mostrar Socios");
-        System.out.println("3. Añadir Excursión");
-        System.out.println("4. Mostrar Excursiones");
-        System.out.println("5. Inscribir Socio a Excursión");
-        System.out.println("6. Mostrar Inscripciones");
-        System.out.println("7. Eliminar Socio :(");
-        System.out.println("8. Eliminar Excursión :(");
-        System.out.println("9. Probar conexión");
+        System.out.println("1. Socios");
+        System.out.println("2. Excursiones");
+        System.out.println("3. Inscripciones");
+        System.out.println("4. TEST - PROBAR CONEXION");
         System.out.println("0. Salir");
-        int opcion = leerEntero(9, "");
+        int opcion = leerEntero(4, "");
+        return opcion;
+    }
+
+    public int menuSocios() {
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Nuevo socio");
+        System.out.println("2. Mostrar Socios");
+        System.out.println("3. Eliminar Socio");
+        System.out.println("4. Buscar Socio");
+        System.out.println("5. Modificar Seguro");
+        System.out.println("6. Modificar Federacion");
+        System.out.println("7. Calcular Cuota Socios");
+        System.out.println("0. Salir");
+        int opcion = leerEntero(7, "");
+        return opcion;
+    }
+
+    public int menuExcursiones(){
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Nueva Excursión");
+        System.out.println("2. Mostrar Excursiones");
+        System.out.println("3. Eliminar Excursión");
+        System.out.println("4. Buscar Excursión");
+        System.out.println("0. Salir");
+        int opcion = leerEntero(4, "");
+        return opcion;
+    }
+
+    public int menuInscripciones(){
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Nueva Inscripción");
+        System.out.println("2. Mostrar Inscripciones");
+        System.out.println("3. Eliminar Inscripción");
+        System.out.println("4. Buscar Inscripción");
+        System.out.println("0. Salir");
+        int opcion = leerEntero(4, "");
         return opcion;
     }
 
@@ -147,6 +198,20 @@ public class DatosUtil {
 
     public void mostrarError(String mensaje){
         System.err.println(mensaje);
+    }
+
+    public int pedirOpcion(String pregunta, String opcionA, String opcionB){
+        System.out.println(pregunta);
+        System.out.println("1. " + opcionA);
+        System.out.println("2. " + opcionB);
+        return leerEntero(2, "");
+    }
+    public int pedirOpcion(String pregunta, String opcionA, String opcionB, String opcionC){
+        System.out.println(pregunta);
+        System.out.println("1. " + opcionA);
+        System.out.println("2. " + opcionB);
+        System.out.println("3. " + opcionC);
+        return leerEntero(3, "");
     }
 
 }

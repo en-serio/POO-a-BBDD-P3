@@ -75,12 +75,6 @@ public class Excursion {
 
     @Override
     public String toString() {
-        return "Excursion{" +
-                "codigo='" + codigo + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ", noDias=" + noDias +
-                ", precio=" + precio +
-                '}';
+        return "Excursion "+id+ " Codigo: " + codigo + ", Descripcion: " + descripcion + ", Fecha: " + fecha + ", Duracion(dias): " + noDias + ", Precio: " + precio + ".";
     }
 }

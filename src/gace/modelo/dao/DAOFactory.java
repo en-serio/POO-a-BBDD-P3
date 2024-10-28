@@ -5,7 +5,7 @@ public class DAOFactory {
     public static ExcursionDao getExcursionDao() {
         return new ExcursionDao();
     }
-    public InscripcionDao getInscripcionDao() {
+    public static InscripcionDao getInscripcionDao() {
         return new InscripcionDao();
     }
 

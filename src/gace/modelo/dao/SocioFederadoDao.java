@@ -82,6 +82,35 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
         }
         return socio;
     }
+    public SocioFederado buscar(String nif) {
+        String sql = "SELECT f.*, fed.*, s.* " +
+                "FROM federado f " +
+                "JOIN federacion fed ON f.id_federacion = fed.id_federacion " +
+                "JOIN socio s ON f.id_socio = s.id_socio " +
+                "WHERE f.nif = ?";
+        SocioFederado socio = null;
+        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setString(1, nif);
+            ResultSet salida = pst.executeQuery();
+            if(salida.next()) {
+                Federacion fed = new Federacion();
+                socio = new SocioFederado();
+                socio.setNombre(salida.getString("nombre"));
+                socio.setApellido(salida.getString("apellido"));
+                socio.setIdSocio(salida.getInt("id_socio"));
+                socio.setNif(salida.getString("nif"));
+                fed.setIdFederacion(salida.getInt("id_seguro"));
+                fed.setCodigo(salida.getString("codigo"));
+                fed.setNombre(salida.getString("nombre"));
+                socio.setFederacion(fed);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getErrorCode()+e.getMessage());
+        }
+        return socio;
+    }
 
     public ArrayList<SocioFederado> listar() {
         ArrayList<SocioFederado> socios = new ArrayList<>();

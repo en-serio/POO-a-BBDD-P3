@@ -36,7 +36,7 @@ public class SocioInfantil extends Socio {
     }
 
     @Override
-    public double costeExcursion(Excursion excursion) {
-        return excursion.getPrecio(); // Precio completo
+    public double costeExcursion(double precio) {
+        return precio; // Precio completo
     }
 }

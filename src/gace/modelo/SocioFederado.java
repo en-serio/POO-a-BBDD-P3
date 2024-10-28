@@ -45,7 +45,7 @@ public class SocioFederado extends Socio {
     }
 
     @Override
-    public double costeExcursion(Excursion excursion) {
-        return excursion.getPrecio() * 0.90; // 10% de descuento
+    public double costeExcursion(double precio) {
+        return precio * 0.90; // 10% de descuento
     }
 }

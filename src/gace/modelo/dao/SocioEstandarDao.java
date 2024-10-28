@@ -17,7 +17,7 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
     }
     public void insertar(SocioEstandar socio) {
         String sql = "INSERT INTO estandar (id_socio, nif, id_seguro) VALUES (?, ?, ?)";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try(PreparedStatement pst = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pst.setInt(1, socio.getIdSocio());
             pst.setString(2, socio.getNif());
             pst.setInt(3, socio.getSeguro().getIdSeguro());
@@ -70,6 +70,36 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
                 seg.setTipo(salida.getString("tipo").equals("COMPLETO"));
                 seg.setPrecio(salida.getDouble("precio"));
                 socio.setSeguro(seg);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getErrorCode()+e.getMessage());
+        }
+        return socio;
+    }
+
+    public SocioEstandar buscar(String nif) {
+        String sql = "SELECT e.*, seg.* ,s.*" +
+                "FROM estandar e " +
+                "JOIN seguro seg ON e.id_seguro = seg.id_seguro " +
+                "JOIN socio s ON e.id_socio = s.id_socio" +
+                "WHERE e.nif = ?";
+        SocioEstandar socio = null;
+        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setString(1, nif);
+            ResultSet salida = pst.executeQuery();
+            if(salida.next()) {
+                Seguro seg = new Seguro();
+                socio = new SocioEstandar();
+                socio.setNombre(salida.getString("nombre"));
+                socio.setApellido(salida.getString("apellido"));
+                socio.setIdSocio(salida.getInt("id_socio"));
+                socio.setNif(salida.getString("nif"));
+                seg.setIdSeguro(salida.getInt("id_seguro"));
+                seg.setTipo(salida.getString("tipo").equals("COMPLETO"));
+                seg.setPrecio(salida.getDouble("precio"));
+                socio.setSeguro(seg);
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());

@@ -28,7 +28,14 @@ public class VistaInscripciones {
     }
 
     public int pedirExcursionInsc(){
-        System.out.print("Ingrese el código de excursión: ");
-        return datosUtil.leerEntero(1000, "");
+        System.out.print("Ingrese el id de excursión: ");
+        return datosUtil.leerEntero(99999, "");
+    }
+
+    public void mostrarCuota(double precioC, double precioINS, int nExc){
+        System.out.println("El precio de la cuota es: " + precioC + "€");
+        System.out.println("El precio de las excursiones es: " + precioINS + "€");
+        System.out.println("Número de excursiones: ");
+        System.out.println("El precio total es: " + (precioC + precioINS) + "€");
     }
 }

@@ -6,14 +6,15 @@ import gace.modelo.utils.BBDDUtil;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class SocioDao implements DAO<Socio> {
+public class SocioDao {
     private Connection conexion;
 
     public SocioDao() {
         conexion = BBDDUtil.getConexion();
     }
-    public void insertar(Socio socio) {
+    public int insertar(Socio socio) {
         String sql = "INSERT INTO socio (nombre, apellido, tipo, activo) VALUES (?, ?, ?, ?)";
+        int idSocio = 0;
         try(PreparedStatement pst = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, socio.getNombre());
             pst.setString(2, socio.getApellido());
@@ -27,7 +28,6 @@ public class SocioDao implements DAO<Socio> {
             pst.setInt(5, 1);
             pst.executeUpdate();
             ResultSet salida = pst.getGeneratedKeys();
-            int idSocio = 0;
             if(salida.next()) {
                 idSocio = salida.getInt(1);
             }
@@ -42,6 +42,7 @@ public class SocioDao implements DAO<Socio> {
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());
         }
+        return idSocio;
     }
 
     public void modificar(Socio socio) {
@@ -117,19 +118,25 @@ public class SocioDao implements DAO<Socio> {
         return socio;
     }
 
-    public boolean hayNif(String nif) {
-        String sql = "SELECT * FROM socio WHERE nif = ?";
+    public Socio buscar(String nif) {
         Socio socio = null;
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
-            pst.setString(1, nif);
-            ResultSet salida = pst.executeQuery();
-            if(salida.next()) {
-                return true;
-            }else {
-                return false;
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getErrorCode()+e.getMessage());
+        socio = DAOFactory.getSocioEstandarDao().buscar(nif);
+        if(socio != null) {
+            return socio;
+        }
+        socio = DAOFactory.getSocioFederadoDao().buscar(nif);
+        return socio;
+    }
+
+    public boolean hayNif(String nif) {
+        Socio socio = null;
+        socio = DAOFactory.getSocioEstandarDao().buscar(nif);
+        if(socio != null) {
+            return true;
+        }
+        socio = DAOFactory.getSocioFederadoDao().buscar(nif);
+        if(socio != null) {
+            return true;
         }
         return false;
     }

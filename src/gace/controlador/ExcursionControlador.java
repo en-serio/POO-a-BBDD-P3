@@ -3,16 +3,13 @@ package gace.controlador;
 import gace.modelo.Excursion;
 import gace.modelo.dao.DAOFactory;
 import gace.modelo.dao.ExcursionDao;
-import gace.modelo.dao.SocioDao;
 import gace.vista.DatosUtil;
 import gace.vista.VistaExcursion;
-import gace.modelo.ListaExcursion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 
 public class ExcursionControlador {
     private DatosUtil datosUtil;
@@ -56,17 +53,23 @@ public class ExcursionControlador {
     }
 
     public boolean mostrarExcursiones(){
-        for(Excursion excursion : excursionDao.listar()){
+        for(Excursion excursion : DAOFactory.getExcursionDao().listar()){
             vistaExcursion.detalleExcursion(excursion.toString());
         }
         return true;
     }
+    public Excursion pedirExcursion(){
+        String codigo = vistaExcursion.pedirExc();
+        Excursion exc = buscarExcursion(codigo);
+        vistaExcursion.detalleExcursion(exc.toString());
+        return exc;
+    }
 
     public Excursion buscarExcursion(int id_excursion){
-        return excursionDao.buscar(id_excursion);
+        return DAOFactory.getExcursionDao().buscar(id_excursion);
     }
     public Excursion buscarExcursion(String codigo){
-        return excursionDao.buscar(codigo);
+        return DAOFactory.getExcursionDao().buscar(codigo);
     }
 
     //TODO se usa?
@@ -76,15 +79,29 @@ public class ExcursionControlador {
         }
     }
 
+    public boolean eliminarExcursion(){
+        ArrayList<Excursion> excursiones = DAOFactory.getExcursionDao().listar();
+        if(excursiones.isEmpty()){
+            datosUtil.mostrarError("No hay excursiones para eliminar");
+            return false;
+        }
+        for(Excursion excursion : excursiones){
+            vistaExcursion.detalleExcursion(excursion.toString());
+        }
+        if(seleccionarExc(excursiones)){
+            return true;
+        }
+        datosUtil.mostrarError("Excursion no encontrada");
+        return false;
+    }
+
     public boolean seleccionarExc(ArrayList<Excursion> excursiones){
         String codigo = vistaExcursion.pedirExc();
         for(Excursion excur : excursiones){
             if(excur.getCodigo().equals(codigo)) {
-                vistaExcursion.mostrarExcursiones("Es esta la excursion que desea eliminar " + excur.toString() + "?");
-                if (vistaExcursion.confExc()) {
-//                    listaExcursion.getListaExcursiones().remove(excur);
-                    excursionDao.eliminar(excur.getId());
-                    datosUtil.mostrarError("Excursion eliminada");
+                int opcion = datosUtil.pedirOpcion("Es esta la excursion que desea eliminar", "Sí", "No");
+                if (opcion == 1) {
+                    DAOFactory.getExcursionDao().eliminar(excur.getId());
                     return true;
                 }
                 return false;

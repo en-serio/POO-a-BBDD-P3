@@ -37,9 +37,6 @@ public class Federacion {
 
     @Override
     public String toString() {
-        return "Federacion{" +
-                "codigo='" + codigo + '\'' +
-                ", nombre='" + nombre + '\'' +
-                '}';
+        return "Federacion: " + "Codigo: '" + codigo + ", Nombre: '" + nombre + ".\n";
     }
 }
