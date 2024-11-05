@@ -17,7 +17,7 @@ public class FederacionDao implements DAO<Federacion> {
 
     @Override
     public void insertar(Federacion federacion) {
-        String sql = "INSERT INTO federacion (codigo, nombre) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO federacion (codigo, nombre) VALUES (?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, federacion.getCodigo());
             pst.setString(2, federacion.getNombre());

@@ -12,16 +12,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SeguroDao implements DAO<Seguro>{
+public class SeguroDao{
     private Connection conexion;
     public SeguroDao() {
         conexion = BBDDUtil.getConexion();
     }
 
-    @Override
-    public void insertar(Seguro seguro) {
-        String sql = "INSERT INTO seguro (tipo, precio) VALUES (?, ?, ?)";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+
+    public int insertar(Seguro seguro) {
+        int idseguro = 0;
+        String sql = "INSERT INTO seguro (nombre, tipo, precio) VALUES ('a', ?, ?)";
+        try(PreparedStatement pst = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             if(seguro.isTipo()) {
                 pst.setString(1, "COMPLETO");
             } else {
@@ -29,12 +30,18 @@ public class SeguroDao implements DAO<Seguro>{
             }
             pst.setDouble(2, seguro.getPrecio());
             pst.executeUpdate();
+            ResultSet salida = pst.getGeneratedKeys();
+            if(salida.next()) {
+                idseguro = salida.getInt(1);
+            }
+            seguro.setIdSeguro(idseguro);
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());
         }
+        return idseguro;
     }
 
-    @Override
+
     public void modificar(Seguro seguro) {
         String sql = "UPDATE seguro SET tipo = ?, precio = ? WHERE id_seguro = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -51,7 +58,7 @@ public class SeguroDao implements DAO<Seguro>{
         }
     }
 
-    @Override
+
     public void eliminar(int idSeguro) {
         String sql = "DELETE FROM seguro WHERE id_seguro = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -62,7 +69,7 @@ public class SeguroDao implements DAO<Seguro>{
         }
     }
 
-    @Override
+
     public Seguro buscar(int idSeguro) {
         String sql = "SELECT * FROM seguro WHERE codigo = ?";
         Seguro seg = null;
@@ -81,7 +88,7 @@ public class SeguroDao implements DAO<Seguro>{
         return seg;
     }
 
-    @Override
+
     public ArrayList<Seguro> listar() {
         ArrayList<Seguro> seguros = new ArrayList<>();
         String sql = "SELECT * FROM seguro";

@@ -19,13 +19,13 @@ public class SocioDao {
             pst.setString(1, socio.getNombre());
             pst.setString(2, socio.getApellido());
             if(socio instanceof SocioEstandar) {
-                pst.setInt(4, 1);
+                pst.setInt(3, 1);
             } else if(socio instanceof SocioFederado) {
-                pst.setInt(4, 2);
+                pst.setInt(3, 2);
             }else{
-                pst.setInt(4, 3);
+                pst.setInt(3, 3);
             }
-            pst.setInt(5, 1);
+            pst.setInt(4, 1);
             pst.executeUpdate();
             ResultSet salida = pst.getGeneratedKeys();
             if(salida.next()) {
