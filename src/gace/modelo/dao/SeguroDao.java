@@ -18,11 +18,11 @@ public class SeguroDao{
         conexion = BBDDUtil.getConexion();
     }
 
-//    @Override
+
     public int insertar(Seguro seguro) {
         int idseguro = 0;
         String sql = "INSERT INTO seguro (nombre, tipo, precio) VALUES ('a', ?, ?)";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try(PreparedStatement pst = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             if(seguro.isTipo()) {
                 pst.setString(1, "COMPLETO");
             } else {
@@ -41,7 +41,7 @@ public class SeguroDao{
         return idseguro;
     }
 
-//    @Override
+
     public void modificar(Seguro seguro) {
         String sql = "UPDATE seguro SET tipo = ?, precio = ? WHERE id_seguro = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -58,7 +58,7 @@ public class SeguroDao{
         }
     }
 
-//    @Override
+
     public void eliminar(int idSeguro) {
         String sql = "DELETE FROM seguro WHERE id_seguro = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -69,7 +69,7 @@ public class SeguroDao{
         }
     }
 
-//    @Override
+
     public Seguro buscar(int idSeguro) {
         String sql = "SELECT * FROM seguro WHERE codigo = ?";
         Seguro seg = null;
@@ -88,7 +88,7 @@ public class SeguroDao{
         return seg;
     }
 
-//    @Override
+
     public ArrayList<Seguro> listar() {
         ArrayList<Seguro> seguros = new ArrayList<>();
         String sql = "SELECT * FROM seguro";

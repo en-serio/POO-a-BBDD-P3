@@ -17,11 +17,10 @@ public class FederacionDao implements DAO<Federacion> {
 
     @Override
     public void insertar(Federacion federacion) {
-        String sql = "INSERT INTO federacion (codigo, nombre, precio) VALUES (?, ?, 1)";
+        String sql = "INSERT INTO federacion (codigo, nombre) VALUES (?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, federacion.getCodigo());
             pst.setString(2, federacion.getNombre());
-
             pst.executeUpdate();
             ResultSet salida = pst.getGeneratedKeys();
             if(salida.next()) {

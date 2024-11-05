@@ -81,7 +81,7 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
         String sql = "SELECT e.*, seg.* ,s.*" +
                 "FROM estandar e " +
                 "JOIN seguro seg ON e.id_seguro = seg.id_seguro " +
-                "JOIN socio s ON e.id_socio = s.id_socio" +
+                "JOIN socio s ON e.id_socio = s.id_socio " +
                 "WHERE e.nif = ?";
         SocioEstandar socio = null;
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
