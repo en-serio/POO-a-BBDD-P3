@@ -6,6 +6,11 @@ public class SocioInfantil extends Socio {
 
     public SocioInfantil() {}
 
+    public SocioInfantil(int id, String nombre, String apellido, int noTutor) {
+        super(id, nombre, apellido);
+        this.noTutor = noTutor;
+    }
+
     public SocioInfantil(String nombre, String apellido, int noTutor) {
         super(nombre, apellido);
         this.noTutor = noTutor;

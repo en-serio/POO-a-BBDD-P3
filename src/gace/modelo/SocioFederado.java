@@ -5,6 +5,12 @@ public class SocioFederado extends Socio {
     private Federacion federacion;
     private final double cuotaBase = 100.0;
 
+    public SocioFederado(int id, String nombre,String apellido, String nif, Federacion federacion) {
+        super(id, nombre, apellido);
+        this.nif = nif;
+        this.federacion = federacion;
+    }
+
     public SocioFederado(String nombre,String apellido, String nif, Federacion federacion) {
         super(nombre, apellido);
         this.nif = nif;

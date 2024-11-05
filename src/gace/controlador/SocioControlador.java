@@ -59,7 +59,7 @@ public class SocioControlador {
             case 3:
                 SocioInfantil socioInf = nouSociInfantil(datosSocio[1], datosSocio[2]);
                 if (socioInf == null) {
-                    datosUtil.mostrarError("Error al crear el socio estándar");
+                    datosUtil.mostrarError("Error al crear el socio infantil");
                     return 0;
                 }
                 id = DAOFactory.getSocioDao().insertar(socioInf);
@@ -122,9 +122,13 @@ public class SocioControlador {
     public SocioInfantil nouSociInfantil(String nombre, String apellido){
         int noTutor = vistaSocios.formTutor();
         if(noTutor == 0){
+            //BORRAR
+            System.out.println("ERROR 1");
             return null;
         }
         if(!buscarTutor(noTutor)){
+            //BORRAR
+            System.out.println("ERROR 2");
             return null;
         }
         return new SocioInfantil(nombre, apellido, noTutor);
@@ -171,14 +175,17 @@ public class SocioControlador {
                 for(Socio socio : DAOFactory.getSocioEstandarDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
+                break;
             case 2:
                 for(Socio socio : DAOFactory.getSocioFederadoDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
+                break;
             case 3:
                 for(Socio socio : DAOFactory.getSocioInfantilDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
+                break;
             case 4:
                 for(Socio socio : DAOFactory.getSocioDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());

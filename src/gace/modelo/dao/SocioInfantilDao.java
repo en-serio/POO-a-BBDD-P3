@@ -21,7 +21,7 @@ public class SocioInfantilDao implements DAO<SocioInfantil> {
         String sql = "INSERT INTO infantil (id_socio, id_tutor) VALUES (?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setInt(1, socio.getIdSocio());
-            pst.setInt(3, socio.getNoTutor());
+            pst.setInt(2, socio.getNoTutor());
 
             pst.executeUpdate();
         } catch (SQLException e) {
