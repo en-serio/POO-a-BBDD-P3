@@ -111,7 +111,7 @@ public class SocioControlador {
             datosUtil.mostrarError("Federación no válida.");
             return null;
         }
-        DAOFactory.getFederacionDao().insertar(fed);
+        //DAOFactory.getFederacionDao().insertar(fed);
         return new SocioFederado(nombre, apellido, nif, fed);
     }
 
@@ -231,7 +231,7 @@ public class SocioControlador {
             return null;
         }
         Federacion federacion = new Federacion(datosFed[0], datosFed[1]);
-        DAOFactory.getFederacionDao().insertar(federacion);
+        //DAOFactory.getFederacionDao().insertar(federacion);
         return federacion;
     }
 
