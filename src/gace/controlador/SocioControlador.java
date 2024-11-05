@@ -111,7 +111,7 @@ public class SocioControlador {
             datosUtil.mostrarError("Federación no válida.");
             return null;
         }
-        DAOFactory.getFederacionDao().insertar(fed);
+        /*DAOFactory.getFederacionDao().insertar(fed);*/
         return new SocioFederado(nombre, apellido, nif, fed);
     }
 
@@ -171,14 +171,17 @@ public class SocioControlador {
                 for(Socio socio : DAOFactory.getSocioEstandarDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
+                break;
             case 2:
                 for(Socio socio : DAOFactory.getSocioFederadoDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
+                break;
             case 3:
                 for(Socio socio : DAOFactory.getSocioInfantilDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
+                break;
             case 4:
                 for(Socio socio : DAOFactory.getSocioDao().listar()) {
                     vistaSocios.mostrarSocio(socio.toString());
@@ -232,7 +235,7 @@ public class SocioControlador {
             return null;
         }
         Federacion federacion = new Federacion(datosFed[0], datosFed[1]);
-        /*DAOFactory.getFederacionDao().insertar(federacion);*/
+        DAOFactory.getFederacionDao().insertar(federacion);
         return federacion;
     }
 

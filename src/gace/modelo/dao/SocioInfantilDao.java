@@ -75,9 +75,10 @@ public class SocioInfantilDao implements DAO<SocioInfantil> {
 
     public ArrayList<SocioInfantil> listar() {
         ArrayList<SocioInfantil> socios = new ArrayList<>();
-        String sql = "SELECT i.id_socio, s.* \" +\n" +
-                "\"FROM infantil i \" +\n" +
-                "\"JOIN socio s ON i.id_socio = s.id_socio \"";
+        String sql = "SELECT i.id_socio, s.* " +
+                "FROM infantil i " +
+                "JOIN socio s ON i.id_socio = s.id_socio";
+
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
             while(salida.next()) {

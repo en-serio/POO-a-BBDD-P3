@@ -114,10 +114,11 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
 
     public ArrayList<SocioFederado> listar() {
         ArrayList<SocioFederado> socios = new ArrayList<>();
-        String sql = "SELECT f.id_socio, s.nombre, s.apellido, f.nif, f.id_federacion, fed.* \" +\n" +
-                "\"FROM federado f \" +\n" +
-                "\"JOIN socio s ON f.id_socio = s.id_socio \" +\n" +
-                "\"JOIN federacion fed ON f.id_federacion = fed.id_federacion\"";
+        String sql = "SELECT f.id_socio, s.nombre, s.apellido, f.nif, f.id_federacion, fed.* " +
+                "FROM federado f " +
+                "JOIN socio s ON f.id_socio = s.id_socio " +
+                "JOIN federacion fed ON f.id_federacion = fed.id_federacion";
+
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
             while(salida.next()) {
