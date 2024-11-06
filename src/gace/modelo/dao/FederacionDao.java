@@ -1,7 +1,7 @@
 package gace.modelo.dao;
 
-import gace.modelo.Excursion;
 import gace.modelo.Federacion;
+import gace.modelo.Socio;
 import gace.modelo.utils.BBDDUtil;
 
 import java.sql.*;
@@ -15,7 +15,6 @@ public class FederacionDao implements DAO<Federacion> {
         conexion = BBDDUtil.getConexion();
     }
 
-    @Override
     public void insertar(Federacion federacion) {
         String sql = "INSERT INTO federacion (codigo, nombre) VALUES (?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -31,7 +30,6 @@ public class FederacionDao implements DAO<Federacion> {
         }
     }
 
-    @Override
     public void modificar(Federacion federacion) {
         String sql = "UPDATE federacion SET nombre = ? WHERE id_federacion = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -43,7 +41,6 @@ public class FederacionDao implements DAO<Federacion> {
         }
     }
 
-    @Override
     public void eliminar(int id_t) {
         String sql = "DELETE FROM federacion WHERE id_federacion = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -64,7 +61,6 @@ public class FederacionDao implements DAO<Federacion> {
         }
     }
 
-    @Override
     public Federacion buscar(int idFederacion) {
         Federacion fed = null;
         String sql = "SELECT * FROM federacion WHERE id_federacion = ?";
@@ -101,7 +97,6 @@ public class FederacionDao implements DAO<Federacion> {
         return fed;
     }
 
-    @Override
     public ArrayList<Federacion> listar() {
         ArrayList<Federacion> federacions = new ArrayList<>();
         String sql = "SELECT * FROM federacion";

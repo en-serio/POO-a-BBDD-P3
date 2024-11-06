@@ -108,15 +108,18 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
         return socio;
     }
 
-    public ArrayList<SocioEstandar> listar() {
-        ArrayList<SocioEstandar> socios = new ArrayList<>();
+    public ArrayList<Socio> listar() {
+        ArrayList<Socio> socios = new ArrayList<>();
         String sql = "SELECT e.id_socio, s.nombre, s.apellido, e.nif, e.id_seguro, seg.* " +
                     "FROM estandar e " +
                     "JOIN socio s ON e.id_socio = s.id_socio " +
                     "JOIN seguro seg ON e.id_seguro = seg.id_seguro";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
-            while(salida.next()) {
+            if(!salida.next()) {
+                return null;
+            }
+            do{
                 SocioEstandar socio = new SocioEstandar();
                 Seguro seg = new Seguro();
                 socio.setIdSocio(salida.getInt("id_socio"));
@@ -128,7 +131,7 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
                 seg.setPrecio(salida.getDouble("precio"));
                 socio.setSeguro(seg);
                 socios.add(socio);
-            }
+            } while(salida.next());
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
         }

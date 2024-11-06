@@ -170,24 +170,45 @@ public class SocioControlador {
         }else {
             opcionSocios = filtro;
         }
+        ArrayList<Socio> list= null;
         switch (opcionSocios) {
             case 1:
-                for(Socio socio : DAOFactory.getSocioEstandarDao().listar()) {
+                list = DAOFactory.getSocioEstandarDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios estándar");
+                    return false;
+                }
+                for(Socio socio : list) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;
             case 2:
-                for(Socio socio : DAOFactory.getSocioFederadoDao().listar()) {
+                list = DAOFactory.getSocioFederadoDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios federados");
+                    return false;
+                }
+                for(Socio socio : list) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;
             case 3:
-                for(Socio socio : DAOFactory.getSocioInfantilDao().listar()) {
+                list = DAOFactory.getSocioInfantilDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios infantiles");
+                    return false;
+                }
+                for(Socio socio : list) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;
             case 4:
-                for(Socio socio : DAOFactory.getSocioDao().listar()) {
+                list = DAOFactory.getSocioDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios");
+                    return false;
+                }
+                for(Socio socio : list) {
                     vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;

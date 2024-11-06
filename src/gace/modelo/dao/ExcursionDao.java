@@ -1,6 +1,7 @@
 package gace.modelo.dao;
 
 import gace.modelo.Excursion;
+import gace.modelo.Socio;
 import gace.modelo.utils.BBDDUtil;
 
 import java.sql.Connection;
@@ -8,8 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ExcursionDao implements DAO<Excursion> {
     private Connection conexion;
@@ -18,7 +17,6 @@ public class ExcursionDao implements DAO<Excursion> {
         conexion = BBDDUtil.getConexion();
     }
 
-    @Override
     public void insertar(Excursion excursion) {
         String sql = "INSERT INTO excursion (codigo, descripcion, fecha, no_dias, precio) VALUES (?,?, ?, ?, ?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -34,7 +32,6 @@ public class ExcursionDao implements DAO<Excursion> {
         }
     }
 
-    @Override
     public void modificar(Excursion excursion) {
         String sql = "UPDATE excursion SET descripcion = ?, fecha = ?, no_dias = ?, precio = ? WHERE id_excursion = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -50,7 +47,6 @@ public class ExcursionDao implements DAO<Excursion> {
         }
     }
 
-    @Override
     public void eliminar(int id_excursion) {
         String sql = "DELETE FROM excursion WHERE id_excursion = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -71,7 +67,6 @@ public class ExcursionDao implements DAO<Excursion> {
         }
     }
 
-    @Override
     public Excursion buscar(int id_excursion) {
         String sql = "SELECT * FROM excursion WHERE id_excursion = ?";
         Excursion excursion = null;
@@ -114,13 +109,15 @@ public class ExcursionDao implements DAO<Excursion> {
     }
 
 
-    @Override
     public ArrayList<Excursion> listar() {
         ArrayList<Excursion> excursiones = new ArrayList<>();
         String sql = "SELECT * FROM excursion";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
-            while(salida.next()) {
+            if(!salida.next()){
+                return null;
+            }
+            do {
                 Excursion excursion = new Excursion();
                 excursion.setId(salida.getInt("id_excursion"));
                 excursion.setDescripcion(salida.getString("descripcion"));
@@ -128,7 +125,7 @@ public class ExcursionDao implements DAO<Excursion> {
                 excursion.setNoDias(salida.getInt("no_dias"));
                 excursion.setPrecio(salida.getDouble("precio"));
                 excursiones.add(excursion);
-            }
+            } while(salida.next());
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
         }
