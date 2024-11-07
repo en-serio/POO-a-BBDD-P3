@@ -35,3 +35,5 @@ mysql-connector-j-9.1.0.jar
 dotenv-java-3.0.2.jar
 
 .env
+.idea
+Producto 1.iml
