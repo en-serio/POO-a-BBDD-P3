@@ -36,7 +36,7 @@ public class SocioEstandar extends Socio {
 
     @Override
     public String toString() {
-        String tipo = seguro.isTipo() ? "Completo" : "Básico";
+        String tipo = seguro.isTipo() ? "Completo" : "Estándar";
         return "Socio nº:" + this.getIdSocio() +", Nombre: " + this.getNombre() +
                 ", Apellido: " + this.getApellido() +
                 ", Tipo: Estandar" +

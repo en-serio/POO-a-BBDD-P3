@@ -47,7 +47,7 @@ public class SeguroDao{
             if(seguro.isTipo()) {
                 pst.setString(1, "COMPLETO");
             } else {
-                pst.setString(1, "BASICO");
+                pst.setString(1, "ESTÁNDAR");
             }
             pst.setDouble(2, seguro.getPrecio());
             pst.setInt(3, seguro.getIdSeguro());
