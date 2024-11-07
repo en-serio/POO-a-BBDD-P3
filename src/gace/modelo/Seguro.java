@@ -38,7 +38,7 @@ public class Seguro {
     @Override
     public String toString() {
         return "Seguro{" +
-                ", tipo=" + (tipo ? "COMPLETO" : "BÁSICO") +
+                ", tipo=" + (tipo ? "COMPLETO" : "ESTÁNDAR") +
                 ", precio=" + precio +
                 '}';
     }
