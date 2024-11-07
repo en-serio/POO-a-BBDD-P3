@@ -122,13 +122,15 @@ public class SocioDao {
     }
 
     public Socio buscar(String nif) {
-        Socio socio = null;
-        socio = DAOFactory.getSocioEstandarDao().buscar(nif);
-        if(socio != null) {
-            return socio;
+        int id = DAOFactory.getSocioEstandarDao().comprobarEst(nif);
+        if(id != -1) {
+            return DAOFactory.getSocioEstandarDao().buscar(id);
         }
-        socio = DAOFactory.getSocioFederadoDao().buscar(nif);
-        return socio;
+        id = DAOFactory.getSocioFederadoDao().comprobarFed(nif);
+        if(id != -1) {
+            return DAOFactory.getSocioFederadoDao().buscar(id);
+        }
+        return null;
     }
 
     public boolean hayNif(String nif) {
@@ -146,8 +148,7 @@ public class SocioDao {
 
 
 
-    // todo seguro que esto se puede optimizar
-    // todo hacer 3 consultas, una para cada tipo de socio y unirlas luego y usar sort para ordenar por id
+
     public ArrayList<Socio> listar() {
         ArrayList<Socio> socios = new ArrayList<>();
         ArrayList<Socio> aux = DAOFactory.getSocioEstandarDao().listar();

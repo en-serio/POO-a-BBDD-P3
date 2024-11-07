@@ -81,7 +81,9 @@ public class ExcursionDao implements DAO<Excursion> {
                 excursion.setFecha(salida.getDate("fecha"));
                 excursion.setNoDias(salida.getInt("no_dias"));
                 excursion.setPrecio(salida.getDouble("precio"));
-            }else return null;
+            }else{
+                return null;
+            }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
         }
@@ -98,12 +100,14 @@ public class ExcursionDao implements DAO<Excursion> {
             if(salida.next()) {
                 excursion = new Excursion();
                 excursion.setId(salida.getInt("id_excursion"));
-                excursion.setCodigo(salida.getString("codigo"));
                 excursion.setDescripcion(salida.getString("descripcion"));
+                excursion.setCodigo(salida.getString("codigo"));
                 excursion.setFecha(salida.getDate("fecha"));
                 excursion.setNoDias(salida.getInt("no_dias"));
                 excursion.setPrecio(salida.getDouble("precio"));
-            }else return null;
+            }else{
+                return null;
+            }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
         }
