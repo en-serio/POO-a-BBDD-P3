@@ -9,7 +9,6 @@ public class Federacion {
         this.codigo = codigo;
         this.nombre = nombre;
     }
-
     public Federacion() {}
 
     //getters
