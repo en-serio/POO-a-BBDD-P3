@@ -20,14 +20,14 @@ public class ExcursionDao implements DAO<Excursion> {
 
     @Override
     public void insertar(Excursion excursion) {
-        String sql = "INSERT INTO excursion (codigo, descripcion, fecha, no_dias, precio) VALUES (?,?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO excursion ( descripcion, fecha, no_dias, precio) VALUES (?,?, ?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             java.sql.Date fechaSQL = new java.sql.Date(excursion.getFecha().getTime());
-            pst.setString(1, excursion.getCodigo());
-            pst.setString(2, excursion.getDescripcion());
-            pst.setDate(3, fechaSQL);
-            pst.setInt(4, excursion.getNoDias());
-            pst.setDouble(5, excursion.getPrecio());
+            //pst.setString(1, excursion.getCodigo());
+            pst.setString(1, excursion.getDescripcion());
+            pst.setDate(2, fechaSQL);
+            pst.setInt(3, excursion.getNoDias());
+            pst.setDouble(4, excursion.getPrecio());
             pst.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());

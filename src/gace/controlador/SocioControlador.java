@@ -163,28 +163,45 @@ public class SocioControlador {
         int opcionSocios = 0;
         if(mostrarFiltro == 1){
             opcionSocios = vistaSocios.requerirFiltro();
-        }else {
+        } else {
             opcionSocios = filtro;
         }
+
         switch (opcionSocios) {
             case 1:
                 for(Socio socio : DAOFactory.getSocioEstandarDao().listar()) {
-                    vistaSocios.mostrarSocio(socio.toString());
+                    if (socio != null) {
+                        vistaSocios.mostrarSocio(socio.toString());
+                    } else {
+                        vistaSocios.mostrarSocio("Socio no encontrado");
+                    }
                 }
                 break;
             case 2:
                 for(Socio socio : DAOFactory.getSocioFederadoDao().listar()) {
-                    vistaSocios.mostrarSocio(socio.toString());
+                    if (socio != null) {
+                        vistaSocios.mostrarSocio(socio.toString());
+                    } else {
+                        vistaSocios.mostrarSocio("Socio no encontrado");
+                    }
                 }
                 break;
             case 3:
                 for(Socio socio : DAOFactory.getSocioInfantilDao().listar()) {
-                    vistaSocios.mostrarSocio(socio.toString());
+                    if (socio != null) {
+                        vistaSocios.mostrarSocio(socio.toString());
+                    } else {
+                        vistaSocios.mostrarSocio("Socio no encontrado");
+                    }
                 }
                 break;
             case 4:
                 for(Socio socio : DAOFactory.getSocioDao().listar()) {
-                    vistaSocios.mostrarSocio(socio.toString());
+                    if (socio != null) {
+                        vistaSocios.mostrarSocio(socio.toString());
+                    } else {
+                        vistaSocios.mostrarSocio("Socio no encontrado");
+                    }
                 }
                 break;
             case 0:
@@ -194,6 +211,7 @@ public class SocioControlador {
         }
         return true;
     }
+
 
     public Socio buscarSocio(int noSocio) {
         return DAOFactory.getSocioDao().buscar(noSocio);

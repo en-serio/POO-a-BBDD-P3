@@ -98,7 +98,7 @@ public class ExcursionControlador {
     public boolean seleccionarExc(ArrayList<Excursion> excursiones){
         String codigo = vistaExcursion.pedirExc();
         for(Excursion excur : excursiones){
-            if(excur.getCodigo().equals(codigo)) {
+            if(excur.getDescripcion().equals(codigo)) {
                 int opcion = datosUtil.pedirOpcion("Es esta la excursion que desea eliminar", "Sí", "No");
                 if (opcion == 1) {
                     DAOFactory.getExcursionDao().eliminar(excur.getId());
