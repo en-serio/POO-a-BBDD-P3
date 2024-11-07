@@ -24,9 +24,9 @@ public class SeguroDao{
         String sql = "INSERT INTO seguro (nombre, tipo, precio) VALUES ('a', ?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             if(seguro.isTipo()) {
-                pst.setString(1, "ESTANDAR");
-            } else {
                 pst.setString(1, "COMPLETO");
+            } else {
+                pst.setString(1, "ESTANDAR");
             }
             pst.setDouble(2, seguro.getPrecio());
             pst.executeUpdate();

@@ -69,7 +69,7 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
                 socio.setApellido(salida.getString("apellido"));
                 socio.setIdSocio(salida.getInt("id_socio"));
                 socio.setNif(salida.getString("nif"));
-                fed.setIdFederacion(salida.getInt("id_seguro"));
+                fed.setIdFederacion(salida.getInt("id_federacion"));
                 fed.setCodigo(salida.getString("codigo"));
                 fed.setNombre(salida.getString("nombre"));
                 socio.setFederacion(fed);
