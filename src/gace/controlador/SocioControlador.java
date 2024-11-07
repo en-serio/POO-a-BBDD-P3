@@ -121,12 +121,9 @@ public class SocioControlador {
     public SocioInfantil nouSociInfantil(String nombre, String apellido){
         int noTutor = vistaSocios.formTutor();
         if(noTutor == 0){
-            //BORRAR
-            System.out.println("ERROR 1");
             return null;
         }
-        if(!buscarTutor(noTutor)){
-            //BORRAR
+        if(buscarTutor(noTutor)){
             System.out.println("ERROR 2");
             return null;
         }
@@ -148,7 +145,7 @@ public class SocioControlador {
         if(socio == null){
             socio = DAOFactory.getSocioFederadoDao().buscar(noTutor);
             if(socio == null){
-                    return false;
+                return false;
             }
         }
         return true;

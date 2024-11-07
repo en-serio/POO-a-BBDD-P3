@@ -78,6 +78,20 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
         return socio;
     }
 
+    public int comprobarEst(String nif) {
+        String sql = "SELECT * FROM estandar WHERE nif = ?";
+        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setString(1, nif);
+            ResultSet salida = pst.executeQuery();
+            if(salida.next()) {
+                return salida.getInt("id_socio");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getErrorCode() + e.getMessage());
+        }
+        return -1;
+    }
+
     public SocioEstandar buscar(String nif) {
         String sql = "SELECT e.*, seg.* ,s.*" +
                 "FROM estandar e " +

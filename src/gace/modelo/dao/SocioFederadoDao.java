@@ -79,6 +79,21 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
         }
         return socio;
     }
+
+    public int comprobarFed(String nif) {
+        String sql = "SELECT * FROM federado WHERE nif = ?";
+        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setString(1, nif);
+            ResultSet salida = pst.executeQuery();
+            if(salida.next()) {
+                return salida.getInt("id_socio");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getErrorCode() + e.getMessage());
+        }
+        return -1;
+    }
+
     public SocioFederado buscar(String nif) {
         String sql = "SELECT f.*, fed.*, s.* " +
                 "FROM federado f " +
