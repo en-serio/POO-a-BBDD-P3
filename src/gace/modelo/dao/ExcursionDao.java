@@ -77,6 +77,7 @@ public class ExcursionDao implements DAO<Excursion> {
                 excursion = new Excursion();
                 excursion.setId(salida.getInt("id_excursion"));
                 excursion.setDescripcion(salida.getString("descripcion"));
+                excursion.setCodigo(salida.getString("codigo"));
                 excursion.setFecha(salida.getDate("fecha"));
                 excursion.setNoDias(salida.getInt("no_dias"));
                 excursion.setPrecio(salida.getDouble("precio"));
@@ -121,6 +122,7 @@ public class ExcursionDao implements DAO<Excursion> {
                 Excursion excursion = new Excursion();
                 excursion.setId(salida.getInt("id_excursion"));
                 excursion.setDescripcion(salida.getString("descripcion"));
+                excursion.setCodigo(salida.getString("codigo"));
                 excursion.setFecha(salida.getDate("fecha"));
                 excursion.setNoDias(salida.getInt("no_dias"));
                 excursion.setPrecio(salida.getDouble("precio"));
