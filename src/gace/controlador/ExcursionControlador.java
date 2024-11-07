@@ -66,6 +66,10 @@ public class ExcursionControlador {
     public Excursion pedirExcursion(){
         String codigo = vistaExcursion.pedirExc();
         Excursion exc = buscarExcursion(codigo);
+        if (exc == null){
+            datosUtil.mostrarError("Excursion no encontrada");
+            return null;
+        }
         vistaExcursion.detalleExcursion(exc.toString());
         return exc;
     }

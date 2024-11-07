@@ -63,6 +63,7 @@ public class SocioControlador {
                     return 0;
                 }
                 id = DAOFactory.getSocioDao().insertar(socioInf);
+                vistaSocios.mostrarSocio(socioInf.toString());
                 break;
             default:
                 datosUtil.mostrarError("Tipo de socio no válido");
@@ -126,7 +127,7 @@ public class SocioControlador {
             System.out.println("ERROR 1");
             return null;
         }
-        if(!buscarTutor(noTutor)){
+        if(buscarTutor(noTutor)){
             //BORRAR
             System.out.println("ERROR 2");
             return null;
@@ -310,6 +311,7 @@ public class SocioControlador {
             return false;
         }
         vistaSocios.mostrarSocio(socio.toString());
+
         if(vistaSocios.confirmar("¿Está seguro de que desea eliminar este socio?")){
             DAOFactory.getSocioDao().eliminar(socio.getIdSocio());
             datosUtil.mostrarError("Socio eliminado");
