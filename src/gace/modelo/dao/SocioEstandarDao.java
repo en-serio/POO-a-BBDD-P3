@@ -108,6 +108,8 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
         return socio;
     }
 
+
+
     public ArrayList<Socio> listar() {
         ArrayList<Socio> socios = new ArrayList<>();
         String sql = "SELECT e.id_socio, s.nombre, s.apellido, e.nif, e.id_seguro, seg.* " +

@@ -66,6 +66,10 @@ public class ExcursionControlador {
     public Excursion pedirExcursion(){
         String codigo = vistaExcursion.pedirExc();
         Excursion exc = buscarExcursion(codigo);
+        if(exc == null){
+            datosUtil.mostrarError("Excursion no encontrada");
+            return null;
+        }
         vistaExcursion.detalleExcursion(exc.toString());
         return exc;
     }
@@ -86,7 +90,7 @@ public class ExcursionControlador {
 
     public boolean eliminarExcursion(){
         ArrayList<Excursion> excursiones = DAOFactory.getExcursionDao().listar();
-        if(excursiones.isEmpty()){
+        if(excursiones== null){
             datosUtil.mostrarError("No hay excursiones para eliminar");
             return false;
         }
