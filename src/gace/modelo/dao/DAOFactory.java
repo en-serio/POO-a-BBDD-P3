@@ -2,13 +2,13 @@ package gace.modelo.dao;
 
 public class DAOFactory {
     // TODO aplicar el patrón Singleton
+
     public static ExcursionDao getExcursionDao() {
         return new ExcursionDao();
     }
     public static InscripcionDao getInscripcionDao() {
         return new InscripcionDao();
     }
-
     public static SocioDao getSocioDao() {
         return new SocioDao();
     }
