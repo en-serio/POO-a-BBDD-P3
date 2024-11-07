@@ -19,14 +19,14 @@ public class SeguroDao{
     }
 
 
-    public int insertar(Seguro seguro) {
+    public void insertar(Seguro seguro) {
         int idseguro = 0;
         String sql = "INSERT INTO seguro (nombre, tipo, precio) VALUES ('a', ?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             if(seguro.isTipo()) {
-                pst.setString(1, "COMPLETO");
+                pst.setString(1, "ESTANDAR");
             } else {
-                pst.setString(1, "BASICO");
+                pst.setString(1, "COMPLETO");
             }
             pst.setDouble(2, seguro.getPrecio());
             pst.executeUpdate();
@@ -38,7 +38,6 @@ public class SeguroDao{
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());
         }
-        return idseguro;
     }
 
 

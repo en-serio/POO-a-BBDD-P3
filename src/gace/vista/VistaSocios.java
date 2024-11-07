@@ -85,6 +85,7 @@ public class VistaSocios {
         if (precioSeguro == -1) {
             return null;
         }
+
         return tipoSeguro + "," + precioSeguro;
     }
 
