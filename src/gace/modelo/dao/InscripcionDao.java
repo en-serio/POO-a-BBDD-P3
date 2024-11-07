@@ -15,7 +15,6 @@ public class InscripcionDao implements DAO<Inscripcion>{
     public InscripcionDao() {
         conexion = BBDDUtil.getConexion();
     }
-    @Override
     public void insertar(Inscripcion inscripcion) {
         String sql = "INSERT INTO incripcion (codigo, id_socio, id_excursion, fecha) VALUES (?, ?, ?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -31,7 +30,6 @@ public class InscripcionDao implements DAO<Inscripcion>{
         }
     }
 
-    @Override
     public void modificar(Inscripcion inscripcion) {
         String sql = "UPDATE inscripcion SET id_socio = ?, id_excurion = ?,fecha = ? WHERE id_inscripcion = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -46,7 +44,6 @@ public class InscripcionDao implements DAO<Inscripcion>{
         }
     }
 
-    @Override
     public void eliminar(int idInscripcion) {
         String sql = "DELETE FROM inscripcion WHERE id_inscripcion = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
@@ -67,7 +64,6 @@ public class InscripcionDao implements DAO<Inscripcion>{
         }
     }
 
-    @Override
     public Inscripcion buscar(int idInscripcion) {
         String sql = "SELECT * FROM inscripcion WHERE id_inscripcion = ?";
         Inscripcion insc = null;
@@ -153,16 +149,15 @@ public class InscripcionDao implements DAO<Inscripcion>{
         return insc;
     }
 
-    @Override
     public ArrayList<Inscripcion> listar() {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, s.*, e.*," +
+        String sql = "SELECT i.*, s.*, e.* " +
                 "CASE" +
-                "   WHEN s.tipo = 1 THEN se.*" +
-                "   WHEN s.tipo = 2 THEN sf.*" +
-                "   WHEN s.tipo = 3 THEN si.*" +
+                "   WHEN s.tipo = 1 THEN se.* " +
+                "   WHEN s.tipo = 2 THEN sf.* " +
+                "   WHEN s.tipo = 3 THEN si.* " +
                 "END as socio" +
-                "FROM inscripcion i" +
+                "FROM inscripcion i " +
                 "JOIN socio s ON i.id_socio = s.id_socio " +
                 "LEFT JOIN estandar se ON i.id_socio = se.id_socio " +
                 "LEFT JOIN federado sf ON i.id_socio = sf.id_socio " +

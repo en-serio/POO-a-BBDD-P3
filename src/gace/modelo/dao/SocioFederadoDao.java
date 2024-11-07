@@ -1,9 +1,6 @@
 package gace.modelo.dao;
 
-import gace.modelo.Federacion;
-import gace.modelo.Seguro;
-import gace.modelo.SocioEstandar;
-import gace.modelo.SocioFederado;
+import gace.modelo.*;
 import gace.modelo.utils.BBDDUtil;
 
 import java.sql.Connection;
@@ -112,16 +109,18 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
         return socio;
     }
 
-    public ArrayList<SocioFederado> listar() {
-        ArrayList<SocioFederado> socios = new ArrayList<>();
+    public ArrayList<Socio> listar() {
+        ArrayList<Socio> socios = new ArrayList<>();
         String sql = "SELECT f.id_socio, s.nombre, s.apellido, f.nif, f.id_federacion, fed.* " +
                 "FROM federado f " +
                 "JOIN socio s ON f.id_socio = s.id_socio " +
                 "JOIN federacion fed ON f.id_federacion = fed.id_federacion";
-
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
-            while(salida.next()) {
+            if (!salida.next()) {
+                return null;
+            }
+            do{
                 SocioFederado socio = new SocioFederado();
                 Federacion fed = new Federacion();
                 socio.setIdSocio(salida.getInt("id_socio"));
@@ -133,7 +132,7 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
                 fed.setCodigo(salida.getString("codigo"));
                 socio.setFederacion(fed);
                 socios.add(socio);
-            }
+            }while(salida.next());
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
         }

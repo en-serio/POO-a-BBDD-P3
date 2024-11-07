@@ -59,7 +59,7 @@ public class SocioControlador {
             case 3:
                 SocioInfantil socioInf = nouSociInfantil(datosSocio[1], datosSocio[2]);
                 if (socioInf == null) {
-                    datosUtil.mostrarError("Error al crear el socio estándar");
+                    datosUtil.mostrarError("Error al crear el socio infantil");
                     return 0;
                 }
                 id = DAOFactory.getSocioDao().insertar(socioInf);
@@ -111,7 +111,7 @@ public class SocioControlador {
             datosUtil.mostrarError("Federación no válida.");
             return null;
         }
-        /*DAOFactory.getFederacionDao().insertar(fed);*/
+        //DAOFactory.getFederacionDao().insertar(fed);
         return new SocioFederado(nombre, apellido, nif, fed);
     }
 
@@ -122,9 +122,13 @@ public class SocioControlador {
     public SocioInfantil nouSociInfantil(String nombre, String apellido){
         int noTutor = vistaSocios.formTutor();
         if(noTutor == 0){
+            //BORRAR
+            System.out.println("ERROR 1");
             return null;
         }
         if(!buscarTutor(noTutor)){
+            //BORRAR
+            System.out.println("ERROR 2");
             return null;
         }
         return new SocioInfantil(nombre, apellido, noTutor);
@@ -163,45 +167,49 @@ public class SocioControlador {
         int opcionSocios = 0;
         if(mostrarFiltro == 1){
             opcionSocios = vistaSocios.requerirFiltro();
-        } else {
+        }else {
             opcionSocios = filtro;
         }
-
+        ArrayList<Socio> list= null;
         switch (opcionSocios) {
             case 1:
-                for(Socio socio : DAOFactory.getSocioEstandarDao().listar()) {
-                    if (socio != null) {
-                        vistaSocios.mostrarSocio(socio.toString());
-                    } else {
-                        vistaSocios.mostrarSocio("Socio no encontrado");
-                    }
+                list = DAOFactory.getSocioEstandarDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios estándar");
+                    return false;
+                }
+                for(Socio socio : list) {
+                    vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;
             case 2:
-                for(Socio socio : DAOFactory.getSocioFederadoDao().listar()) {
-                    if (socio != null) {
-                        vistaSocios.mostrarSocio(socio.toString());
-                    } else {
-                        vistaSocios.mostrarSocio("Socio no encontrado");
-                    }
+                list = DAOFactory.getSocioFederadoDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios federados");
+                    return false;
+                }
+                for(Socio socio : list) {
+                    vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;
             case 3:
-                for(Socio socio : DAOFactory.getSocioInfantilDao().listar()) {
-                    if (socio != null) {
-                        vistaSocios.mostrarSocio(socio.toString());
-                    } else {
-                        vistaSocios.mostrarSocio("Socio no encontrado");
-                    }
+                list = DAOFactory.getSocioInfantilDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios infantiles");
+                    return false;
+                }
+                for(Socio socio : list) {
+                    vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;
             case 4:
-                for(Socio socio : DAOFactory.getSocioDao().listar()) {
-                    if (socio != null) {
-                        vistaSocios.mostrarSocio(socio.toString());
-                    } else {
-                        vistaSocios.mostrarSocio("Socio no encontrado");
-                    }
+                list = DAOFactory.getSocioDao().listar();
+                if(list == null){
+                    datosUtil.mostrarError("No hay socios");
+                    return false;
+                }
+                for(Socio socio : list) {
+                    vistaSocios.mostrarSocio(socio.toString());
                 }
                 break;
             case 0:
@@ -211,7 +219,6 @@ public class SocioControlador {
         }
         return true;
     }
-
 
     public Socio buscarSocio(int noSocio) {
         return DAOFactory.getSocioDao().buscar(noSocio);
@@ -253,7 +260,7 @@ public class SocioControlador {
             return null;
         }
         Federacion federacion = new Federacion(datosFed[0], datosFed[1]);
-        DAOFactory.getFederacionDao().insertar(federacion);
+        /*DAOFactory.getFederacionDao().insertar(federacion);*/
         return federacion;
     }
 

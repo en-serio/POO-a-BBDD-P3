@@ -1,7 +1,6 @@
 package gace.modelo.dao;
 
-import gace.modelo.Federacion;
-import gace.modelo.SocioFederado;
+import gace.modelo.Socio;
 import gace.modelo.SocioInfantil;
 import gace.modelo.utils.BBDDUtil;
 
@@ -21,7 +20,7 @@ public class SocioInfantilDao implements DAO<SocioInfantil> {
         String sql = "INSERT INTO infantil (id_socio, id_tutor) VALUES (?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setInt(1, socio.getIdSocio());
-            pst.setInt(3, socio.getNoTutor());
+            pst.setInt(2, socio.getNoTutor());
 
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -73,22 +72,25 @@ public class SocioInfantilDao implements DAO<SocioInfantil> {
         return socio;
     }
 
-    public ArrayList<SocioInfantil> listar() {
-        ArrayList<SocioInfantil> socios = new ArrayList<>();
-        String sql = "SELECT i.id_socio, s.* " +
+    public ArrayList<Socio> listar() {
+        ArrayList<Socio> socios = new ArrayList<>();
+        String sql = "SELECT i.*, s.* " +
                 "FROM infantil i " +
                 "JOIN socio s ON i.id_socio = s.id_socio";
 
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
-            while(salida.next()) {
+            if(!salida.next()){
+                return null;
+            }
+            do{
                 SocioInfantil socio = new SocioInfantil();
                 socio.setIdSocio(salida.getInt("id_socio"));
                 socio.setNombre(salida.getString("nombre"));
                 socio.setApellido(salida.getString("apellido"));
                 socio.setNoTutor(salida.getInt("id_tutor"));
                 socios.add(socio);
-            }
+            } while(salida.next());
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
         }

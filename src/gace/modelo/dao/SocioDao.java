@@ -5,6 +5,7 @@ import gace.modelo.utils.BBDDUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class SocioDao {
     private Connection conexion;
@@ -144,23 +145,27 @@ public class SocioDao {
 
 
     // todo seguro que esto se puede optimizar
+    // todo hacer 3 consultas, una para cada tipo de socio y unirlas luego y usar sort para ordenar por id
     public ArrayList<Socio> listar() {
         ArrayList<Socio> socios = new ArrayList<>();
-        String sql = "SELECT * FROM socio";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
-            ResultSet salida = pst.executeQuery();
-            while(salida.next()) {
-                if(salida.getInt("tipo") == 1) {
-                    socios.add(DAOFactory.getSocioEstandarDao().buscar(salida.getInt("id_socio")));
-                } else if(salida.getInt("tipo") == 2) {
-                    socios.add(DAOFactory.getSocioFederadoDao().buscar(salida.getInt("id_socio")));
-                } else {
-                    socios.add(DAOFactory.getSocioInfantilDao().buscar(salida.getInt("id_socio")));
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getErrorCode()+e.getMessage());
+        ArrayList<Socio> aux = DAOFactory.getSocioEstandarDao().listar();
+        if(aux != null) {
+            socios.addAll(aux);
         }
+        aux = null;
+        aux = DAOFactory.getSocioFederadoDao().listar();
+        if(aux != null) {
+            socios.addAll(aux);
+        }
+        aux = null;
+        aux = DAOFactory.getSocioInfantilDao().listar();
+        if(aux != null) {
+            socios.addAll(aux);
+        }
+        if(socios.isEmpty()) {
+            return null;
+        }
+        socios.sort(Comparator.comparingInt(Socio::getIdSocio));
         return socios;
     }
 

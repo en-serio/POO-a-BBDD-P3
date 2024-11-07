@@ -53,7 +53,12 @@ public class ExcursionControlador {
     }
 
     public boolean mostrarExcursiones(){
-        for(Excursion excursion : DAOFactory.getExcursionDao().listar()){
+        ArrayList<Excursion> excursiones = DAOFactory.getExcursionDao().listar();
+        if(excursiones == null){
+            datosUtil.mostrarError("No hay excursiones para mostrar");
+            return false;
+        }
+        for(Excursion excursion : excursiones){
             vistaExcursion.detalleExcursion(excursion.toString());
         }
         return true;
