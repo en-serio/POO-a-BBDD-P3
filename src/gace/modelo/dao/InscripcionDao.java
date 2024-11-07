@@ -109,71 +109,72 @@ public class InscripcionDao implements DAO<Inscripcion>{
     }
 
     public Inscripcion buscar(String codigo) {
-        String sql = "SELECT i.*, s.*, e.*," +
-                "CASE" +
-                "   WHEN s.tipo = 1 THEN se.*" +
-                "   WHEN s.tipo = 2 THEN sf.*" +
-                "   WHEN s.tipo = 3 THEN si.*" +
-                "END as socio" +
-                "FROM inscripcion i" +
+        String sql = "SELECT i.*, s.*, e.*, " +
+                "CASE " +
+                "   WHEN s.tipo = 1 THEN se.* " +
+                "   WHEN s.tipo = 2 THEN sf.* " +
+                "   WHEN s.tipo = 3 THEN si.* " +
+                "END AS socio " +
+                "FROM inscripcion i " +
                 "JOIN socio s ON i.id_socio = s.id_socio " +
                 "LEFT JOIN estandar se ON i.id_socio = se.id_socio " +
                 "LEFT JOIN federado sf ON i.id_socio = sf.id_socio " +
                 "LEFT JOIN infantil si ON i.id_socio = si.id_socio " +
-                "JOIN excursion e ON i.id_excursion = e.id_excursion";;
+                "JOIN excursion e ON i.id_excursion = e.id_excursion " +
+                "WHERE i.codigo = ?";
         Inscripcion insc = null;
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setString(1, codigo);
             ResultSet salida = pst.executeQuery();
-            if(salida.next()) {
+            if (salida.next()) {
                 insc = new Inscripcion();
                 insc.setIdInscripcion(salida.getInt("id_inscripcion"));
                 insc.setCodigo(salida.getString("codigo"));
                 Excursion excursion = listExcursion(salida);
-                if(salida.getInt("tipo") == 1) {
+                insc.setExcursion(excursion);
+                if (salida.getInt("tipo") == 1) {
                     SocioEstandar socio = listSocioEst(salida);
                     insc.setSocio(socio);
-                } else if(salida.getInt("tipo") == 2) {
+                } else if (salida.getInt("tipo") == 2) {
                     SocioFederado socio = listSocioFed(salida);
                     insc.setSocio(socio);
                 } else {
                     SocioInfantil socio = listSocioInf(salida);
                     insc.setSocio(socio);
                 }
-                insc.setExcursion(excursion);
                 insc.setFechaInscripcion(salida.getDate("fecha"));
             }
         } catch (SQLException e) {
-            System.err.println(e.getErrorCode()+e.getMessage());
+            System.err.println(e.getErrorCode() + e.getMessage());
         }
         return insc;
     }
 
     public ArrayList<Inscripcion> listar() {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, s.*, e.* " +
-                "CASE" +
+        String sql = "SELECT i.*, s.*, e.*, " +
+                "CASE " +
                 "   WHEN s.tipo = 1 THEN se.* " +
                 "   WHEN s.tipo = 2 THEN sf.* " +
                 "   WHEN s.tipo = 3 THEN si.* " +
-                "END as socio" +
+                "END AS socio " +
                 "FROM inscripcion i " +
                 "JOIN socio s ON i.id_socio = s.id_socio " +
                 "LEFT JOIN estandar se ON i.id_socio = se.id_socio " +
                 "LEFT JOIN federado sf ON i.id_socio = sf.id_socio " +
                 "LEFT JOIN infantil si ON i.id_socio = si.id_socio " +
                 "JOIN excursion e ON i.id_excursion = e.id_excursion";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
-            while(salida.next()) {
+            while (salida.next()) {
                 Inscripcion insc = new Inscripcion();
-                if(salida.getInt("tipo") == 1) {
+                if (salida.getInt("tipo") == 1) {
                     SocioEstandar socio = listSocioEst(salida);
-                    if(socio == null) continue;
+                    if (socio == null) continue;
                     insc.setSocio(socio);
-                } else if(salida.getInt("tipo") == 2) {
+                } else if (salida.getInt("tipo") == 2) {
                     SocioFederado socio = listSocioFed(salida);
-                    if(socio == null) continue;
+                    if (socio == null) continue;
                     insc.setSocio(socio);
                 } else {
                     SocioInfantil socio = listSocioInf(salida);
@@ -188,76 +189,82 @@ public class InscripcionDao implements DAO<Inscripcion>{
                 inscripciones.add(insc);
             }
         } catch (SQLException e) {
-            System.err.println(e.getErrorCode()+e.getMessage());
+            System.err.println(e.getErrorCode() + e.getMessage());
         }
         return inscripciones;
     }
 
-    public ArrayList<Inscripcion> ListarXSocioEst(Socio socio){
+
+    public ArrayList<Inscripcion> ListarXSocioEst(Socio socio) {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, e.*, s.id_socio" +
-                "FROM inscripcion i" +
-                "JOIN socio s ON i.id_socio = s.id_socio" +
-                "JOIN excursion e ON i.id_excursion = e.id_excursion" +
-                "WHERE i.id_socio = ?" +
-                "AND MONTH(i.fecha) = MONTH(CURRENT_DATE())" +
+        String sql = "SELECT i.*, e.*, s.id_socio " +
+                "FROM inscripcion i " +
+                "JOIN socio s ON i.id_socio = s.id_socio " +
+                "JOIN excursion e ON i.id_excursion = e.id_excursion " +
+                "WHERE i.id_socio = ? " +
+                "AND MONTH(i.fecha) = MONTH(CURRENT_DATE()) " +
                 "AND YEAR(i.fecha) = YEAR(CURRENT_DATE())";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setInt(1, socio.getIdSocio());
             ResultSet salida = pst.executeQuery();
-            while(salida.next()){
+            while (salida.next()) {
                 Inscripcion insc = new Inscripcion();
                 Excursion exc = listExcursion(salida);
                 insc.setSocio(socio);
                 insc.setExcursion(exc);
+                inscripciones.add(insc);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         return inscripciones;
     }
-    public ArrayList<Inscripcion> ListarXSocioInf(Socio socio){
+
+    public ArrayList<Inscripcion> ListarXSocioInf(Socio socio) {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, e.*, s.id_socio" +
-                "FROM inscripcion i" +
-                "JOIN socio s ON i.id_socio = s.id_socio" +
-                "JOIN excursion e ON i.id_excursion = e.id_excursion" +
-                "WHERE i.id_socio = ?" +
-                "AND MONTH(i.fecha) = MONTH(CURRENT_DATE())" +
+        String sql = "SELECT i.*, e.*, s.id_socio " +
+                "FROM inscripcion i " +
+                "JOIN socio s ON i.id_socio = s.id_socio " +
+                "JOIN excursion e ON i.id_excursion = e.id_excursion " +
+                "WHERE i.id_socio = ? " +
+                "AND MONTH(i.fecha) = MONTH(CURRENT_DATE()) " +
                 "AND YEAR(i.fecha) = YEAR(CURRENT_DATE())";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setInt(1, socio.getIdSocio());
             ResultSet salida = pst.executeQuery();
-            while(salida.next()){
+            while (salida.next()) {
                 Inscripcion insc = new Inscripcion();
                 Excursion exc = listExcursion(salida);
                 insc.setSocio(socio);
                 insc.setExcursion(exc);
+                inscripciones.add(insc);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         return inscripciones;
     }
-    public ArrayList<Inscripcion> ListarXSocioFed(Socio socio){
+
+    public ArrayList<Inscripcion> ListarXSocioFed(Socio socio) {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, e.*, s.id_socio" +
-                "FROM inscripcion i" +
-                "JOIN socio s ON i.id_socio = s.id_socio" +
-                "JOIN excursion e ON i.id_excursion = e.id_excursion" +
-                "WHERE i.id_socio = ?" +
-                "AND MONTH(i.fecha) = MONTH(CURRENT_DATE())" +
+        String sql = "SELECT i.*, e.*, s.id_socio " +
+                "FROM inscripcion i " +
+                "JOIN socio s ON i.id_socio = s.id_socio " +
+                "JOIN excursion e ON i.id_excursion = e.id_excursion " +
+                "WHERE i.id_socio = ? " +
+                "AND MONTH(i.fecha) = MONTH(CURRENT_DATE()) " +
                 "AND YEAR(i.fecha) = YEAR(CURRENT_DATE())";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setInt(1, socio.getIdSocio());
             ResultSet salida = pst.executeQuery();
-            while(salida.next()){
+            while (salida.next()) {
                 Inscripcion insc = new Inscripcion();
                 Excursion exc = listExcursion(salida);
                 insc.setSocio(socio);
                 insc.setExcursion(exc);
+                inscripciones.add(insc);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         return inscripciones;
