@@ -10,6 +10,7 @@ public class Seguro {
         this.tipo = tipo;
         this.precio = precio;
     }
+
     public Seguro(boolean tipo, double precio) {
         this.tipo = tipo;
         this.precio = precio;

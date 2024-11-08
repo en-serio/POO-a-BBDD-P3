@@ -29,11 +29,11 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
     }
 
     public void modificar(SocioEstandar socio) {
-        String sql = "UPDATE federado SET nif = ?, id_seguro = ? WHERE id_socio = ?";
+        String sql = "UPDATE estandar SET nif = ?, id_seguro = ? WHERE id_socio = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
-            pst.setInt(3, socio.getIdSocio());
             pst.setString(1, socio.getNif());
             pst.setInt(2, socio.getSeguro().getIdSeguro());
+            pst.setInt(3, socio.getIdSocio());
             pst.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());

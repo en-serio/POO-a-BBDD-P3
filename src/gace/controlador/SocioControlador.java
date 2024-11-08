@@ -369,8 +369,7 @@ public class SocioControlador {
             return false;
         }
         if(!(socio instanceof SocioEstandar)){
-            //todo modificar sout
-            System.out.println("Error Socio no Estandar");
+            datosUtil.mostrarError("Error Socio no Estandar");
             return false;
         }
         String strSeg = vistaSocios.formSeguro();
