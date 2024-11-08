@@ -5,6 +5,11 @@ public class Seguro {
     private boolean tipo;
     private double precio;
 
+    public Seguro(int idSeguro, boolean tipo, double precio) {
+        this.idSeguro = idSeguro;
+        this.tipo = tipo;
+        this.precio = precio;
+    }
     public Seguro(boolean tipo, double precio) {
         this.tipo = tipo;
         this.precio = precio;
