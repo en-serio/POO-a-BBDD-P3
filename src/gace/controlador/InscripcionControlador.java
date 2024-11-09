@@ -136,7 +136,7 @@ public class InscripcionControlador {
                 return false;
             }
         }else{
-            int idExcursion = datosUtil.leerEntero(99999, "Introduce el ID de la excursión");
+            int idExcursion = datosUtil.leerEntero(99999, "Introduce el ID de la excursión:\n");
             exc = DAOFactory.getExcursionDao().buscar(idExcursion);
             if (exc == null) {
                 datosUtil.mostrarError("Excursión no encontrada");
