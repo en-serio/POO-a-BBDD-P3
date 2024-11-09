@@ -33,7 +33,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
     }
 
     public void modificar(Inscripcion inscripcion) {
-        String sql = "UPDATE inscripcion SET id_socio = ?, id_excurion = ?,fecha = ? WHERE id_inscripcion = ?";
+        String sql = "UPDATE inscripcion SET id_socio = ?, id_excursion = ?,fecha = ? WHERE id_inscripcion = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             java.sql.Date fechaSQL = new java.sql.Date(inscripcion.getFechaInscripcion().getTime());
             pst.setInt(1, inscripcion.getSocio().getIdSocio());

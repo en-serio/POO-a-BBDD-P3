@@ -382,15 +382,10 @@ public class SocioControlador {
             return false;
         }
         boolean tipo = Integer.parseInt(datosSeg[0]) == 1;
-        System.out.println("1");
         Seguro seg = new Seguro(tipo, Double.parseDouble(datosSeg[1]));
-        System.out.println("2");
         DAOFactory.getSeguroDao().insertar(seg);
-        System.out.println("3");
         ((SocioEstandar) socio).setSeguro(seg);
-        System.out.println("4");
         DAOFactory.getSocioEstandarDao().modificar((SocioEstandar) socio);
-        System.out.println("5");
         return true;
     }
     public boolean modificarFederacion(){
