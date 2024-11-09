@@ -159,7 +159,7 @@ public class InscripcionControlador {
     }
 
     public Inscripcion buscarInscripcion() {
-        int buscar = datosUtil.pedirOpcion("Buscar Inscripcion", "Por identificador", "Por Excursion", "Por Socio");
+        int buscar = datosUtil.pedirOpcion("Buscar Inscripcion", "Por Excursion", "Por Socio");
         if(buscar == 0){
             return null;
         }
@@ -169,32 +169,9 @@ public class InscripcionControlador {
         ArrayList<Inscripcion> insc = null;
         Inscripcion inscripcion = null;
         if(buscar == 1){
-            int forma = datosUtil.pedirOpcion("Buscar Inscripcion", "código", "ID");
-            if(forma == 0){
+            if(!mostrarInscripcionesXExc()){
                 return null;
             }
-            //mostrarInscripciones();
-            if(forma == 1){
-                String codigo = datosUtil.devString("Introduce el código de la inscripción");
-                return DAOFactory.getInscripcionDao().buscar(codigo);
-            } else {
-                idInscripcion = datosUtil.leerEntero(99999,"Introduce el ID de la inscripción" );
-                return DAOFactory.getInscripcionDao().buscar(idInscripcion);
-            }
-        } else if(buscar == 2){
-            excursionControlador.mostrarExcursiones();
-            excursion = excursionControlador.pedirExcursion();
-            if(excursion == null){
-                return null;
-            }
-            insc = DAOFactory.getInscripcionDao().listarXExc(excursion);
-            mostrarLista(insc);
-            socio = socioControlador.obtenerSocio();
-            if(socio == null){
-                return null;
-            }
-            inscripcion = buscarLista(insc, socio);
-            return inscripcion;
         } else {
             socioControlador.mostrarSocios(0, 4);
             socio = socioControlador.obtenerSocio();
@@ -208,13 +185,11 @@ public class InscripcionControlador {
                 insc = DAOFactory.getInscripcionDao().ListarXSocioInf(socio);
             }
             mostrarLista(insc);
-            excursion = excursionControlador.pedirExcursion();
-            if(excursion == null){
-                return null;
-            }
-            inscripcion = buscarLista(insc, excursion);
-            return inscripcion;
+            idInscripcion = datosUtil.leerEntero(99999, "Introduce el ID de la inscripción");
+            return DAOFactory.getInscripcionDao().buscar(idInscripcion);
         }
+        idInscripcion = datosUtil.leerEntero(99999, "Introduce el ID de la inscripción");
+        return DAOFactory.getInscripcionDao().buscar(idInscripcion);
     }
 
     public void mostrarLista(ArrayList<Inscripcion> inscripciones){

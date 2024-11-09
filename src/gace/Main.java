@@ -3,7 +3,7 @@ package gace;
 /*
 * Super TODO
 *           - Al crear inscripció obliga a crear soci - FET
-*           -
+*           - Inscripció problema buscar - FET (aparece error 0column nombre not found??)
 *           -
 *           -
 * */

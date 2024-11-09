@@ -51,7 +51,7 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
     }
 
     public SocioEstandar buscar(int idSocio) {
-        String sql = "SELECT e.*, seg.*, s.*" +
+        String sql = "SELECT e.nif, e.id_seguro, seg.tipo, seg.precio, s.id_socio, s.nombre, s.apellido, s.tipo " +
                 "FROM estandar e " +
                 "JOIN seguro seg ON e.id_seguro = seg.id_seguro " +
                 "JOIN socio s ON e.id_socio = s.id_socio " +
