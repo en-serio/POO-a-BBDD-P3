@@ -137,7 +137,7 @@ public class MenuControlador {
                 inscripcionControlador.novaInscripcio(1);
                 break;
             case 2:
-                inscripcionControlador.mostrarInscripciones();
+                inscripcionControlador.mostrarInscripcionesXExc();
                 break;
             case 3:
                 inscripcionControlador.eliminarInscripcion();

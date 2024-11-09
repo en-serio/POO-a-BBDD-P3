@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InscripcionDao implements DAO<Inscripcion>{
     private Connection conexion;
@@ -16,7 +18,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
         conexion = BBDDUtil.getConexion();
     }
     public void insertar(Inscripcion inscripcion) {
-        String sql = "INSERT INTO incripcion (codigo, id_socio, id_excursion, fecha) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO inscripcion (codigo, id_socio, id_excursion, fecha) VALUES (?, ?, ?, ?)";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             java.sql.Date fechaSQL = new java.sql.Date(inscripcion.getFechaInscripcion().getTime());
             pst.setString(1, inscripcion.getCodigo());
@@ -88,7 +90,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
 
     public ArrayList<Inscripcion> listarXExc(Excursion excursion){
         String sql = "SELECT * FROM inscripcion WHERE id_excursion = ?";
-        ArrayList<Inscripcion> inscripciones = null;
+        ArrayList<Inscripcion> inscripciones = new ArrayList<>();
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setInt(1, excursion.getId());
             ResultSet salida = pst.executeQuery();
@@ -150,19 +152,11 @@ public class InscripcionDao implements DAO<Inscripcion>{
         return insc;
     }
 
-    public ArrayList<Inscripcion> listar() {
+    //Todo: Ignorar
+/*    public ArrayList<Inscripcion> listar() {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, s.*, e.*, " +
-                "CASE " +
-                "   WHEN s.tipo = 1 THEN se.* " +
-                "   WHEN s.tipo = 2 THEN sf.* " +
-                "   WHEN s.tipo = 3 THEN si.* " +
-                "END AS socio " +
+        String sql = "SELECT i.*, e.*, " +
                 "FROM inscripcion i " +
-                "JOIN socio s ON i.id_socio = s.id_socio " +
-                "LEFT JOIN estandar se ON i.id_socio = se.id_socio " +
-                "LEFT JOIN federado sf ON i.id_socio = sf.id_socio " +
-                "LEFT JOIN infantil si ON i.id_socio = si.id_socio " +
                 "JOIN excursion e ON i.id_excursion = e.id_excursion";
         try (PreparedStatement pst = conexion.prepareStatement(sql)) {
             ResultSet salida = pst.executeQuery();
@@ -190,6 +184,43 @@ public class InscripcionDao implements DAO<Inscripcion>{
             }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());
+        }
+        return inscripciones;
+    }*/
+
+    public ArrayList<Inscripcion> listarInscXExc(Excursion excursion) {
+        ArrayList<Inscripcion> inscripciones = new ArrayList<>();
+        Map<Integer, Inscripcion> mapSocioInsc = new HashMap<>();
+        ArrayList<Integer> idsSocios = new ArrayList<>();
+        String sql = "SELECT i.*, e.*, s.id_socio " +
+                "FROM inscripcion i " +
+                "JOIN socio s ON i.id_socio = s.id_socio " +
+                "JOIN excursion e ON i.id_excursion = e.id_excursion " +
+                "WHERE i.id_excursion = ? ";
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setInt(1, excursion.getId());
+            ResultSet salida = pst.executeQuery();
+            while (salida.next()) {
+                Inscripcion insc = new Inscripcion();
+                Excursion exc = excursion;
+                mapSocioInsc.put(salida.getInt("id_socio"), insc);
+                idsSocios.add(salida.getInt("id_socio"));
+//                Demasiadas llamadas
+//                Socio socio = DAOFactory.getSocioDao().buscar(salida.getInt("id_socio"));
+//                insc.setSocio(socio);
+                insc.setExcursion(exc);
+                inscripciones.add(insc);
+            }
+            if (inscripciones.isEmpty()) {
+                return null;
+            }
+            ArrayList<Socio> sociosConInsc = DAOFactory.getSocioDao().buscarLista(idsSocios);
+            for (Socio socio : sociosConInsc) {
+                System.out.println(socio.toString());
+            }
+            //aqui llamaré a una función que buscara los ids de los socios y los añadira a una lista
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
         }
         return inscripciones;
     }

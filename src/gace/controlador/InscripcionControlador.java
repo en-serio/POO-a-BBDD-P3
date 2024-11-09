@@ -89,7 +89,7 @@ public class InscripcionControlador {
             return false;
         }
         int tipo = datosUtil.pedirOpcion("¿Elegir socio o Crear uno nuevo?", "Elegir socio", "Crear nuevo socio");
-        if(tipo == 1) {
+        if(tipo == 2) {
             Socio soc = socioControlador.crearSocio();
         } else if (tipo == 0) {
             return false;
@@ -106,7 +106,7 @@ public class InscripcionControlador {
             datosUtil.mostrarError("Socio no encontrado");
             return false;
         }
-        String codigo = getCodigoExcursion(soc.getIdSocio(), exc.getCodigo(), exc.getFecha());
+        String codigo = getCodigoExcursion(soc.getIdSocio(), exc.getCodigo());
         Inscripcion ins = new Inscripcion(codigo, soc, exc);
         if (ins == null){
             return false;
@@ -115,18 +115,45 @@ public class InscripcionControlador {
         return true;
     }
 
-    public String getCodigoExcursion(int socNoSocio, String excCodigo, Date excFecha){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(excFecha);
-        String dia = String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        String mes = String.format("%02d", calendar.get(Calendar.MONTH) + 1);
-        return socNoSocio + excCodigo + dia + mes;
-
+    public String getCodigoExcursion(int socNoSocio, String excCodigo){
+        return socNoSocio + excCodigo;
     }
 
-    public boolean mostrarInscripciones() {
-        for(Inscripcion inscripcion : DAOFactory.getInscripcionDao().listar()) {
+    public boolean mostrarInscripcionesXExc() {
+        boolean hayExc = excursionControlador.mostrarExcursiones();
+        if(!hayExc){
+            return false;
+        }
+        Excursion exc = new Excursion();
+        int opcion = datosUtil.pedirOpcion("Seleccionar Excursión", "Por Código", "Por ID");
+        if(opcion == 0){
+            return false;
+        }else if(opcion == 1) {
+            String codigo = datosUtil.devString("Introduce el código de la excursión");
+            exc = DAOFactory.getExcursionDao().buscar(codigo);
+            if (exc == null) {
+                datosUtil.mostrarError("Excursión no encontrada");
+                return false;
+            }
+        }else{
+            int idExcursion = datosUtil.leerEntero(99999, "Introduce el ID de la excursión");
+            exc = DAOFactory.getExcursionDao().buscar(idExcursion);
+            if (exc == null) {
+                datosUtil.mostrarError("Excursión no encontrada");
+                return false;
+            }
+        }
+        ArrayList<Inscripcion> inscripcions = DAOFactory.getInscripcionDao().listarXExc(exc);
+        /*
+        Aquesta funció ha de buscar tots els socis en una única cerca, no borrar no utilitzar
+        ArrayList<Inscripcion> inscripcions = DAOFactory.getInscripcionDao().listarInscXExc(exc);
+        */
+        for (Inscripcion inscripcion : inscripcions) {
             vistaInscripciones.mostrarInscripciones(inscripcion.toString());
+        }
+        if(inscripcions == null){
+            datosUtil.mostrarError("No hay inscripciones para esta excursión");
+            return false;
         }
         return true;
     }
@@ -146,7 +173,7 @@ public class InscripcionControlador {
             if(forma == 0){
                 return null;
             }
-            mostrarInscripciones();
+            //mostrarInscripciones();
             if(forma == 1){
                 String codigo = datosUtil.devString("Introduce el código de la inscripción");
                 return DAOFactory.getInscripcionDao().buscar(codigo);

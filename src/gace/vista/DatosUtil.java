@@ -145,7 +145,7 @@ public class DatosUtil {
     public int menuInscripciones(){
         System.out.println("Seleccione una opción:");
         System.out.println("1. Nueva Inscripción");
-        System.out.println("2. Mostrar Inscripciones");
+        System.out.println("2. Mostrar Inscripciones por excursión");
         System.out.println("3. Eliminar Inscripción");
         System.out.println("4. Buscar Inscripción");
         System.out.println("0. Salir");

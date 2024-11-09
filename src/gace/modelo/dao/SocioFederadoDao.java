@@ -124,6 +124,47 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
         return socio;
     }
 
+    public ArrayList<Socio> buscarLista(ArrayList<Integer> ids){
+        ArrayList<Socio> socios = new ArrayList<>();
+        String sql = "SELECT f.id_socio, s.nombre, s.apellido, f.nif, f.id_federacion, fed.* " +
+                "FROM federado f " +
+                "JOIN socio s ON f.id_socio = s.id_socio " +
+                "JOIN federacion fed ON f.id_federacion = fed.id_federacion " +
+                "WHERE f.id_socio IN (";
+        for(int i = 0; i < ids.size(); i++) {
+            sql += "?";
+            if(i < ids.size()-1) {
+                sql += ",";
+            }
+        }
+        sql += ")";
+        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+            for(int i = 0; i < ids.size(); i++) {
+                pst.setInt(i+1, ids.get(i));
+            }
+            ResultSet salida = pst.executeQuery();
+            if(!salida.next()) {
+                return null;
+            }
+            do{
+                SocioFederado socio = new SocioFederado();
+                Federacion fed = new Federacion();
+                socio.setIdSocio(salida.getInt("id_socio"));
+                socio.setNombre(salida.getString("nombre"));
+                socio.setApellido(salida.getString("apellido"));
+                socio.setNif(salida.getString("nif"));
+                fed.setIdFederacion(salida.getInt("id_federacion"));
+                fed.setNombre(salida.getString("nombre"));
+                fed.setCodigo(salida.getString("codigo"));
+                socio.setFederacion(fed);
+                socios.add(socio);
+            } while(salida.next());
+        } catch (SQLException e) {
+            System.err.println(e.getErrorCode()+e.getMessage());
+        }
+        return socios;
+    }
+
     public ArrayList<Socio> listar() {
         ArrayList<Socio> socios = new ArrayList<>();
         String sql = "SELECT f.id_socio, s.nombre, s.apellido, f.nif, f.id_federacion, fed.* " +

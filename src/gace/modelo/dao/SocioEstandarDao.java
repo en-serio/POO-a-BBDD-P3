@@ -78,6 +78,47 @@ public class SocioEstandarDao implements DAO<SocioEstandar> {
         return socio;
     }
 
+    public ArrayList<Socio> buscarLista(ArrayList<Integer> ids){
+        ArrayList<Socio> socios = new ArrayList<>();
+        String sql = "SELECT e.id_socio, s.nombre, s.apellido, e.nif, e.id_seguro, seg.* " +
+                "FROM estandar e " +
+                "JOIN socio s ON e.id_socio = s.id_socio " +
+                "JOIN seguro seg ON e.id_seguro = seg.id_seguro " +
+                "WHERE e.id_socio IN (";
+        for(int i = 0; i < ids.size(); i++) {
+            sql += "?";
+            if(i < ids.size()-1) {
+                sql += ",";
+            }
+        }
+        sql += ")";
+        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+            for(int i = 0; i < ids.size(); i++) {
+                pst.setInt(i+1, ids.get(i));
+            }
+            ResultSet salida = pst.executeQuery();
+            if(!salida.next()) {
+                return null;
+            }
+            do{
+                SocioEstandar socio = new SocioEstandar();
+                Seguro seg = new Seguro();
+                socio.setIdSocio(salida.getInt("id_socio"));
+                socio.setNombre(salida.getString("nombre"));
+                socio.setApellido(salida.getString("apellido"));
+                socio.setNif(salida.getString("nif"));
+                seg.setIdSeguro(salida.getInt("id_seguro"));
+                seg.setTipo(salida.getString("tipo").equals("COMPLETO"));
+                seg.setPrecio(salida.getDouble("precio"));
+                socio.setSeguro(seg);
+                socios.add(socio);
+            } while(salida.next());
+        } catch (SQLException e) {
+            System.err.println(e.getErrorCode()+e.getMessage());
+        }
+        return socios;
+    }
+
     public int comprobarEst(String nif) {
         String sql = "SELECT * FROM estandar WHERE nif = ?";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {

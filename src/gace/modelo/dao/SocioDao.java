@@ -146,7 +146,28 @@ public class SocioDao {
         return false;
     }
 
-
+    public ArrayList<Socio> buscarLista(ArrayList<Integer> ids){
+        ArrayList<Socio> socios = new ArrayList<>();
+        ArrayList<Socio> aux = DAOFactory.getSocioEstandarDao().buscarLista(ids);
+        if(aux != null) {
+            socios.addAll(aux);
+        }
+        aux = null;
+        aux = DAOFactory.getSocioFederadoDao().buscarLista(ids);
+        if(aux != null) {
+            socios.addAll(aux);
+        }
+        aux = null;
+        aux = DAOFactory.getSocioInfantilDao().buscarLista(ids);
+        if(aux != null) {
+            socios.addAll(aux);
+        }
+        if(socios.isEmpty()) {
+            return null;
+        }
+        socios.sort(Comparator.comparingInt(Socio::getIdSocio));
+        return socios;
+    }
 
 
     public ArrayList<Socio> listar() {
