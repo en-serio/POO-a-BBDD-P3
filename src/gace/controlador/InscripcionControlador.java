@@ -76,6 +76,7 @@ public class InscripcionControlador {
     }
 
     public boolean novaInscripcio(int ayuda) {
+
         if (ayuda == 1) {
             excursionControlador.mostrarExcursiones();
         }
@@ -88,14 +89,20 @@ public class InscripcionControlador {
             datosUtil.mostrarError("Excursión no encontrada");
             return false;
         }
-        int tipo = datosUtil.pedirOpcion("¿Elegir socio o Crear uno nuevo?", "Elegir socio", "Crear nuevo socio");
+        int tipo = datosUtil.pedirOpcion("¿Crear socio o Elegir uno existente?", "Crear nuevo socio", "Elegir socio");
         if(tipo == 1) {
             Socio soc = socioControlador.crearSocio();
         } else if (tipo == 0) {
             return false;
         }
-        if(ayuda == 1){
-            socioControlador.mostrarSocios(0,4);
+        if(tipo == 2){
+            int ayuda2 = datosUtil.leerInt(ayuda);
+
+            if (ayuda2 == 1) {
+                socioControlador.mostrarSocios(0,4);
+            }
+
+
         }
         int strSocio = vistaInscripciones.pedirSocioInsc();
         if (strSocio == 0) {

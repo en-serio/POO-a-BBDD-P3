@@ -214,4 +214,12 @@ public class DatosUtil {
         return leerEntero(3, "");
     }
 
+    public int leerInt(int ayuda){
+        System.out.println("Deseas disponer de ayudas?");
+        System.out.println("1.Sí");
+        System.out.println("2.No");
+        ayuda = scanner.nextInt();
+        return ayuda;
+    }
+
 }
