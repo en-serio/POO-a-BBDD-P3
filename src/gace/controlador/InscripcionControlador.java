@@ -92,6 +92,7 @@ public class InscripcionControlador {
         int tipo = datosUtil.pedirOpcion("¿Crear socio o Elegir uno existente?", "Crear nuevo socio", "Elegir socio");
         if(tipo == 1) {
             Socio soc = socioControlador.crearSocio();
+            System.out.println("El socio ha sido creado correctamente.");
         } else if (tipo == 0) {
             return false;
         }
@@ -104,6 +105,7 @@ public class InscripcionControlador {
 
 
         }
+        System.out.println("=========================================================");
         int strSocio = vistaInscripciones.pedirSocioInsc();
         if (strSocio == 0) {
             return false;
