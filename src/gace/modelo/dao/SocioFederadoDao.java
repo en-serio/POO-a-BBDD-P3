@@ -95,7 +95,7 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
     }
 
     public SocioFederado buscar(String nif) {
-        String sql = "SELECT f.*, fed.*, s.* " +
+        String sql = "SELECT f.*, fed.*, s.nombre as nombre_socio, s.id_socio, s.apellido, s.tipo, s.activo " +
                 "FROM federado f " +
                 "JOIN federacion fed ON f.id_federacion = fed.id_federacion " +
                 "JOIN socio s ON f.id_socio = s.id_socio " +
@@ -107,11 +107,11 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
             if(salida.next()) {
                 Federacion fed = new Federacion();
                 socio = new SocioFederado();
-                socio.setNombre(salida.getString("nombre"));
+                socio.setNombre(salida.getString("nombre_socio"));
                 socio.setApellido(salida.getString("apellido"));
                 socio.setIdSocio(salida.getInt("id_socio"));
                 socio.setNif(salida.getString("nif"));
-                fed.setIdFederacion(salida.getInt("id_seguro"));
+                fed.setIdFederacion(salida.getInt("id_federacion"));
                 fed.setCodigo(salida.getString("codigo"));
                 fed.setNombre(salida.getString("nombre"));
                 socio.setFederacion(fed);
@@ -126,7 +126,7 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
 
     public ArrayList<Socio> buscarLista(ArrayList<Integer> ids){
         ArrayList<Socio> socios = new ArrayList<>();
-        String sql = "SELECT f.id_socio, s.nombre, s.apellido, f.nif, f.id_federacion, fed.* " +
+        String sql = "SELECT f.id_socio, s.nombre as nombre_socio, s.apellido, f.nif, f.id_federacion, fed.* " +
                 "FROM federado f " +
                 "JOIN socio s ON f.id_socio = s.id_socio " +
                 "JOIN federacion fed ON f.id_federacion = fed.id_federacion " +
@@ -150,7 +150,7 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
                 SocioFederado socio = new SocioFederado();
                 Federacion fed = new Federacion();
                 socio.setIdSocio(salida.getInt("id_socio"));
-                socio.setNombre(salida.getString("nombre"));
+                socio.setNombre(salida.getString("nombre_socio"));
                 socio.setApellido(salida.getString("apellido"));
                 socio.setNif(salida.getString("nif"));
                 fed.setIdFederacion(salida.getInt("id_federacion"));
