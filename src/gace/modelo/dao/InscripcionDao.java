@@ -239,7 +239,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
             pst.setInt(1, socio.getIdSocio());
             ResultSet salida = pst.executeQuery();
             while (salida.next()) {
-                Inscripcion insc = new Inscripcion();
+                Inscripcion insc = listInscripcion(salida);
                 Excursion exc = listExcursion(salida);
                 insc.setSocio(socio);
                 insc.setExcursion(exc);
@@ -267,7 +267,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
             pst.setInt(1, socio.getIdSocio());
             ResultSet salida = pst.executeQuery();
             while (salida.next()) {
-                Inscripcion insc = new Inscripcion();
+                Inscripcion insc = listInscripcion(salida);
                 Excursion exc = listExcursion(salida);
                 insc.setSocio(socio);
                 insc.setExcursion(exc);
@@ -295,7 +295,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
             pst.setInt(1, socio.getIdSocio());
             ResultSet salida = pst.executeQuery();
             while (salida.next()) {
-                Inscripcion insc = new Inscripcion();
+                Inscripcion insc = listInscripcion(salida);
                 Excursion exc = listExcursion(salida);
                 insc.setSocio(socio);
                 insc.setExcursion(exc);
@@ -367,16 +367,29 @@ public class InscripcionDao implements DAO<Inscripcion>{
         Excursion excursion = new Excursion();
         try {
             excursion.setId(salida.getInt("id_excursion"));
-            excursion.setDescripcion(salida.getString("nombre"));
             excursion.setCodigo(salida.getString("codigo"));
+            excursion.setDescripcion(salida.getString("descripcion"));
             excursion.setFecha(salida.getDate("fecha"));
-            excursion.setNoDias(salida.getInt("dias"));
+            excursion.setNoDias(salida.getInt("no_dias"));
             excursion.setPrecio(salida.getDouble("precio"));
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
             excursion = null;
         }
         return excursion;
+    }
+
+    private Inscripcion listInscripcion(ResultSet salida) {
+        Inscripcion insc = new Inscripcion();
+        try {
+            insc.setIdInscripcion(salida.getInt("id_inscripcion"));
+            insc.setCodigo(salida.getString("codigo"));
+            insc.setFechaInscripcion(salida.getDate("fecha"));
+        } catch (SQLException e) {
+            System.err.println(e.getErrorCode()+e.getMessage());
+            insc = null;
+        }
+        return insc;
     }
 }
 

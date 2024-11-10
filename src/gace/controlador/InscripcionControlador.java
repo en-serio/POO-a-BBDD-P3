@@ -271,13 +271,11 @@ public class InscripcionControlador {
         double totalExc = 0;
         int nExc =0;
         if(inscripcions != null){
-            for(Inscripcion inscripcion : inscripcions){
-                totalExc += inscripcion.getExcursion().getPrecio();
+            for(Inscripcion insc : inscripcions){
+                System.out.println(insc.toString());
+                totalExc += insc.getExcursion().getPrecio();
             }
             nExc = inscripcions.size();
-        }else{
-            datosUtil.mostrarError("No hay inscripciones para este socio");
-            return false;
         }
         double cuota = socio.calcularCuota();
         totalExc = socio.costeExcursion(totalExc);
