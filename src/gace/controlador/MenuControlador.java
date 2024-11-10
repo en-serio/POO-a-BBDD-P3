@@ -121,6 +121,9 @@ public class MenuControlador {
             case 4:
                 excursionControlador.pedirExcursion();
                 break;
+            case 5:
+                excursionControlador.cancelarExcursion();
+                break;
             case 0:
                 return false;
             default:

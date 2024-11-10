@@ -77,7 +77,9 @@ public class InscripcionControlador {
 
     public boolean novaInscripcio(int ayuda) {
         if (ayuda == 1) {
-            excursionControlador.mostrarExcursiones();
+            if(!excursionControlador.mostrarExcursiones()){
+                return false;
+            }
         }
         int idExcursion = vistaInscripciones.pedirExcursionInsc();
         if (idExcursion == -1) {
@@ -183,6 +185,10 @@ public class InscripcionControlador {
                 insc = DAOFactory.getInscripcionDao().ListarXSocioFed(socio);
             }else{
                 insc = DAOFactory.getInscripcionDao().ListarXSocioInf(socio);
+            }
+            if(insc == null){
+                datosUtil.mostrarError("No hay inscripciones para este socio");
+                return null;
             }
             mostrarLista(insc);
             idInscripcion = datosUtil.leerEntero(99999, "Introduce el ID de la inscripción");

@@ -140,17 +140,19 @@ public class ExcursionDao implements DAO<Excursion> {
         return excursiones;
     }
 
-    public int obtenerUltimoId() {
-        String sql = "SELECT MAX(id_excursion) as id FROM excursion";
-        int id = 0;
+
+    public int cancelar(Excursion exc){
+        String sql = "CALL EliminarExcursionConInscripciones( ? );";
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
-            ResultSet salida = pst.executeQuery();
-            if(salida.next()) {
-                id = salida.getInt("id");
+            pst.setInt(1, exc.getId());
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("inscripciones_borradas");
+                }
             }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
         }
-        return id;
+        return 0;
     }
 }

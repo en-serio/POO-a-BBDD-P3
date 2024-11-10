@@ -135,8 +135,9 @@ public class DatosUtil {
         System.out.println("2. Mostrar Excursiones");
         System.out.println("3. Eliminar Excursión");
         System.out.println("4. Buscar Excursión");
+        System.out.println("5. Cancelar Excursión");
         System.out.println("0. Salir");
-        int opcion = leerEntero(4, "");
+        int opcion = leerEntero(5, "");
         return opcion;
     }
 
@@ -210,6 +211,10 @@ public class DatosUtil {
         System.out.println("2. " + opcionB);
         System.out.println("3. " + opcionC);
         return leerEntero(3, "");
+    }
+
+    public void mostrarInfo(String mensaje){
+        System.out.println(mensaje);
     }
 
 }

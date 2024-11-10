@@ -125,4 +125,26 @@ public class ExcursionControlador {
         return false;
     }
 
+    public boolean cancelarExcursion(){
+        ArrayList<Excursion> excursiones = DAOFactory.getExcursionDao().listar();
+        if(excursiones == null){
+            datosUtil.mostrarError("No hay excursiones para cancelar");
+            return false;
+        }
+        for(Excursion excursion : excursiones){
+            vistaExcursion.detalleExcursion(excursion.toString());
+        }
+        Excursion exc = pedirExcursion();
+        if(exc == null){
+            return false;
+        }
+        int opcion = datosUtil.pedirOpcion("¿Está seguro de que desea cancelar la excursión?", "Sí", "No");
+        int cantidad = 0;
+        if(opcion == 1){
+            cantidad = DAOFactory.getExcursionDao().cancelar(exc);
+            datosUtil.mostrarInfo("Se han cancelado "+cantidad+" inscripciones");
+        }
+        return false;
+    }
+
 }
