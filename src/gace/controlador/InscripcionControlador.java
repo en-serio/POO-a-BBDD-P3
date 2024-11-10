@@ -275,6 +275,9 @@ public class InscripcionControlador {
                 totalExc += inscripcion.getExcursion().getPrecio();
             }
             nExc = inscripcions.size();
+        }else{
+            datosUtil.mostrarError("No hay inscripciones para este socio");
+            return false;
         }
         double cuota = socio.calcularCuota();
         totalExc = socio.costeExcursion(totalExc);
