@@ -19,7 +19,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
     }
     public void insertar(Inscripcion inscripcion) {
         String sql = "INSERT INTO inscripcion (codigo, id_socio, id_excursion, fecha) VALUES (?, ?, ?, ?)";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try(PreparedStatement pst = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             java.sql.Date fechaSQL = new java.sql.Date(inscripcion.getFechaInscripcion().getTime());
             pst.setString(1, inscripcion.getCodigo());
             pst.setInt(2, inscripcion.getSocio().getIdSocio());
@@ -27,6 +27,10 @@ public class InscripcionDao implements DAO<Inscripcion>{
             pst.setDate(4, fechaSQL);
 
             pst.executeUpdate();
+            ResultSet salida = pst.getGeneratedKeys();
+            if(salida.next()) {
+                inscripcion.setIdInscripcion(salida.getInt(1));
+            }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());
         }
@@ -103,6 +107,9 @@ public class InscripcionDao implements DAO<Inscripcion>{
                 insc.setExcursion(excursion);
                 insc.setFechaInscripcion(salida.getDate("fecha"));
                 inscripciones.add(insc);
+            }
+            if(inscripciones.isEmpty()){
+                return null;
             }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
@@ -228,7 +235,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
 
     public ArrayList<Inscripcion> ListarXSocioEst(Socio socio) {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, e.*, s.id_socio " +
+        String sql = "SELECT i.id_inscripcion, i.codigo, i.id_socio, i.id_excursion, i.fecha as fecha_inscripcion, e.*, s.id_socio " +
                 "FROM inscripcion i " +
                 "JOIN socio s ON i.id_socio = s.id_socio " +
                 "JOIN excursion e ON i.id_excursion = e.id_excursion " +
@@ -256,7 +263,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
 
     public ArrayList<Inscripcion> ListarXSocioInf(Socio socio) {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, e.*, s.id_socio " +
+        String sql = "SELECT i.id_inscripcion, i.codigo, i.id_socio, i.id_excursion, i.fecha as fecha_inscripcion, e.*, s.id_socio " +
                 "FROM inscripcion i " +
                 "JOIN socio s ON i.id_socio = s.id_socio " +
                 "JOIN excursion e ON i.id_excursion = e.id_excursion " +
@@ -284,7 +291,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
 
     public ArrayList<Inscripcion> ListarXSocioFed(Socio socio) {
         ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        String sql = "SELECT i.*, e.*, s.id_socio " +
+        String sql = "SELECT i.id_inscripcion, i.codigo, i.id_socio, i.id_excursion, i.fecha as fecha_inscripcion, e.*, s.id_socio " +
                 "FROM inscripcion i " +
                 "JOIN socio s ON i.id_socio = s.id_socio " +
                 "JOIN excursion e ON i.id_excursion = e.id_excursion " +
@@ -384,7 +391,7 @@ public class InscripcionDao implements DAO<Inscripcion>{
         try {
             insc.setIdInscripcion(salida.getInt("id_inscripcion"));
             insc.setCodigo(salida.getString("codigo"));
-            insc.setFechaInscripcion(salida.getDate("fecha"));
+            insc.setFechaInscripcion(salida.getDate("fecha_inscripcion"));
         } catch (SQLException e) {
             System.err.println(e.getErrorCode()+e.getMessage());
             insc = null;

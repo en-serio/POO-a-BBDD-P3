@@ -217,13 +217,29 @@ public class InscripcionControlador {
         return null;
     }
 
+    public boolean eliminarSocio(){
+        Socio socio = socioControlador.obtenerSocio();
+        if(socio == null){
+            return false;
+        }
+
+        if(datosUtil.confirmar("¿Estás seguro de que quieres eliminar este socio?")){
+            DAOFactory.getSocioDao().eliminar(socio.getIdSocio());
+            datosUtil.mostrarError("Socio eliminado");
+            return true;
+        }
+        return false;
+    }
+
+
     public boolean eliminarInscripcion(){
         Inscripcion insc = buscarInscripcion();
         if(insc == null){
             datosUtil.mostrarError("Inscripción no encontrada");
             return false;
         }
-        if(compararFecha(insc.getExcursion().getFecha())){
+        System.out.println(insc.getExcursion().getFecha());
+        if(!compararFecha(insc.getExcursion().getFecha())){
             datosUtil.mostrarError("No se puede eliminar una inscripción de una excursión que ya ha pasado");
             return false;
         }

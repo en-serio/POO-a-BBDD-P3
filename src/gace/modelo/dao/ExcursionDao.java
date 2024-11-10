@@ -4,10 +4,7 @@ import gace.modelo.Excursion;
 import gace.modelo.Socio;
 import gace.modelo.utils.BBDDUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ExcursionDao implements DAO<Excursion> {
@@ -19,7 +16,7 @@ public class ExcursionDao implements DAO<Excursion> {
 
     public void insertar(Excursion excursion) {
         String sql = "INSERT INTO excursion (codigo, descripcion, fecha, no_dias, precio) VALUES (?,?,?, ?, ?)";
-        try(PreparedStatement pst = conexion.prepareStatement(sql)) {
+        try(PreparedStatement pst = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             java.sql.Date fechaSQL = new java.sql.Date(excursion.getFecha().getTime());
             pst.setString(1, excursion.getCodigo());
             pst.setString(2, excursion.getDescripcion());
@@ -27,6 +24,10 @@ public class ExcursionDao implements DAO<Excursion> {
             pst.setInt(4, excursion.getNoDias());
             pst.setDouble(5, excursion.getPrecio());
             pst.executeUpdate();
+            ResultSet salida = pst.getGeneratedKeys();
+            if(salida.next()) {
+                excursion.setId(salida.getInt(1));
+            }
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());
         }

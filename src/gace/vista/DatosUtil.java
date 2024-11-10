@@ -100,9 +100,7 @@ public class DatosUtil {
 
     public int salir() {
         System.out.println("Desea salir? 1-Si / 2-no");
-        scanner.nextLine();
         int opcion = scanner.nextInt();
-        System.out.println(opcion);
         return opcion == 1 ? -1 : 0;
     }
 

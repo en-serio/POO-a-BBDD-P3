@@ -53,7 +53,7 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
     }
 
     public SocioFederado buscar(int idSocio) {
-        String sql = "SELECT f.*, fed.*, s.* " +
+        String sql = "SELECT f.*, fed.*, s.nombre as nombre_socio, s.id_socio, s.apellido, s.tipo, s.activo " +
                 "FROM federado f " +
                 "JOIN federacion fed ON f.id_federacion = fed.id_federacion " +
                 "JOIN socio s ON f.id_socio = s.id_socio " +
@@ -65,7 +65,7 @@ public class SocioFederadoDao implements DAO<SocioFederado>{
             if(salida.next()) {
                 Federacion fed = new Federacion();
                 socio = new SocioFederado();
-                socio.setNombre(salida.getString("nombre"));
+                socio.setNombre(salida.getString("nombre_socio"));
                 socio.setApellido(salida.getString("apellido"));
                 socio.setIdSocio(salida.getInt("id_socio"));
                 socio.setNif(salida.getString("nif"));

@@ -127,7 +127,7 @@ public class SocioControlador {
             System.out.println("ERROR 1");
             return null;
         }
-        if(buscarTutor(noTutor)){
+        if(!buscarTutor(noTutor)){
             //BORRAR
             System.out.println("ERROR 2");
             return null;
@@ -135,22 +135,22 @@ public class SocioControlador {
         return new SocioInfantil(nombre, apellido, noTutor);
     }
 
-    public SocioInfantil nouSociInfantil(String nombre, String apellido, int noTutor) {
-        if(noTutor == 0){
-            return null;
-        }
-        if(!buscarTutor(noTutor)){
-            return null;
-        }
-        return new SocioInfantil(nombre, apellido, noTutor);
-    }
+//    public SocioInfantil nouSociInfantil(String nombre, String apellido, int noTutor) {
+//        if(noTutor == 0){
+//            return null;
+//        }
+//        if(!buscarTutor(noTutor)){
+//            return null;
+//        }
+//        return new SocioInfantil(nombre, apellido, noTutor);
+//    }
 
     public boolean buscarTutor(int noTutor) {
         Socio socio = DAOFactory.getSocioEstandarDao().buscar(noTutor);
         if(socio == null){
             socio = DAOFactory.getSocioFederadoDao().buscar(noTutor);
             if(socio == null){
-                    return false;
+                return false;
             }
         }
         return true;
@@ -311,7 +311,18 @@ public class SocioControlador {
             return false;
         }
         vistaSocios.mostrarSocio(socio.toString());
-
+        ArrayList<Inscripcion> insc = null;
+        if(socio instanceof SocioEstandar) {
+            insc = DAOFactory.getInscripcionDao().ListarXSocioEst(socio);
+        }else if(socio instanceof SocioFederado){
+            insc = DAOFactory.getInscripcionDao().ListarXSocioFed(socio);
+        }else{
+            insc = DAOFactory.getInscripcionDao().ListarXSocioInf(socio);
+        }
+        if(insc != null){
+            datosUtil.mostrarError("No se puede eliminar el socio, tiene inscripciones");
+            return false;
+        }
         if(vistaSocios.confirmar("¿Está seguro de que desea eliminar este socio?")){
             DAOFactory.getSocioDao().eliminar(socio.getIdSocio());
             datosUtil.mostrarError("Socio eliminado");

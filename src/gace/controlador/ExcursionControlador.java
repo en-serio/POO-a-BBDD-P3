@@ -1,6 +1,7 @@
 package gace.controlador;
 
 import gace.modelo.Excursion;
+import gace.modelo.Inscripcion;
 import gace.modelo.dao.DAOFactory;
 import gace.modelo.dao.ExcursionDao;
 import gace.vista.DatosUtil;
@@ -100,7 +101,6 @@ public class ExcursionControlador {
         if(seleccionarExc(excursiones)){
             return true;
         }
-        datosUtil.mostrarError("Excursion no encontrada");
         return false;
     }
 
@@ -108,6 +108,11 @@ public class ExcursionControlador {
         String codigo = vistaExcursion.pedirExc();
         for(Excursion excur : excursiones){
             if(excur.getCodigo().equals(codigo)) {
+                ArrayList<Inscripcion> insc = DAOFactory.getInscripcionDao().listarXExc(excur);
+                if(insc != null){
+                    datosUtil.mostrarError("No se puede eliminar la excursión porque tiene inscripciones");
+                    return false;
+                }
                 int opcion = datosUtil.pedirOpcion("Es esta la excursion que desea eliminar", "Sí", "No");
                 if (opcion == 1) {
                     DAOFactory.getExcursionDao().eliminar(excur.getId());
@@ -116,6 +121,7 @@ public class ExcursionControlador {
                 return false;
             }
         }
+        datosUtil.mostrarError("Excursion no encontrada");
         return false;
     }
 

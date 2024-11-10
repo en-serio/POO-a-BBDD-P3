@@ -23,7 +23,6 @@ public class SocioInfantilDao implements DAO<SocioInfantil> {
         try(PreparedStatement pst = conexion.prepareStatement(sql)) {
             pst.setInt(1, socio.getIdSocio());
             pst.setInt(2, socio.getNoTutor());
-
             pst.executeUpdate();
         } catch (SQLException e) {
             System.err.println(e.getErrorCode() + e.getMessage());

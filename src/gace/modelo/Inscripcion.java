@@ -62,11 +62,6 @@ public class Inscripcion {
 
     @Override
     public String toString() {
-        return "Inscripcion{" +
-                "codigo='" + codigo + '\'' +
-                ", socio=" + socio +
-                ", excursion=" + excursion +
-                ", fechaInscripcion=" + fechaInscripcion +
-                '}';
+        return  "Id Inscripción: " + idInscripcion + ", Codigo INSC: " + codigo + " " + socio + " " + excursion + ", Fecha de Inscripción: " + fechaInscripcion +".";
     }
 }
