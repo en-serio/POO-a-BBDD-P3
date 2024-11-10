@@ -245,6 +245,9 @@ public class InscripcionDao implements DAO<Inscripcion>{
                 insc.setExcursion(exc);
                 inscripciones.add(insc);
             }
+            if(inscripciones.isEmpty()){
+                return null;
+            }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -270,6 +273,9 @@ public class InscripcionDao implements DAO<Inscripcion>{
                 insc.setExcursion(exc);
                 inscripciones.add(insc);
             }
+            if(inscripciones.isEmpty()){
+                return null;
+            }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -294,6 +300,9 @@ public class InscripcionDao implements DAO<Inscripcion>{
                 insc.setSocio(socio);
                 insc.setExcursion(exc);
                 inscripciones.add(insc);
+            }
+            if(inscripciones.isEmpty()){
+                return null;
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
