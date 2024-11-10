@@ -333,6 +333,10 @@ public class SocioControlador {
 
     public Socio obtenerSocio(){
         int formaBuscar = datosUtil.pedirOpcion("¿Como desea buscar?", "NIF", "Número de socio");
+        int opcion = datosUtil.pedirOpcion("Deseas disponer de ayudas?","Sí","No");
+        if(opcion == 1){
+            mostrarSocios(0,4);
+        }
         if (formaBuscar == -1) {
             return null;
         }

@@ -110,10 +110,9 @@ public class InscripcionControlador {
         }
         String codigo = getCodigoExcursion(soc.getIdSocio(), exc.getCodigo());
         Inscripcion ins = new Inscripcion(codigo, soc, exc);
-        if (ins == null){
-            return false;
-        }
+
         DAOFactory.getInscripcionDao().insertar(ins);
+        vistaInscripciones.mostrarInscripciones(ins.toString());
         return true;
     }
 
@@ -191,10 +190,10 @@ public class InscripcionControlador {
                 return null;
             }
             mostrarLista(insc);
-            idInscripcion = datosUtil.leerEntero(99999, "Introduce el ID de la inscripción");
+            idInscripcion = datosUtil.leerEntero(99999, "Introduce el ID de la inscripción: ");
             return DAOFactory.getInscripcionDao().buscar(idInscripcion);
         }
-        idInscripcion = datosUtil.leerEntero(99999, "Introduce el ID de la inscripción");
+        idInscripcion = datosUtil.leerEntero(99999, "Introduce el ID de la inscripción: ");
         return DAOFactory.getInscripcionDao().buscar(idInscripcion);
     }
 
