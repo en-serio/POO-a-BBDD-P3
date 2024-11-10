@@ -1,7 +1,6 @@
 package gace.modelo.dao;
 
 public class DAOFactory {
-    // TODO aplicar el patrón Singleton
 
     public static ExcursionDao getExcursionDao() {
         return new ExcursionDao();

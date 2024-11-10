@@ -243,7 +243,6 @@ public class InscripcionControlador {
             datosUtil.mostrarError("Inscripción no encontrada");
             return false;
         }
-        System.out.println(insc.getExcursion().getFecha());
         if(!compararFecha(insc.getExcursion().getFecha())){
             datosUtil.mostrarError("No se puede eliminar una inscripción de una excursión que ya ha pasado");
             return false;

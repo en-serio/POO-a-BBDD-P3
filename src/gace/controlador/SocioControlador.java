@@ -123,13 +123,9 @@ public class SocioControlador {
     public SocioInfantil nouSociInfantil(String nombre, String apellido){
         int noTutor = vistaSocios.formTutor();
         if(noTutor == 0){
-            //BORRAR
-            System.out.println("ERROR 1");
             return null;
         }
         if(!buscarTutor(noTutor)){
-            //BORRAR
-            System.out.println("ERROR 2");
             return null;
         }
         return new SocioInfantil(nombre, apellido, noTutor);
@@ -155,14 +151,6 @@ public class SocioControlador {
         }
         return true;
     }
-
-    //todo comprobar
-//    public void mostrarListaSociosSelec(ArrayList<Socio> socios){
-//        for(Socio socio : socios){
-//            vistaSocios.mostrarSocio(socio.toString());
-//        }
-//    }
-
 
     public boolean mostrarSocios(int mostrarFiltro, int filtro) {
         int opcionSocios = 0;
@@ -304,7 +292,6 @@ public class SocioControlador {
         return true;
     }
 
-    //todo implantar logica negocio
     public boolean eliminarSocio(){
         Socio socio = obtenerSocio();
         if(socio == null){
@@ -409,8 +396,7 @@ public class SocioControlador {
             return false;
         }
         if(!(socio instanceof SocioFederado)){
-            //todo modificar sout
-            System.out.println("Error socio no Federado");
+            datosUtil.mostrarError("Error socio no Federado");
             return false;
         }
         Federacion fed = pedirFed();

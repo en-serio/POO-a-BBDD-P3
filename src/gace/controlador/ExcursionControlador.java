@@ -82,14 +82,7 @@ public class ExcursionControlador {
         return DAOFactory.getExcursionDao().buscar(codigo);
     }
 
-    //TODO se usa?
-    public void mostrar(ArrayList<Excursion> excursiones){
-        for (Excursion excursion : excursiones) {
-            vistaExcursion.detalleExcursion(excursion.toString());
-        }
-    }
-
-    public boolean eliminarExcursion(){
+      public boolean eliminarExcursion(){
         ArrayList<Excursion> excursiones = DAOFactory.getExcursionDao().listar();
         if(excursiones== null){
             datosUtil.mostrarError("No hay excursiones para eliminar");
